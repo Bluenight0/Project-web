@@ -7,7 +7,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   // Cek data di database
   $sql = "SELECT * FROM admin WHERE Admin='$username' AND Password='$password'";
-  $result = mysqli_query($conn, $sql);
+  $result = mysqli_query($koneksi, $sql);
 
   if (mysqli_num_rows($result) > 0) {
     // Jika berhasil login
