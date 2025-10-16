@@ -19,9 +19,17 @@
         font-weight: 600;
       }
       .hero {
-        background: linear-gradient(135deg, #0052d4, #4364f7, #6fb1fc);
-        color: white;
-        padding: 100px 0;
+        background-image: url('perpus.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        position: relative;
+        color: #fff;
+        padding: 200px 0;
+        min-height: 320px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         text-align: center;
       }
       .hero h1 {
@@ -46,7 +54,7 @@
     <!-- 🌐 Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container">
-        <a class="navbar-brand" href="#">📚 Perpustakaan UNRI</a>
+        <a class="navbar-brand" href="#">📚 Perpustakaan SOEMAN HS</a>
         <button
           class="navbar-toggler"
           type="button"
@@ -129,7 +137,7 @@
             >
               Tutup
             </button>
-            <a href="#" class="btn btn-primary">Lihat Detail</a>
+            <a href="event.html" class="btn btn-primary">Lihat Detail</a>
           </div>
         </div>
       </div>
