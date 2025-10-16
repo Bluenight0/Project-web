@@ -1,3 +1,24 @@
+<?php
+include "koneksi.php";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  $username = $_POST['Admin'];
+  $password = $_POST['Password'];
+
+  // Cek data di database
+  $sql = "SELECT * FROM admin WHERE Admin='$username' AND Password='$password'";
+  $result = mysqli_query($conn, $sql);
+
+  if (mysqli_num_rows($result) > 0) {
+    // Jika berhasil login
+    header("Location: dashboard.php"); // akan diarahkan ke halaman lain
+    exit;
+  } else {
+    echo "<script>alert('Username atau password salah!');</script>";
+  }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -21,31 +42,30 @@
       <div class="card shadow p-3 rounded" style="width: 22rem">
         <div class="card-body">
           <h3>login</h3>
-          <form action="">
-            <div class="mb-3">
-              <label for="nama" class="form-label">Username:</label>
-              <input
-                type="nama"
-                class="form-control"
-                id="nama"
-                placeholder="Enter Username"
-                name="nama"
-              />
-            </div>
-            <div class="mb-3">
-              <label for="pwd" class="form-label">Password:</label>
-              <input
-                type="password"
-                class="form-control"
-                id="pwd"
-                placeholder="Enter password"
-                name="pswd"
-              />
-            </div>
-            <button type="submit" class="btn btn-primary" onclick="key()">
-              Submit
-            </button>
-          </form>
+          <form method="POST" action="">
+  <div class="mb-3">
+    <label for="Admin" class="form-label">Username:</label>
+    <input
+      type="text"
+      class="form-control"
+      id="Admin"
+      placeholder="Enter Username"
+      name="Admin"
+    />
+  </div>
+  <div class="mb-3">
+    <label for="Password" class="form-label">Password:</label>
+    <input
+      type="password"
+      class="form-control"
+      id="Password"
+      placeholder="Enter password"
+      name="Password"
+    />
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
         </div>
       </div>
     </div>
