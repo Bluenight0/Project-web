@@ -11,9 +11,9 @@
     </style>
     <title>Document</title>
 </head>
-<body class="bg-white">
-    <header class="relative z-10">
-        <nav class="absolute top-0 left-0 w-full flex justify-end p-3 gap-4">
+<body class="h-screen overflow-hidden bg-gray-600">
+    <header class="absolute top-0 left-0 w-full z-20">
+      <nav class="flex justify-end p-3 gap-4">
             <ul class="bg-white/10 text-white/60 rounded-2xl px-3 py-1 hover:bg-gray-400 transition ease-in-out duration-500 shadow-lg">
                 <li><a href=""></a>Admin</li>
             </ul>
@@ -34,46 +34,51 @@
             </ul>
 
     </header>
-    <main class="relatif w-full">
-        <div>
-            <div class="">
-                <img src="" alt="">
-                <div class="relative w-full h-[500px] md:h-[600px] lg:h-[700px]">
-                <img src="../assets/5924.jpg" alt="Library"
-                    class="w-full h-full object-cover z-0" />
-                <div class="absolute top-1/4 left-8 text-white">
-                <h1 class="text-3xl md:text-5xl font-bold leading-tight">
-                    Soeman's space to rel.
-                </h1>
-                <p class="mt-2 text-sm md:text-lg">
-                    Open today 9:00 am - 9:00 pm
-                </p>
-                </div>
-            </div>
-        </div>
-    </main>
-    <section class="relatif w-full mt-2">
-      <div class="flex justify-around">
-        <!-- tanggal -->
-         <div class="bg-gray-400 w-90">
-          <p class=""><span>Kalendar</span></p>
-          <div class="grid grid-cols-6 p-2" id="tanggal">
-        </div>
-         </div>
-         <!-- card keterangan -->
-        <div class="bg-gray-400 p-2 gap-4">
-          <!-- card -->
-          <div class="bg-white">
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius, exercitationem.</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis, molestias!</p>
-          </div>
-          <div class="bg-yellow-300">
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quia, numquam.</p>
-            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Unde, libero.</p>
-          </div>
-        </div>
+   <main class="relative w-full">
+  <div class="relative w-full h-[370px] overflow-hidden">
+    <img src="../assets/5924.jpg" alt="Library" class="w-full h-full object-cover" />
+    <div class="absolute top-1/4 left-8 text-white">
+      <h1 class="text-3xl md:text-5xl font-bold leading-tight">
+        Soeman's space to rel.
+      </h1>
+      <p class="mt-2 text-sm md:text-lg">
+        Open today 9:00 am - 9:00 pm
+      </p>
+    </div>
+  </div>
+</main>
+
+
+
+
+  <section class="w-full mt-6 px-6">
+  <div class="flex flex-wrap justify-around items-start gap-6">
+   <!-- Kalendar -->
+    <div class="ring-2 ring-white rounded-lg shadow-lg flex flex-col items-center w-full sm:w-[250px] md:w-[300px] lg:w-[350px] max-w-sm shadow-lg">
+        <p class="text-white py-1 rounded-md font-semibold mb-3 text-center w-fit">
+          Kalendar
+        </p>
+      <div class="grid grid-cols-5 sm:grid-cols-6 gap-1 p-1 rounded text-center text-white w-full" id="tanggal">
       </div>
-    </section>
+    </div>
+
+
+    <!-- Card Keterangan -->
+    <div class="bg-gray-400 p-3 rounded-lg shadow-lg flex flex-col gap-4 w-[400px]">
+      <div class="bg-white p-2 rounded">
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius, exercitationem.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis, molestias!</p>
+      </div>
+      <div class="bg-yellow-300 p-2 rounded">
+        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quia, numquam.</p>
+        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Unde, libero.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
     <script>
       const tanggal = document.getElementById('tanggal');
       for(let i =1; i <=31; i++){
