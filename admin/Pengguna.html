@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <title>Document</title>
+  </head>
+
+  <body class="h-screen overflow-hidden bg-gray-600">
+    <!-- HEADER -->
+    <header class="absolute top-0 left-0 w-full z-20">
+      <nav class="flex justify-end p-3 gap-6">
+       <ul
+            class="bg-white/10 text-white/60 rounded-2xl px-3 py-1 hover:bg-gray-400 transition ease-in-out duration-500 shadow-lg font-semibold"
+          >
+            <li><a href="">Peminjaman</a></li>
+          </ul>
+          <ul
+            class="bg-white/10 text-white/60 rounded-2xl px-3 py-1 hover:bg-gray-400 transition ease-in-out duration-500 shadow-lg font-semibold"
+          >
+            <li><a href="">Pengembalian</a></li>
+          </ul>
+          <ul
+            class="bg-white/10 text-white/60 rounded-2xl px-3 py-1 hover:bg-gray-400 transition ease-in-out duration-500 shadow-lg font-semibold"
+          >
+            <li><a href="">Status Buku</a></li>
+          </ul>
+          <ul
+            class="bg-white/10 text-white/60 rounded-2xl px-3 py-1 hover:bg-gray-400 transition ease-in-out duration-500 shadow-lg font-semibold"
+          >
+            <li><a href="">Data Buku</a></li>
+          </ul>
+          <ul
+            class="bg-white/10 text-white/60 rounded-2xl px-3 py-1 hover:bg-gray-400 transition ease-in-out duration-500 shadow-lg font-semibold"
+          >
+            <li><a href="">Pengguna</a></li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+
+    <!-- MAIN -->
+    <main class="relative w-full">
+      <div class="relative w-full h-[370px] overflow-hidden">
+        <!-- Background image -->
+        <img
+          src="../assets/libarry.jpg"
+          alt="Library"
+          class="w-full h-full object-cover scale-[1.3] origin-top"
+        />
+
+        <!-- Overlay -->
+        <div
+          class="absolute inset-0 bg-black/40 flex items-center justify-center text-center">
+          <!-- Card popup -->
+          <div
+            class="relative bg-white/80 p-5 shadow-xl rounded-lg w-80 backdrop-blur-sm mt-37">
+            <!-- Tombol X di pojok kanan atas -->
+            <button
+              class="absolute top-2 right-2 bg-gray-400 text-black hover:bg-red-500 hover:text-white rounded-full p-2 leading-none transition">
+              ✕
+            </button>
+
+            <!--card -->
+            <div class="mt-4">
+              <h2 class="text-lg font-bold text-gray-800">Event Hari Ini</h2>
+              <p class="text-gray-700 mt-2">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi,
+                unde.
+              </p>
+              <a
+                href="#"
+                class="text-blue-700 underline mt-3 inline-block hover:text-blue-900">
+                Detail
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <footer class="w-full ml-10 flex flex-start mt-10 w-full flex-col">
+      <div class="text-2xl">
+        <p>apo isi?</p>
+      </div>
+      <div>
+        <p>jawab </p>
+      </div>
+    </footer>
+  </body>
+</html>
