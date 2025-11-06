@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <title>Data Buku User</title>
+  </head>
+  <body class="bg-gray-400 min-h-screen relative">
+    <!-- NAVBAR -->
+    <header class="absolute top-0 left-0 w-full z-20">
+      <nav class="flex justify-between p-3 gap-6">
+        <ul
+          class="bg-white/10 text-white rounded-2xl px-3 py-1 hover:bg-gray-400 transition ease-in-out duration-500 shadow-lg font-semibold"
+        >
+          <li><a href="beranda.html">Beranda</a></li>
+        </ul>
+
+        <div class="flex gap-6">
+          <ul
+            class="bg-white/10 text-white/60 rounded-2xl px-3 py-1 hover:bg-gray-400 transition ease-in-out duration-500 shadow-lg font-semibold"
+          >
+            <li><a href="data-buku-user.html">Data Buku</a></li>
+          </ul>
+          <ul
+            class="bg-white/10 text-white/60 rounded-2xl px-3 py-1 hover:bg-gray-400 transition ease-in-out duration-500 shadow-lg font-semibold"
+          >
+            <li><a href="event.html">Event</a></li>
+          </ul>
+          <ul
+            class="bg-white/10 text-white/60 rounded-2xl px-3 py-1 hover:bg-gray-400 transition ease-in-out duration-500 shadow-lg font-semibold"
+          >
+            <li><a href="profil.html">Profil</a></li>
+          </ul>
+          <ul
+            class="bg-white/10 text-white/60 rounded-2xl px-3 py-1 hover:bg-gray-400 transition ease-in-out duration-500 shadow-lg font-semibold"
+          >
+            <li><a href="peminjaman.html">Peminjaman</a></li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="pt-24 px-6">
+      <h1 class="text-2xl font-semibold text-white mb-6">Daftar Buku</h1>
+
+      <!-- Grid buku -->
+      <div
+        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
+      >
+        <!-- Card Buku -->
+        <a
+          href="peminjaman.html"
+          class="bg-white/10 hover:bg-white/20 transition rounded-2xl p-4 shadow-lg text-white backdrop-blur-sm"
+        >
+          <img
+            src="../assets/book1.jpg"
+            alt="Buku 1"
+            class="rounded-xl w-full h-48 object-cover mb-3"
+          />
+          <h2 class="text-lg font-semibold">The Art of Coding</h2>
+          <p class="text-sm text-white/70 mt-1">Kategori: Teknologi</p>
+          <p class="text-sm text-white/60">Tersedia</p>
+        </a>
+
+        <a
+          href="peminjaman.html"
+          class="bg-white/10 hover:bg-white/20 transition rounded-2xl p-4 shadow-lg text-white backdrop-blur-sm"
+        >
+          <img
+            src="../assets/book2.jpg"
+            alt="Buku 2"
+            class="rounded-xl w-full h-48 object-cover mb-3"
+          />
+          <h2 class="text-lg font-semibold">Filosofi Kopi</h2>
+          <p class="text-sm text-white/70 mt-1">Kategori: Fiksi</p>
+          <p class="text-sm text-white/60">Dipinjam</p>
+        </a>
+
+        <a
+          href="peminjaman.html"
+          class="bg-white/10 hover:bg-white/20 transition rounded-2xl p-4 shadow-lg text-white backdrop-blur-sm"
+        >
+          <img
+            src="../assets/book3.jpg"
+            alt="Buku 3"
+            class="rounded-xl w-full h-48 object-cover mb-3"
+          />
+          <h2 class="text-lg font-semibold">Belajar Tailwind</h2>
+          <p class="text-sm text-white/70 mt-1">Kategori: Pemrograman</p>
+          <p class="text-sm text-white/60">Tersedia</p>
+        </a>
+
+        <a
+          href="peminjaman.html"
+          class="bg-white/10 hover:bg-white/20 transition rounded-2xl p-4 shadow-lg text-white backdrop-blur-sm"
+        >
+          <img
+            src="../assets/book4.jpg"
+            alt="Buku 4"
+            class="rounded-xl w-full h-48 object-cover mb-3"
+          />
+          <h2 class="text-lg font-semibold">Sejarah Dunia</h2>
+          <p class="text-sm text-white/70 mt-1">Kategori: Edukasi</p>
+          <p class="text-sm text-white/60">Tersedia</p>
+        </a>
+      </div>
+    </main>
+  </body>
+</html>

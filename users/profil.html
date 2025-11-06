@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <title>Profil | User</title>
+  </head>
+  <body class="bg-gray-400 min-h-screen">
+    <!-- Navbar -->
+    <header class="absolute top-0 left-0 w-full z-20">
+      <nav class="flex justify-between p-3 gap-6">
+        <ul
+          class="bg-white/10 text-white rounded-2xl px-3 py-1 hover:bg-gray-400 transition ease-in-out duration-500 shadow-lg font-semibold"
+        >
+          <li><a href="beranda.html">Beranda</a></li>
+        </ul>
+        <div class="flex flex-end gap-6">
+          <ul
+            class="bg-white/10 text-white/60 rounded-2xl px-3 py-1 hover:bg-gray-400 transition ease-in-out duration-500 shadow-lg font-semibold"
+          >
+            <li><a href="data-buku-user.html">Data Buku</a></li>
+          </ul>
+          <ul
+            class="bg-white/10 text-white rounded-2xl px-3 py-1 bg-gray-500/50 font-semibold shadow-lg"
+          >
+            <li><a href="profil.html">Profil</a></li>
+          </ul>
+          <ul
+            class="bg-white/10 text-white/60 rounded-2xl px-3 py-1 hover:bg-gray-400 transition ease-in-out duration-500 shadow-lg font-semibold"
+          >
+            <li><a href="event.html">Event</a></li>
+          </ul>
+          <ul
+            class="bg-white/10 text-white/60 rounded-2xl px-3 py-1 hover:bg-gray-400 transition ease-in-out duration-500 shadow-lg font-semibold"
+          >
+            <li><a href="peminjaman.html">Peminjaman</a></li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Main -->
+    <main class="pt-28 px-8 text-white">
+      <h1 class="text-2xl font-bold mb-6">Profil Pengguna</h1>
+
+      <!-- Dua Kolom: Profil + Identitas -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+        <!-- Kolom Kiri: Foto Profil -->
+        <div class="bg-white/10 rounded-2xl p-6 shadow-lg flex flex-col items-center">
+          <div class="w-32 h-32 bg-gray-300 rounded-full overflow-hidden mb-4">
+            <img src="../assets/profile-default.png" alt="Foto Profil" class="w-full h-full object-cover" />
+          </div>
+          <h2 class="text-xl font-semibold">Nama Pengguna</h2>
+          <p class="text-white/70 text-sm">ID: #USR001</p>
+          <button
+            class="mt-4 bg-blue-500 hover:bg-blue-600 text-white px-4 py-1 rounded-xl font-semibold shadow"
+          >
+            Ganti Foto
+          </button>
+        </div>
+
+        <!-- Kolom Kanan: Identitas Lengkap -->
+        <div class="bg-white/10 rounded-2xl p-6 shadow-lg">
+          <h2 class="text-xl font-semibold mb-4">Identitas Lengkap</h2>
+          <form action="update_profil.php" method="POST" class="space-y-3">
+            <div>
+              <label class="block text-sm mb-1">Nama Lengkap</label>
+              <input
+                type="text"
+                name="nama"
+                class="w-full p-2 rounded-md text-gray-800"
+                value="<?php echo $user['nama'] ?? ''; ?>"
+              />
+            </div>
+            <div>
+              <label class="block text-sm mb-1">Email</label>
+              <input
+                type="email"
+                name="email"
+                class="w-full p-2 rounded-md text-gray-800"
+                value="<?php echo $user['email'] ?? ''; ?>"
+              />
+            </div>
+            <div>
+              <label class="block text-sm mb-1">No. HP</label>
+              <input
+                type="text"
+                name="no_hp"
+                class="w-full p-2 rounded-md text-gray-800"
+                value="<?php echo $user['no_hp'] ?? ''; ?>"
+              />
+            </div>
+            <div>
+              <label class="block text-sm mb-1">Alamat</label>
+              <textarea
+                name="alamat"
+                class="w-full p-2 rounded-md text-gray-800"
+              ><?php echo $user['alamat'] ?? ''; ?></textarea>
+            </div>
+            <div class="flex justify-end">
+              <button
+                type="submit"
+                class="bg-green-500 hover:bg-green-600 text-white px-5 py-1 rounded-lg font-semibold shadow"
+              >
+                Konfirmasi
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Bagian Bawah: Status, Buku, Event -->
+      <div class="space-y-6">
+        <!-- Status Aktif -->
+        <div class="bg-white/10 rounded-2xl p-5 shadow-lg">
+          <h3 class="text-xl font-semibold mb-3">Status Akun</h3>
+          <p class="text-white/80">
+            Status: <span class="text-green-400 font-semibold">Aktif</span>
+          </p>
+          <p class="text-white/60 text-sm mt-1">Terakhir login: 2025-11-06</p>
+        </div>
+
+        <!-- Data Buku dari peminjaman.html -->
+        <div class="bg-white/10 rounded-2xl p-5 shadow-lg">
+          <h3 class="text-xl font-semibold mb-3">Buku yang Dipinjam</h3>
+          <table class="w-full text-left text-white/80">
+            <thead class="border-b border-white/30">
+              <tr>
+                <th class="py-2">Judul Buku</th>
+                <th class="py-2">Status</th>
+                <th class="py-2">Waktu</th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php
+                // contoh sinkronisasi data dari peminjaman.html (table peminjaman)
+                // $buku = mysqli_query($conn, "SELECT * FROM peminjaman WHERE user_id = $id");
+                // while ($row = mysqli_fetch_assoc($buku)) {
+              ?>
+              <tr class="border-b border-white/10">
+                <td class="py-2">Contoh Buku A</td>
+                <td class="py-2">Dipinjam</td>
+                <td class="py-2">3 Hari Lagi</td>
+              </tr>
+              <?php // } ?>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Event yang Diikuti -->
+        <div class="bg-white/10 rounded-2xl p-5 shadow-lg">
+          <h3 class="text-xl font-semibold mb-3">Event yang Diikuti</h3>
+          <ul class="list-disc list-inside text-white/80 space-y-1">
+            <?php
+              // $event = mysqli_query($conn, "SELECT e.nama_event FROM event_user eu JOIN events e ON e.id = eu.event_id WHERE eu.user_id = $id");
+              // while ($e = mysqli_fetch_assoc($event)) {
+            ?>
+            <li>Contoh Event Literasi Buku</li>
+            <?php // } ?>
+          </ul>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

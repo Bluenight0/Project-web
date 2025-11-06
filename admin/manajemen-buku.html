@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <title>Dashboard Admin</title>
+  </head>
+  <body class="bg-gray-100 min-h-screen text-gray-800">
+    <!-- Header -->
+    <header class="fixed top-0 left-0 w-full bg-gray-700/80 backdrop-blur-md z-20 shadow-lg">
+      <nav class="flex justify-between items-center p-3 max-w-6xl mx-auto">
+        <ul
+            class="bg-white/10 text-white rounded-2xl px-3 py-1 hover:bg-gray-400 transition ease-in-out duration-500 shadow-lg font-semibold"
+          >
+            <li><a href="dashboard.html">Admin</a></li>
+          </ul>
+        <div class=" flex flex-end gap-6">
+          <ul
+            class="bg-white/10 text-white/60 rounded-2xl px-3 py-1 hover:bg-gray-400 transition ease-in-out duration-500 shadow-lg font-semibold"
+          >
+            <li><a href="status-buku.html">Status Buku</a></li>
+          </ul>
+          <ul
+            class="bg-white/10 text-white/60 rounded-2xl px-3 py-1 hover:bg-gray-400 transition ease-in-out duration-500 shadow-lg font-semibold"
+          >
+            <li><a href="manajemen-buku.html">Data Buku</a></li>
+          </ul>
+          <ul
+            class="bg-white/10 text-white/60 rounded-2xl px-3 py-1 hover:bg-gray-400 transition ease-in-out duration-500 shadow-lg font-semibold"
+          >
+            <li><a href="Pengguna.html">Pengguna</a></li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="pt-24 px-6 flex flex-col items-center">
+      <section class="w-full max-w-5xl bg-white rounded-2xl shadow-md p-6">
+        <!-- Tombol CRUD -->
+        <div class="flex justify-end gap-3 mb-6">
+          <button
+            class="bg-green-500 hover:bg-green-600 text-white font-semibold px-4 py-2 rounded-lg shadow transition"
+            onclick="toggleForm(true)"
+          >
+            Tambah
+          </button>
+          <button
+            class="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold px-4 py-2 rounded-lg shadow transition"
+          >
+            Edit
+          </button>
+          <button
+            class="bg-red-500 hover:bg-red-600 text-white font-semibold px-4 py-2 rounded-lg shadow transition"
+          >
+            Hapus
+          </button>
+        </div>
+
+        <!-- Form Tambah/Edit -->
+        <form
+          id="formBuku"
+          class="hidden mb-6 border border-gray-300 rounded-xl p-4 bg-gray-50"
+          action="proses_buku.php"
+          method="POST"
+        >
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div>
+              <label class="block font-semibold text-gray-700">Nama Buku</label>
+              <input
+                type="text"
+                name="nama"
+                required
+                class="w-full border border-gray-300 rounded-lg p-2 focus:ring focus:ring-blue-300"
+              />
+            </div>
+            <div>
+              <label class="block font-semibold text-gray-700">Jenis Buku</label>
+              <select
+                name="jenis"
+                required
+                class="w-full border border-gray-300 rounded-lg p-2 bg-white focus:ring focus:ring-blue-300"
+              >
+                <option value="">-- Pilih Jenis Buku --</option>
+                <option value="Novel">Novel</option>
+                <option value="Komik">Komik</option>
+                <option value="Majalah">Majalah</option>
+                <option value="Ensiklopedia">Ensiklopedia</option>
+                <option value="Pelajaran">Pelajaran</option>
+              </select>
+            </div>
+            <div>
+              <label class="block font-semibold text-gray-700">Tanggal</label>
+              <input
+                type="date"
+                name="tanggal"
+                required
+                class="w-full border border-gray-300 rounded-lg p-2 focus:ring focus:ring-blue-300"
+              />
+            </div>
+          </div>
+          <div class="flex justify-end mt-4 gap-2">
+            <button
+              type="submit"
+              class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold"
+            >
+              Simpan
+            </button>
+            <button
+              type="button"
+              onclick="toggleForm(false)"
+              class="bg-gray-400 hover:bg-gray-500 text-white px-4 py-2 rounded-lg font-semibold"
+            >
+              Batal
+            </button>
+          </div>
+        </form>
+
+        <!-- Tabel Data -->
+        <div class="overflow-x-auto">
+          <table class="min-w-full border border-gray-300 rounded-lg overflow-hidden">
+            <thead class="bg-gray-700 text-white">
+              <tr>
+                <th class="px-4 py-2 text-left">Nama</th>
+                <th class="px-4 py-2 text-left">Jenis Buku</th>
+                <th class="px-4 py-2 text-left">Tanggal</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- contoh data, nanti ini diganti dengan PHP
+              <?php
+              // contoh integrasi PHP (nanti disesuaikan)
+              // $result = mysqli_query($conn, "SELECT * FROM buku");
+              // while($row = mysqli_fetch_assoc($result)) {
+              //     echo "<tr class='hover:bg-gray-100'>
+              //         <td class='px-4 py-2 border-t'>{$row['nama']}</td>
+              //         <td class='px-4 py-2 border-t'>{$row['jenis']}</td>
+              //         <td class='px-4 py-2 border-t'>{$row['tanggal']}</td>
+              //     </tr>";
+              // }
+              ?> -->
+              <tr class="hover:bg-gray-100">
+                <td class="px-4 py-2 border-t">Buku A</td>
+                <td class="px-4 py-2 border-t">Novel</td>
+                <td class="px-4 py-2 border-t">2025-11-06</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      function toggleForm(show) {
+        const form = document.getElementById("formBuku");
+        form.classList.toggle("hidden", !show);
+      }
+    </script>
+  </body>
+</html>
