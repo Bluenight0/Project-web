@@ -1,180 +1,172 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <title>Peminjaman Buku</title>
-  </head>
-  <body class="bg-gray-400 min-h-screen relative">
-    <!-- NAVBAR -->
-    <header class="absolute top-0 left-0 w-full z-20">
-      <nav class="flex justify-between p-3 gap-6">
-        <ul
-          class="bg-white/10 text-white rounded-2xl px-3 py-1 hover:bg-gray-400 transition ease-in-out duration-500 shadow-lg font-semibold"
-        >
-          <li><a href="beranda.html">Beranda</a></li>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <title>Peminjaman Buku</title>
+</head>
+<body class="bg-gray-400 min-h-screen">
+
+  <!-- Navbar -->
+  <header class="absolute top-0 left-0 w-full z-20">
+    <nav class="flex justify-between p-3 gap-6">
+      <ul class="bg-white/10 text-white rounded-2xl px-3 py-1 shadow-lg font-semibold">
+        <li><a href="data-buku-user.html">Data Buku</a></li>
+      </ul>
+      <div class="flex gap-6">
+        <ul class="bg-white/10 text-white/60 rounded-2xl px-3 py-1 shadow-lg font-semibold">
+          <li><a href="peminjaman.html">Peminjaman</a></li>
         </ul>
+        <ul class="bg-white/10 text-white/60 rounded-2xl px-3 py-1 shadow-lg font-semibold">
+          <li><a href="event.html">Event</a></li>
+        </ul>
+        <ul class="bg-white/10 text-white/60 rounded-2xl px-3 py-1 shadow-lg font-semibold">
+          <li><a href="profil.html">Profil</a></li>
+        </ul>
+      </div>
+    </nav>
+  </header>
 
-        <div class="flex gap-6">
-          <ul
-            class="bg-white/10 text-white/60 rounded-2xl px-3 py-1 hover:bg-gray-400 transition ease-in-out duration-500 shadow-lg font-semibold"
-          >
-            <li><a href="data-buku-user.html">Data Buku</a></li>
-          </ul>
-          <ul
-            class="bg-white/10 text-white/60 rounded-2xl px-3 py-1 hover:bg-gray-400 transition ease-in-out duration-500 shadow-lg font-semibold"
-          >
-            <li><a href="event.html">Event</a></li>
-          </ul>
-          <ul
-            class="bg-white/10 text-white/60 rounded-2xl px-3 py-1 hover:bg-gray-400 transition ease-in-out duration-500 shadow-lg font-semibold"
-          >
-            <li><a href="profil.html">Profil</a></li>
-          </ul>
-          <ul
-            class="bg-white/10 text-white/90 rounded-2xl px-3 py-1 bg-gray-500/50 transition ease-in-out duration-500 shadow-lg font-semibold"
-          >
-            <li><a href="peminjaman.html">Peminjaman</a></li>
-          </ul>
-        </div>
-      </nav>
-    </header>
-
-    <!-- MAIN -->
-    <main class="pt-28 px-6 text-white">
+  <!-- Main Content -->
+  <main class="pt-24 p-6">
+    <div class="max-w-5xl mx-auto bg-white/10 rounded-2xl shadow-lg p-6 text-white">
       <h1 class="text-2xl font-semibold mb-4">Peminjaman Buku</h1>
 
-      <!-- SEARCH + SORT -->
-      <form
-        action="peminjaman.php"
-        method="GET"
-        class="flex flex-wrap items-center gap-4 mb-6"
-      >
+      <!-- Search Input -->
+      <div class="mb-6">
         <input
-          type="text"
           id="searchInput"
-          name="search"
+          type="text"
           placeholder="Cari buku..."
-          class="px-4 py-2 rounded-xl bg-white/10 backdrop-blur-sm text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-white/50 w-64"
+          class="w-full px-4 py-2 rounded-xl bg-white/20 text-white placeholder-white/60 focus:outline-none"
         />
-
-        <select
-          name="sort"
-          class="px-4 py-2 rounded-xl bg-white/10 text-white backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-white/50"
-        >
-          <option value="">Urutkan</option>
-          <option value="judul">Judul</option>
-          <option value="tanggal">Tanggal</option>
-          <option value="populer">Terpopuler</option>
-        </select>
-
-        <button
-          type="submit"
-          class="bg-blue-600 hover:bg-blue-700 transition px-4 py-2 rounded-xl font-semibold"
-        >
-          Cari
-        </button>
-      </form>
-
-      <!-- CRUD BUTTONS -->
-      <div class="flex flex-wrap gap-3 mb-6">
-        <button
-          class="bg-green-600 hover:bg-green-700 px-4 py-2 rounded-xl font-semibold shadow-lg transition"
-        >
-          Tambah
-        </button>
-        <button
-          class="bg-yellow-600 hover:bg-yellow-700 px-4 py-2 rounded-xl font-semibold shadow-lg transition"
-        >
-          Edit
-        </button>
-        <button
-          class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded-xl font-semibold shadow-lg transition"
-        >
-          Hapus
-        </button>
       </div>
 
-      <!-- TABEL DATA PEMINJAMAN -->
-      <div class="overflow-x-auto">
-        <table class="w-full text-left bg-white/10 backdrop-blur-sm rounded-2xl">
-          <thead>
-            <tr class="bg-white/20 text-white">
-              <th class="p-3">Judul Buku</th>
-              <th class="p-3">Tanggal Pinjam</th>
-              <th class="p-3">Batas Pengembalian</th>
-              <th class="p-3">Waktu</th>
-              <th class="p-3">Status</th>
+      <!-- Card buku -->
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-6" id="bookList">
+        <!-- Contoh data (nanti dari PHP) -->
+        <div class="bg-white/20 rounded-2xl p-4 flex flex-col items-center gap-3">
+          <h2 class="font-semibold">Naruto Vol.1</h2>
+          <p class="text-sm text-white/70">Jenis: Manga</p>
+          <button
+            class="bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded-xl font-semibold"
+            onclick="pinjamBuku('Naruto Vol.1')"
+          >Pinjam</button>
+        </div>
+        <div class="bg-white/20 rounded-2xl p-4 flex flex-col items-center gap-3">
+          <h2 class="font-semibold">Atomic Habits</h2>
+          <p class="text-sm text-white/70">Jenis: Self Improvement</p>
+          <button
+            class="bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded-xl font-semibold"
+            onclick="pinjamBuku('Atomic Habits')"
+          >Pinjam</button>
+        </div>
+      </div>
+
+      <!-- Tabel Peminjaman -->
+      <div class="mt-10">
+        <h2 class="text-xl font-semibold mb-3">Status Peminjaman</h2>
+        <table class="w-full text-left bg-white/10 rounded-2xl overflow-hidden">
+          <thead class="bg-white/20">
+            <tr>
+              <th class="px-4 py-2">Judul</th>
+              <th class="px-4 py-2">Batas Pengembalian</th>
+              <th class="px-4 py-2">Status</th>
+              <th class="px-4 py-2">Sanksi</th>
             </tr>
           </thead>
-          <tbody id="tableBody">
-            <!-- Data contoh -->
-            <tr class="hover:bg-white/20 transition">
-              <td class="p-3">Filosofi Kopi</td>
-              <td class="p-3">2025-11-02</td>
-              <td class="p-3">2025-11-09</td>
-              <td class="p-3 text-blue-200">7 Hari</td>
-              <td class="p-3">
-                <button
-                  class="bg-blue-500 hover:bg-blue-600 px-3 py-1 rounded-lg"
-                  onclick="returnBook(this)"
-                >
-                  Pinjam
-                </button>
-              </td>
-            </tr>
-            <tr class="hover:bg-white/20 transition">
-              <td class="p-3">Belajar Tailwind</td>
-              <td class="p-3">2025-10-25</td>
-              <td class="p-3">2025-11-01</td>
-              <td class="p-3 text-gray-300">-</td>
-              <td class="p-3 text-green-300 font-semibold">Pengembalian</td>
-            </tr>
+          <tbody id="loanTable">
+            <!-- Data dari PHP -->
           </tbody>
         </table>
       </div>
+    </div>
+  </main>
 
-      <!-- BAGIAN TERPOPULER -->
-      <section class="mt-10">
-        <h2 class="text-xl font-semibold mb-4">📚 Buku Paling Populer</h2>
-        <div
-          class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
-        >
-          <div
-            class="bg-white/10 p-4 rounded-2xl backdrop-blur-sm shadow-lg hover:bg-white/20 transition"
-          >
-            <h3 class="font-semibold">The Art of Coding</h3>
-            <p class="text-white/70 text-sm mt-1">Peminjaman: 320 kali</p>
-          </div>
-          <div
-            class="bg-white/10 p-4 rounded-2xl backdrop-blur-sm shadow-lg hover:bg-white/20 transition"
-          >
-            <h3 class="font-semibold">Filosofi Kopi</h3>
-            <p class="text-white/70 text-sm mt-1">Peminjaman: 210 kali</p>
-          </div>
-        </div>
-      </section>
-    </main>
+  <script>
+    // Ambil parameter dari URL (judul buku dari data-buku-user.html)
+    const params = new URLSearchParams(window.location.search);
+    const judul = params.get("judul");
+    if (judul) document.getElementById("searchInput").value = judul;
 
-    <!-- SCRIPT -->
-    <script>
-      // Autofill search dari URL ?search=
-      const params = new URLSearchParams(window.location.search);
-      const searchValue = params.get("search");
-      if (searchValue) document.getElementById("searchInput").value = searchValue;
+    // Variabel user dan sanksi
+    let sedangDihukum = false;
+    let waktuHukum = null;
 
-      // Logika sederhana perubahan status Pinjam -> Pengembalian
-      function returnBook(button) {
-        const row = button.closest("tr");
-        const waktuCell = row.children[3];
-        const statusCell = row.children[4];
+    // Simpan data peminjaman di memory (simulasi PHP)
+    const peminjaman = [];
 
-        // Simulasi waktu habis
-        waktuCell.textContent = "-";
-        statusCell.textContent = "Pengembalian";
-        statusCell.className = "p-3 text-green-300 font-semibold";
+    // Fungsi pinjam buku
+    function pinjamBuku(namaBuku) {
+      // Cek sanksi aktif (3 hari)
+      if (sedangDihukum && waktuHukum) {
+        const now = new Date();
+        const selisih = Math.floor((now - waktuHukum) / (1000 * 60 * 60 * 24));
+        if (selisih < 3) {
+          alert(`⚠️ Kamu masih dalam masa sanksi (${3 - selisih} hari tersisa). Tidak bisa pinjam buku.`);
+          return;
+        } else {
+          sedangDihukum = false; // sanksi selesai
+          waktuHukum = null;
+        }
       }
-    </script>
-  </body>
+
+      if (!confirm(`Apakah kamu yakin ingin meminjam "${namaBuku}"?\n\nWaktu konfirmasi 20 detik.`)) {
+        return;
+      }
+
+      // Countdown 20 detik (visual simulasi)
+      let countdown = 20;
+      const interval = setInterval(() => {
+        countdown--;
+        if (countdown === 0) {
+          clearInterval(interval);
+          alert("⏰ Waktu konfirmasi habis!");
+        }
+      }, 1000);
+
+      // Setelah 20 detik, pinjam otomatis (simulasi sukses)
+      setTimeout(() => {
+        clearInterval(interval);
+        const batas = new Date();
+        batas.setDate(batas.getDate() + 3);
+        tambahKeTabel(namaBuku, batas);
+      }, 20000);
+    }
+
+    // Tambahkan data peminjaman ke tabel
+    function tambahKeTabel(namaBuku, batas) {
+      const tbody = document.getElementById("loanTable");
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td class="px-4 py-2">${namaBuku}</td>
+        <td class="px-4 py-2">${batas.toLocaleDateString()}</td>
+        <td class="px-4 py-2 text-green-400">Pinjam</td>
+        <td class="px-4 py-2 text-white/60">-</td>
+      `;
+      tbody.appendChild(tr);
+
+      peminjaman.push({ namaBuku, batas, status: "pinjam" });
+
+      // Cek keterlambatan setiap kali user buka halaman
+      setInterval(() => cekKeterlambatan(tr, batas), 5000);
+    }
+
+    // Cek keterlambatan berdasarkan tanggal hari ini
+    function cekKeterlambatan(row, batas) {
+      const now = new Date();
+      if (now > batas) {
+        row.children[1].innerText = "-";
+        row.children[2].innerText = "Pengembalian Terlambat";
+        row.children[2].classList.remove("text-green-400");
+        row.children[2].classList.add("text-red-400");
+        row.children[3].innerText = "Sanksi 3 hari / Rp100.000";
+        sedangDihukum = true;
+        waktuHukum = new Date();
+      }
+    }
+  </script>
+
+</body>
 </html>
