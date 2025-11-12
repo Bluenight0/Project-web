@@ -1,151 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <title>Event | User</title>
-  </head>
-  <body class="bg-gray-400 min-h-screen">
-    <!-- Navbar -->
-    <header class="absolute top-0 left-0 w-full z-20">
-      <nav class="flex justify-between p-3 gap-6">
-        <ul
-          class="bg-white/10 text-white rounded-2xl px-3 py-1 hover:bg-gray-400 transition ease-in-out duration-500 shadow-lg font-semibold"
-        >
-          <li><a href="beranda.html">Beranda</a></li>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <title>Event | User</title>
+</head>
+<body class="bg-gray-400 min-h-screen">
+
+  <!-- Navbar -->
+  <header class="absolute top-0 left-0 w-full z-20">
+    <nav class="flex justify-between p-3 gap-6">
+      <ul class="bg-white/10 text-white rounded-2xl px-3 py-1 hover:bg-gray-400 transition shadow-lg font-semibold">
+        <li><a href="beranda.html">Beranda</a></li>
+      </ul>
+      <div class="flex flex-end gap-6">
+        <ul class="bg-white/10 text-white/60 rounded-2xl px-3 py-1 hover:bg-gray-400 transition shadow-lg font-semibold">
+          <li><a href="data-buku-user.html">Data Buku</a></li>
         </ul>
-        <div class="flex flex-end gap-6">
-          <ul
-            class="bg-white/10 text-white/60 rounded-2xl px-3 py-1 hover:bg-gray-400 transition ease-in-out duration-500 shadow-lg font-semibold"
-          >
-            <li><a href="data-buku-user.html">Data Buku</a></li>
-          </ul>
-          <ul
-            class="bg-white/10 text-white/60 rounded-2xl px-3 py-1 hover:bg-gray-400 transition ease-in-out duration-500 shadow-lg font-semibold"
-          >
-            <li><a href="profil.html">Profil</a></li>
-          </ul>
-          <ul
-            class="bg-white/10 text-white/60 rounded-2xl px-3 py-1 hover:bg-gray-400 transition ease-in-out duration-500 shadow-lg font-semibold"
-          >
-            <li><a href="event.html" class="text-white">Event</a></li>
-          </ul>
-          <ul
-            class="bg-white/10 text-white/60 rounded-2xl px-3 py-1 hover:bg-gray-400 transition ease-in-out duration-500 shadow-lg font-semibold"
-          >
-            <li><a href="peminjaman.html">Peminjaman</a></li>
-          </ul>
-          <ul
-            class="bg-white/10 text-white/60 rounded-2xl px-3 py-1 hover:bg-gray-400 transition ease-in-out duration-500 shadow-lg font-semibold"
-          >
-            <li><a href="../login.html">Login</a></li>
-          </ul>
-        </div>
-      </nav>
-    </header>
-
-    <!-- Main -->
-    <main class="pt-28 px-6">
-      <h1 class="text-2xl font-bold text-white mb-6">Event yang Tersedia</h1>
-
-      <!-- Daftar Event -->
-      <div id="event-list" class="grid gap-4">
-        <!-- contoh data (nanti diganti php loop) -->
-        <?php
-          // Contoh pengambilan data dari database (sinkron dengan admin/pengguna.html)
-          // $events = mysqli_query($conn, "SELECT * FROM events");
-          // while ($event = mysqli_fetch_assoc($events)) {
-        ?>
-        <div class="bg-white/10 rounded-2xl p-4 text-white shadow-lg flex justify-between items-center">
-          <div>
-            <h2 class="text-xl font-semibold">Judul Event</h2>
-            <p class="text-sm text-white/70">Deskripsi singkat event</p>
-            <p class="text-sm mt-1">Tanggal: <span class="text-white/80">2025-11-12</span></p>
-          </div>
-          <div class="flex gap-3">
-            <button
-              class="bg-green-500 hover:bg-green-600 text-white font-semibold px-3 py-1 rounded-xl shadow"
-              onclick="verifikasiIkut('1')"
-            >
-              Ikuti
-            </button>
-            <button
-              class="bg-red-500 hover:bg-red-600 text-white font-semibold px-3 py-1 rounded-xl shadow"
-              onclick="batalEvent('1')"
-            >
-              Batal
-            </button>
-          </div>
-        </div>
-        <?php //} ?>
+        <ul class="bg-white/10 text-white/60 rounded-2xl px-3 py-1 hover:bg-gray-400 transition shadow-lg font-semibold">
+          <li><a href="profil.html">Profil</a></li>
+        </ul>
+        <ul class="bg-white/10 text-white/60 rounded-2xl px-3 py-1 hover:bg-gray-400 transition shadow-lg font-semibold">
+          <li><a href="event.html" class="text-white">Event</a></li>
+        </ul>
+        <ul class="bg-white/10 text-white/60 rounded-2xl px-3 py-1 hover:bg-gray-400 transition shadow-lg font-semibold">
+          <li><a href="peminjaman.html">Peminjaman</a></li>
+        </ul>
+        <ul class="bg-white/10 text-white/60 rounded-2xl px-3 py-1 hover:bg-gray-400 transition shadow-lg font-semibold">
+          <li><a href="../login.html">Login</a></li>
+        </ul>
       </div>
-    </main>
+    </nav>
+  </header>
 
-    <!-- Modal Verifikasi -->
-    <div
-      id="modal-verifikasi"
-      class="hidden fixed inset-0 bg-black/60 flex items-center justify-center z-50"
-    >
-      <div class="bg-gray-800 text-white p-6 rounded-2xl w-80 shadow-xl">
-        <h2 class="text-xl font-semibold mb-3">Konfirmasi Mengikuti Event</h2>
-        <p class="text-sm text-gray-300 mb-3">
-          Ketik <strong>"ikut"</strong> untuk konfirmasi:
-        </p>
-        <input
-          type="text"
-          id="verifikasi-input"
-          placeholder="Ketik di sini..."
-          class="w-full p-2 rounded-md text-gray-900 mb-3"
-        />
-        <div class="flex justify-end gap-3">
-          <button
-            onclick="tutupModal()"
-            class="bg-gray-500 hover:bg-gray-600 px-3 py-1 rounded-lg"
-          >
-            Batal
-          </button>
-          <button
-            onclick="konfirmasiIkut()"
-            class="bg-green-500 hover:bg-green-600 px-3 py-1 rounded-lg"
-          >
-            Konfirmasi
-          </button>
-        </div>
-      </div>
-    </div>
+  <!-- Main -->
+  <main class="pt-28 px-6">
+    <h1 class="text-2xl font-bold text-white mb-6">Event yang Tersedia</h1>
+    <div id="event-list" class="grid gap-4"></div>
+  </main>
 
-    <script>
-      let selectedEventId = null;
+  <script>
+    const eventList = document.getElementById("event-list");
 
-      function verifikasiIkut(eventId) {
-        selectedEventId = eventId;
-        document.getElementById("modal-verifikasi").classList.remove("hidden");
+    async function loadEvents() {
+      try {
+        const res = await fetch("../back-end/event.php");
+        const events = await res.json();
+
+        eventList.innerHTML = "";
+
+        if (!Array.isArray(events) || events.length === 0) {
+          eventList.innerHTML =
+            "<p class='text-white text-center'>Belum ada event tersedia.</p>";
+          return;
+        }
+
+        events.forEach((event) => {
+          const div = document.createElement("div");
+          div.className =
+            "bg-white/10 rounded-2xl p-4 text-white shadow-lg flex justify-between items-center flex-wrap";
+
+          let ikutButton = event.ikut ? 
+            `<button class="bg-gray-400 cursor-not-allowed text-white px-3 py-1 rounded-xl shadow" disabled>Sudah Ikut</button>` :
+            `<button class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded-xl shadow" onclick="verifikasiIkut(${event.id})">Ikuti</button>`;
+
+          div.innerHTML = `
+            <div>
+              <h2 class="text-xl font-semibold">${event.nama}</h2>
+              <p class="text-sm text-white/70">${event.lokasi}</p>
+              <p class="text-sm mt-1">Tanggal: <span class="text-white/80">${event.tanggal}</span></p>
+            </div>
+            <div class="flex gap-3 mt-3 md:mt-0">
+              ${ikutButton}
+            </div>
+          `;
+          eventList.appendChild(div);
+        });
+      } catch (err) {
+        console.error("Gagal mengambil event:", err);
+        eventList.innerHTML =
+          "<p class='text-red-400'>Gagal memuat data event.</p>";
+      }
+    }
+
+    async function verifikasiIkut(eventId) {
+      const konfirmasi = prompt("Ketik 'ikut' untuk konfirmasi mengikuti event ini:");
+      if (!konfirmasi) return;
+      if (konfirmasi.toLowerCase() !== "ikut") {
+        alert("❌ Konfirmasi salah. Ketik 'ikut' untuk lanjut.");
+        return;
       }
 
-      function tutupModal() {
-        document.getElementById("modal-verifikasi").classList.add("hidden");
-        document.getElementById("verifikasi-input").value = "";
-      }
+      try {
+        const res = await fetch("../back-end/peserta_event.php", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ event_id: eventId })
+        });
+        const result = await res.json();
 
-      function konfirmasiIkut() {
-        const input = document.getElementById("verifikasi-input").value.trim();
-        if (input.toLowerCase() === "ikut") {
-          alert("Kamu berhasil mengikuti event!");
-          // Di sini nanti bisa kirim data ke PHP
-          // fetch('ikuti_event.php', { method:'POST', body: JSON.stringify({ event_id: selectedEventId }) });
-          tutupModal();
+        if (result.status === "success") {
+          alert("✅ Kamu berhasil mengikuti event!");
+          loadEvents(); // refresh tombol
+        } else if (result.status === "exists") {
+          alert("⚠️ Kamu sudah mengikuti event ini sebelumnya.");
         } else {
-          alert("Input salah. Ketik 'ikut' untuk konfirmasi.");
+          alert("❌ Terjadi kesalahan: " + (result.message || "Gagal."));
         }
+      } catch (err) {
+        console.error("Error:", err);
+        alert("❌ Gagal mengirim data ke server.");
       }
+    }
 
-      function batalEvent(eventId) {
-        if (confirm("Apakah kamu yakin ingin membatalkan event ini?")) {
-          alert("Event berhasil dibatalkan.");
-          // fetch('batal_event.php', { method:'POST', body: JSON.stringify({ event_id: eventId }) });
-        }
-      }
-    </script>
-  </body>
+    // Load events otomatis
+    loadEvents();
+  </script>
+</body>
 </html>

@@ -1,177 +1,286 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-  <title>Peminjaman Buku</title>
-</head>
-<body class="bg-gray-400 min-h-screen overflow-x-hidden">
-
-  <!-- Navbar -->
-  <header class="fixed top-0 left-0 w-full z-20 bg-gray-700/40 backdrop-blur-md shadow-md">
-    <nav class="flex flex-wrap justify-between items-center px-4 py-3 gap-3">
-      <!-- Logo / Beranda -->
-      <a
-        href="beranda.html"
-        class="text-white font-bold text-lg bg-white/10 px-3 py-1 rounded-xl hover:bg-gray-400 transition"
-      >Beranda</a>
-
-      <!-- Menu -->
-      <div class="flex flex-wrap justify-center gap-2 sm:gap-4">
-        <a href="data-buku-user.html"
-           class="bg-white/10 text-white/70 px-3 py-1 rounded-xl hover:bg-gray-400 transition font-semibold">
-          Buku
-        </a>
-        <a href="peminjaman.html"
-           class="bg-white/10 text-white px-3 py-1 rounded-xl font-semibold shadow-lg">
-          Peminjaman
-        </a>
-        <a href="event.html"
-           class="bg-white/10 text-white/70 px-3 py-1 rounded-xl hover:bg-gray-400 transition font-semibold">
-          Event
-        </a>
-        <a href="profil.html"
-           class="bg-white/10 text-white/70 px-3 py-1 rounded-xl hover:bg-gray-400 transition font-semibold">
-          Profil
-        </a>
-        <a href="../login.html"
-           class="bg-white/10 text-white/70 px-3 py-1 rounded-xl hover:bg-gray-400 transition font-semibold">
-          Login
-        </a>
-      </div>
-    </nav>
-  </header>
-
-  <!-- Main Content -->
-  <main class="pt-[90px] px-4 sm:px-8 pb-12">
-    <div class="max-w-6xl mx-auto bg-white/10 rounded-2xl shadow-lg p-6 sm:p-8 text-white">
-      <h1 class="text-2xl font-semibold mb-4 text-center sm:text-left">📚 Peminjaman Buku</h1>
-
-      <!-- Search Input -->
-      <div class="mb-6">
-        <input
-          id="searchInput"
-          type="text"
-          placeholder="Cari buku..."
-          class="w-full px-4 py-2 rounded-xl bg-white/20 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-      </div>
-
-      <!-- Card buku -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6" id="bookList">
-        <!-- Contoh data -->
-        <div class="bg-white/20 rounded-2xl p-4 flex flex-col items-center gap-3 hover:scale-[1.02] transition">
-          <h2 class="font-semibold text-center">Naruto Vol.1</h2>
-          <p class="text-sm text-white/70">Jenis: Manga</p>
-          <button
-            class="bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded-xl font-semibold w-full sm:w-auto"
-            onclick="pinjamBuku('Naruto Vol.1')"
-          >Pinjam</button>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <title>Peminjaman Buku</title>
+  </head>
+  <body class="bg-gray-400 min-h-screen overflow-x-hidden">
+    <!-- Navbar -->
+    <header
+      class="fixed top-0 left-0 w-full z-20 bg-gray-700/40 backdrop-blur-md shadow-md"
+    >
+      <nav class="flex flex-wrap justify-between items-center px-4 py-3 gap-3">
+        <a
+          href="beranda.html"
+          class="text-white font-bold text-lg bg-white/10 px-3 py-1 rounded-xl hover:bg-gray-400 transition"
+          >Beranda</a
+        >
+        <div class="flex flex-wrap justify-center gap-2 sm:gap-4">
+          <a
+            href="data-buku-user.html"
+            class="bg-white/10 text-white/70 px-3 py-1 rounded-xl hover:bg-gray-400 transition font-semibold"
+            >Buku</a
+          >
+          <a
+            href="peminjaman.html"
+            class="bg-white/10 text-white px-3 py-1 rounded-xl font-semibold shadow-lg"
+            >Peminjaman</a
+          >
+          <a
+            href="event.html"
+            class="bg-white/10 text-white/70 px-3 py-1 rounded-xl hover:bg-gray-400 transition font-semibold"
+            >Event</a
+          >
+          <a
+            href="profil.html"
+            class="bg-white/10 text-white/70 px-3 py-1 rounded-xl hover:bg-gray-400 transition font-semibold"
+            >Profil</a
+          >
+          <a
+            href="../login.html"
+            class="bg-white/10 text-white/70 px-3 py-1 rounded-xl hover:bg-gray-400 transition font-semibold"
+            >Login</a
+          >
         </div>
-        <div class="bg-white/20 rounded-2xl p-4 flex flex-col items-center gap-3 hover:scale-[1.02] transition">
-          <h2 class="font-semibold text-center">Atomic Habits</h2>
-          <p class="text-sm text-white/70">Jenis: Self Improvement</p>
-          <button
-            class="bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded-xl font-semibold w-full sm:w-auto"
-            onclick="pinjamBuku('Atomic Habits')"
-          >Pinjam</button>
+      </nav>
+    </header>
+
+    <!-- Main -->
+    <main class="pt-[90px] px-4 sm:px-8 pb-12">
+      <div
+        class="max-w-6xl mx-auto bg-white/10 rounded-2xl shadow-lg p-6 sm:p-8 text-white"
+      >
+        <h1 class="text-2xl font-semibold mb-4 text-center sm:text-left">
+          📚 Peminjaman Buku
+        </h1>
+
+        <!-- 💡 Banner Sanksi -->
+        <div
+          id="sanksiBanner"
+          class="hidden bg-red-600/70 text-white text-center py-2 rounded-xl mb-4 font-semibold"
+        >
+          ⛔ Kamu sedang dalam masa sanksi. Sisa hari:
+          <span id="sisaHari">3</span>
+        </div>
+
+        <!-- Search -->
+        <div class="mb-6">
+          <input
+            id="searchInput"
+            type="text"
+            placeholder="Cari buku..."
+            class="w-full px-4 py-2 rounded-xl bg-white/20 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+
+        <!-- Buku -->
+        <div
+          class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"
+          id="bookList"
+        ></div>
+
+        <!-- Tabel Peminjaman -->
+        <div class="mt-10 overflow-x-auto">
+          <h2 class="text-xl font-semibold mb-3 text-center sm:text-left">
+            📖 Status Peminjaman
+          </h2>
+          <table
+            class="min-w-full text-left bg-white/10 rounded-2xl overflow-hidden border border-white/10"
+          >
+            <thead class="bg-white/20 text-sm sm:text-base">
+              <tr>
+                <th class="px-4 py-2">Judul</th>
+                <th class="px-4 py-2">Tanggal Pinjam</th>
+                <th class="px-4 py-2">Batas Waktu</th>
+                <th class="px-4 py-2">Status</th>
+                <th class="px-4 py-2">Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="loanTable"></tbody>
+          </table>
         </div>
       </div>
+    </main>
 
-      <!-- Tabel Peminjaman -->
-      <div class="mt-10 overflow-x-auto">
-        <h2 class="text-xl font-semibold mb-3 text-center sm:text-left">📖 Status Peminjaman</h2>
-        <table class="min-w-full text-left bg-white/10 rounded-2xl overflow-hidden border border-white/10">
-          <thead class="bg-white/20 text-sm sm:text-base">
-            <tr>
-              <th class="px-4 py-2">Judul</th>
-              <th class="px-4 py-2">Batas Pengembalian</th>
-              <th class="px-4 py-2">Status</th>
-              <th class="px-4 py-2">Sanksi</th>
-            </tr>
-          </thead>
-          <tbody id="loanTable" class="text-sm sm:text-base">
-            <!-- Data akan ditambahkan lewat JS -->
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </main>
+    <script>
+      const currentUser = "user_demo"; // nanti diganti session
+      const bookList = document.getElementById("bookList");
+      const searchInput = document.getElementById("searchInput");
+      const loanTable = document.getElementById("loanTable");
 
-  <script>
-    // Ambil parameter dari URL (judul buku dari halaman lain)
-    const params = new URLSearchParams(window.location.search);
-    const judul = params.get("judul");
-    if (judul) document.getElementById("searchInput").value = judul;
+      const sanksiBanner = document.getElementById("sanksiBanner"); // 💡
+      const sisaHariSpan = document.getElementById("sisaHari"); // 💡
 
-    // Variabel simulasi user
-    let sedangDihukum = false;
-    let waktuHukum = null;
-    const peminjaman = [];
+      let peminjaman = [];
+      let sedangDihukum = false;
+      let waktuHukum = null;
 
-    function pinjamBuku(namaBuku) {
-      if (sedangDihukum && waktuHukum) {
-        const now = new Date();
-        const selisih = Math.floor((now - waktuHukum) / (1000 * 60 * 60 * 24));
-        if (selisih < 3) {
-          alert(`⚠️ Kamu masih dalam masa sanksi (${3 - selisih} hari tersisa). Tidak bisa pinjam buku.`);
-          return;
-        } else {
-          sedangDihukum = false;
-          waktuHukum = null;
-        }
+      async function loadBooks() {
+        const res = await fetch("../back-end/buku.php");
+        const books = await res.json();
+        renderBooks(books);
       }
 
-      if (!confirm(`Apakah kamu yakin ingin meminjam "${namaBuku}"?\n\nWaktu konfirmasi 20 detik.`)) {
-        return;
+      function renderBooks(books) {
+        bookList.innerHTML = "";
+        books.forEach((book) => {
+          const card = document.createElement("div");
+          card.className =
+            "bg-white/20 rounded-2xl p-4 flex flex-col items-center gap-3 hover:scale-[1.02] transition";
+          card.innerHTML = `
+          <h2 class="font-semibold text-center">${book.nama}</h2>
+          <p class="text-sm text-white/70">Jenis: ${book.jenis}</p>
+          <button
+            class="bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded-xl font-semibold w-full sm:w-auto"
+            onclick="pinjamBuku('${book.nama}')"
+          >Pinjam</button>
+        `;
+          bookList.appendChild(card);
+        });
       }
 
-      let countdown = 20;
-      const interval = setInterval(() => {
-        countdown--;
-        if (countdown === 0) {
-          clearInterval(interval);
-          alert("⏰ Waktu konfirmasi habis!");
+      async function pinjamBuku(namaBuku) {
+        if (sedangDihukum && waktuHukum) {
+          const now = new Date();
+          const selisih = Math.floor(
+            (now - waktuHukum) / (1000 * 60 * 60 * 24)
+          );
+          if (selisih < 3) {
+            alert(
+              `⚠️ Kamu masih dalam masa sanksi (${
+                3 - selisih
+              } hari tersisa). Tidak bisa pinjam buku.`
+            );
+            return;
+          } else {
+            sedangDihukum = false;
+            waktuHukum = null;
+            sanksiBanner.classList.add("hidden");
+          }
         }
-      }, 1000);
 
-      setTimeout(() => {
-        clearInterval(interval);
+        if (!confirm(`Apakah kamu yakin ingin meminjam "${namaBuku}"?`)) return;
+
         const batas = new Date();
         batas.setDate(batas.getDate() + 3);
+
         tambahKeTabel(namaBuku, batas);
-      }, 20000);
-    }
 
-    function tambahKeTabel(namaBuku, batas) {
-      const tbody = document.getElementById("loanTable");
-      const tr = document.createElement("tr");
-      tr.innerHTML = `
-        <td class="px-4 py-2">${namaBuku}</td>
-        <td class="px-4 py-2">${batas.toLocaleDateString()}</td>
-        <td class="px-4 py-2 text-green-400">Pinjam</td>
-        <td class="px-4 py-2 text-white/60">-</td>
-      `;
-      tbody.appendChild(tr);
-
-      peminjaman.push({ namaBuku, batas, status: "pinjam" });
-      setInterval(() => cekKeterlambatan(tr, batas), 5000);
-    }
-
-    function cekKeterlambatan(row, batas) {
-      const now = new Date();
-      if (now > batas) {
-        row.children[1].innerText = "-";
-        row.children[2].innerText = "Pengembalian Terlambat";
-        row.children[2].classList.remove("text-green-400");
-        row.children[2].classList.add("text-red-400");
-        row.children[3].innerText = "Sanksi 3 hari / Rp100.000";
-        sedangDihukum = true;
-        waktuHukum = new Date();
+        await fetch("../back-end/peminjaman.php", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            nama_buku: namaBuku,
+            nama_peminjam: currentUser,
+          }),
+        });
       }
-    }
-  </script>
 
-</body>
+      async function loadPeminjaman() {
+        const res = await fetch("../back-end/peminjaman.php");
+        const data = await res.json();
+        peminjaman = data.filter((d) => d.nama_peminjam === currentUser);
+        renderTabel();
+      }
+
+      function renderTabel() {
+        loanTable.innerHTML = "";
+        peminjaman.forEach((p) => {
+          const tr = document.createElement("tr");
+          const batas = new Date(p.tgl_pinjam);
+          batas.setDate(batas.getDate() + p.batas_waktu);
+          const terlambat = new Date() > batas && p.status === "Dipinjam";
+
+          if (terlambat) {
+            updateStatus(p.id, "Terlambat");
+            sedangDihukum = true;
+            waktuHukum = new Date();
+            tampilkanSanksi(); // 💡 tampilkan banner
+          }
+
+          tr.innerHTML = `
+          <td class="px-4 py-2">${p.nama_buku}</td>
+          <td class="px-4 py-2">${p.tgl_pinjam}</td>
+          <td class="px-4 py-2">${batas.toLocaleDateString()}</td>
+          <td class="px-4 py-2 ${
+            terlambat
+              ? "text-red-400"
+              : p.status === "Dikembalikan"
+              ? "text-green-400"
+              : "text-yellow-400"
+          }">${p.status}</td>
+          <td class="px-4 py-2">
+            ${
+              p.status === "Dipinjam"
+                ? `<button class="bg-green-600 hover:bg-green-700 px-3 py-1 rounded-xl text-white" onclick="kembalikanBuku(${p.id})">Kembalikan</button>`
+                : "-"
+            }
+          </td>
+        `;
+          loanTable.appendChild(tr);
+        });
+      }
+
+      async function kembalikanBuku(id) {
+        const res = await fetch("../back-end/peminjaman.php", {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ id, status: "Dikembalikan" }),
+        });
+        const result = await res.json();
+        if (result.status === "success") {
+          alert("✅ Buku berhasil dikembalikan!");
+          loadPeminjaman();
+        }
+      }
+
+      async function updateStatus(id, status) {
+        await fetch("../back-end/peminjaman.php", {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ id, status }),
+        });
+      }
+
+      // 💡 Fungsi banner sanksi
+      function tampilkanSanksi() {
+        if (!waktuHukum) return;
+        sanksiBanner.classList.remove("hidden");
+        const now = new Date();
+        const selisih = Math.floor((now - waktuHukum) / (1000 * 60 * 60 * 24));
+        const sisa = Math.max(0, 3 - selisih);
+        sisaHariSpan.textContent = sisa;
+        if (sisa <= 0) sanksiBanner.classList.add("hidden");
+        else setTimeout(tampilkanSanksi, 1000 * 60 * 60); // update tiap jam
+      }
+
+      searchInput.addEventListener("input", async (e) => {
+        const res = await fetch("../back-end/buku.php");
+        const books = await res.json();
+        const filtered = books.filter((b) =>
+          b.nama.toLowerCase().includes(e.target.value.toLowerCase())
+        );
+        renderBooks(filtered);
+      });
+      async function cekSanksiUser() {
+        const res = await fetch(
+          "../back-end/user_sanksi.php?user=" + currentUser
+        );
+        const data = await res.json();
+
+        if (data.sanksi_aktif == 1) {
+          sedangDihukum = true;
+          waktuHukum = new Date(data.sanksi_mulai);
+          tampilkanSanksi();
+        }
+      }
+      cekSanksiUser();
+
+
+      loadBooks();
+      loadPeminjaman();
+    </script>
+  </body>
 </html>

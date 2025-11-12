@@ -9,27 +9,22 @@
 
   <body class="bg-gray-100 min-h-screen text-gray-800">
     <!-- Header -->
-    <header
-      class="fixed top-0 left-0 w-full bg-gray-700/80 backdrop-blur-md z-20 shadow-lg"
-    >
-      <nav class="flex justify-between items-center p-3 max-w-6xl mx-auto">
-        <ul class="bg-white/10 text-white rounded-2xl px-3 py-1 font-semibold">
-          <li><a href="dashboard.html">Admin</a></li>
-        </ul>
-        <div class="flex flex-wrap justify-end gap-3">
-          <a href="status-buku.html" class="menu-item">Status Buku</a>
-          <a href="manajemen-buku.html" class="menu-item">Data Buku</a>
-          <a href="Pengguna.html" class="menu-item">Pengguna</a>
-          <a href="../login.html" class="menu-item">Login</a>
-        </div>
-      </nav>
-    </header>
+    <header class="fixed top-0 left-0 w-full bg-gray-700/80 backdrop-blur-md z-20 shadow-lg">
+    <nav class="flex flex-wrap justify-between items-center p-3 max-w-6xl mx-auto">
+      <a href="dashboard.html" class="bg-white/10 text-white rounded-2xl px-3 py-1 hover:bg-gray-400 transition font-semibold shadow-lg">Admin</a>
+      <div class="flex flex-wrap gap-3 mt-2 sm:mt-0">
+        <a href="status-buku.php" class="bg-white/10 text-white/80 rounded-2xl px-3 py-1 hover:bg-gray-400 transition font-semibold shadow-lg">Status Buku</a>
+        <a href="manajemen-buku.html" class="bg-white/10 text-white/80 rounded-2xl px-3 py-1 hover:bg-gray-400 transition font-semibold shadow-lg">Data Buku</a>
+        <a href="manajemen-event.html" class="bg-white/10 text-white/80 rounded-2xl px-3 py-1 hover:bg-gray-400 transition font-semibold shadow-lg">Data Events</a>
+        <a href="../login.html" class="bg-white/10 text-white/80 rounded-2xl px-3 py-1 hover:bg-gray-400 transition font-semibold shadow-lg">Login</a>
+      </div>
+    </nav>
+  </header>
 
-    <!-- Main -->
     <main class="pt-24 px-4 sm:px-6 flex flex-col items-center">
       <section class="w-full max-w-5xl bg-white rounded-2xl shadow-md p-6">
         <!-- Tombol CRUD -->
-        <div class="flex flex-wrap justify-between items-center mb-6 gap-4">
+        <div class="flex justify-between flex-wrap mb-6 gap-3">
           <div class="flex gap-3">
             <button
               class="bg-green-500 hover:bg-green-600 text-white font-semibold px-4 py-2 rounded-lg shadow transition"
@@ -39,21 +34,21 @@
             </button>
             <button
               id="btnEdit"
+              class="bg-yellow-400 text-white font-semibold px-4 py-2 rounded-lg shadow opacity-50 cursor-not-allowed"
               disabled
-              class="bg-yellow-400 text-white font-semibold px-4 py-2 rounded-lg shadow opacity-50 cursor-not-allowed transition"
             >
               Edit
             </button>
             <button
               id="btnDelete"
+              class="bg-red-500 text-white font-semibold px-4 py-2 rounded-lg shadow opacity-50 cursor-not-allowed"
               disabled
-              class="bg-red-500 text-white font-semibold px-4 py-2 rounded-lg shadow opacity-50 cursor-not-allowed transition"
             >
               Hapus
             </button>
           </div>
 
-          <!-- Pencarian Google Books -->
+          <!-- Pencarian Google -->
           <div class="flex gap-2 items-center w-full md:w-auto">
             <input
               type="text"
@@ -70,35 +65,19 @@
           </div>
         </div>
 
-        <!-- Hasil Pencarian Google Books -->
         <div id="searchResults" class="grid md:grid-cols-3 gap-4 mb-6"></div>
 
-        <!-- Form Tambah/Edit -->
-        <form
-          id="formBuku"
-          class="hidden mb-6 border border-gray-300 rounded-xl p-4 bg-gray-50"
-          onsubmit="saveBook(event)"
-        >
-          <input type="hidden" id="editIndex" />
+        <!-- Form Buku -->
+        <form id="formBuku" class="hidden mb-6 border p-4 bg-gray-50 rounded-xl" onsubmit="saveBook(event)">
+          <input type="hidden" id="editId" />
           <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
               <label class="block font-semibold text-gray-700">Nama Buku</label>
-              <input
-                type="text"
-                id="nama"
-                required
-                class="w-full border border-gray-300 rounded-lg p-2 focus:ring focus:ring-blue-300"
-              />
+              <input id="nama" required class="w-full border rounded-lg p-2 focus:ring focus:ring-blue-300" />
             </div>
             <div>
-              <label class="block font-semibold text-gray-700"
-                >Jenis Buku</label
-              >
-              <select
-                id="jenis"
-                required
-                class="w-full border border-gray-300 rounded-lg p-2 bg-white focus:ring focus:ring-blue-300"
-              >
+              <label class="block font-semibold text-gray-700">Jenis Buku</label>
+              <select id="jenis" required class="w-full border rounded-lg p-2 focus:ring focus:ring-blue-300">
                 <option value="">-- Pilih Jenis Buku --</option>
                 <option value="Novel">Novel</option>
                 <option value="Komik">Komik</option>
@@ -109,36 +88,18 @@
             </div>
             <div>
               <label class="block font-semibold text-gray-700">Tanggal</label>
-              <input
-                type="date"
-                id="tanggal"
-                required
-                class="w-full border border-gray-300 rounded-lg p-2 focus:ring focus:ring-blue-300"
-              />
+              <input type="date" id="tanggal" required class="w-full border rounded-lg p-2 focus:ring focus:ring-blue-300" />
             </div>
           </div>
           <div class="flex justify-end mt-4 gap-2">
-            <button
-              type="submit"
-              class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold"
-            >
-              Simpan
-            </button>
-            <button
-              type="button"
-              onclick="toggleForm(false)"
-              class="bg-gray-400 hover:bg-gray-500 text-white px-4 py-2 rounded-lg font-semibold"
-            >
-              Batal
-            </button>
+            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold">Simpan</button>
+            <button type="button" onclick="toggleForm(false)" class="bg-gray-400 hover:bg-gray-500 text-white px-4 py-2 rounded-lg font-semibold">Batal</button>
           </div>
         </form>
 
         <!-- Tabel Buku -->
         <div class="overflow-x-auto">
-          <table
-            class="min-w-full border border-gray-300 rounded-lg overflow-hidden"
-          >
+          <table class="min-w-full border border-gray-300 rounded-lg overflow-hidden">
             <thead class="bg-gray-700 text-white">
               <tr>
                 <th class="px-4 py-2 text-left">Nama</th>
@@ -165,31 +126,33 @@
         background: rgba(156, 163, 175, 0.6);
         color: white;
       }
-      @media (max-width: 640px) {
-        nav {
-          flex-direction: column;
-          align-items: flex-start;
-        }
-        .menu-item {
-          display: block;
-          width: 100%;
-          text-align: left;
-        }
-      }
     </style>
 
     <script>
       let books = [];
-      let selectedIndex = null;
+      let selected = null;
 
+      // =============================
+      // Load data dari database
+      // =============================
+      async function loadBooks() {
+        const res = await fetch("../back-end/buku.php");
+        books = await res.json();
+        selected = null;
+        updateActionButtons();
+        renderTable();
+      }
+
+      // =============================
+      // Render tabel data buku
+      // =============================
       function renderTable() {
         const body = document.getElementById("tableBody");
         body.innerHTML = "";
         books.forEach((b, i) => {
           const row = document.createElement("tr");
           row.className =
-            "hover:bg-gray-100 cursor-pointer" +
-            (selectedIndex === i ? " bg-blue-100" : "");
+            "hover:bg-gray-100 cursor-pointer" + (selected === i ? " bg-blue-100" : "");
           row.onclick = () => selectRow(i);
           row.innerHTML = `
             <td class="px-4 py-2 border-t">${b.nama}</td>
@@ -200,143 +163,172 @@
         });
       }
 
+      // =============================
+      // Pilih baris tabel
+      // =============================
       function selectRow(i) {
-        selectedIndex = i;
-        document.getElementById("btnEdit").disabled = false;
-        document.getElementById("btnDelete").disabled = false;
-        document
-          .getElementById("btnEdit")
-          .classList.remove("opacity-50", "cursor-not-allowed");
-        document
-          .getElementById("btnDelete")
-          .classList.remove("opacity-50", "cursor-not-allowed");
+        selected = i;
+        updateActionButtons();
         renderTable();
-        document.getElementById("btnEdit").onclick = () => showForm("edit");
-        document.getElementById("btnDelete").onclick = deleteBook;
       }
 
-      function showForm(mode) {
-        toggleForm(true);
-        if (mode === "add") {
-          document.getElementById("formBuku").reset();
-          document.getElementById("editIndex").value = "";
-        } else if (mode === "edit" && selectedIndex !== null) {
-          const b = books[selectedIndex];
-          document.getElementById("nama").value = b.nama;
-          document.getElementById("jenis").value = b.jenis;
-          document.getElementById("tanggal").value = b.tanggal;
-          document.getElementById("editIndex").value = selectedIndex;
+      // =============================
+      // Update tombol edit/hapus
+      // =============================
+      function updateActionButtons() {
+        const btnEdit = document.getElementById("btnEdit");
+        const btnDelete = document.getElementById("btnDelete");
+        const isSelected = selected !== null;
+
+        [btnEdit, btnDelete].forEach((btn) => {
+          btn.disabled = !isSelected;
+          btn.classList.toggle("opacity-50", !isSelected);
+          btn.classList.toggle("cursor-not-allowed", !isSelected);
+        });
+
+        if (isSelected) {
+          btnEdit.onclick = () => showForm("edit");
+          btnDelete.onclick = deleteBook;
         }
       }
 
+      // =============================
+      // Tampilkan / sembunyikan form
+      // =============================
       function toggleForm(show) {
         document.getElementById("formBuku").classList.toggle("hidden", !show);
       }
 
-      function saveBook(e) {
-        e.preventDefault();
-        const nama = document.getElementById("nama").value;
-        const jenis = document.getElementById("jenis").value;
-        const tanggal = document.getElementById("tanggal").value;
-        const editIndex = document.getElementById("editIndex").value;
+      function showForm(mode) {
+        toggleForm(true);
+        const form = document.getElementById("formBuku");
+        form.reset();
 
-        if (editIndex) {
-          books[editIndex] = { nama, jenis, tanggal };
+        if (mode === "edit" && selected !== null) {
+          const b = books[selected];
+          document.getElementById("editId").value = b.id;
+          document.getElementById("nama").value = b.nama;
+          document.getElementById("jenis").value = b.jenis;
+          document.getElementById("tanggal").value = b.tanggal;
         } else {
-          books.push({ nama, jenis, tanggal });
-        }
-
-        toggleForm(false);
-        selectedIndex = null;
-        renderTable();
-      }
-
-      function deleteBook() {
-        if (selectedIndex !== null && confirm("Hapus buku ini?")) {
-          books.splice(selectedIndex, 1);
-          selectedIndex = null;
-          renderTable();
+          document.getElementById("editId").value = "";
         }
       }
 
-      // 🔍 Pencarian Buku dari Google Books API
+      // =============================
+      // Simpan (Tambah/Edit)
+      // =============================
+      async function saveBook(e) {
+        e.preventDefault();
+
+        const id = document.getElementById("editId").value;
+        const data = {
+          id,
+          nama: document.getElementById("nama").value.trim(),
+          jenis: document.getElementById("jenis").value,
+          tanggal: document.getElementById("tanggal").value,
+        };
+
+        const method = id ? "PUT" : "POST";
+
+        const res = await fetch("../back-end/buku.php", {
+          method,
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        });
+
+        const result = await res.json();
+        if (result.status === "success") {
+          toggleForm(false);
+          await loadBooks();
+        } else {
+          alert("Gagal menyimpan buku!");
+        }
+      }
+
+      // =============================
+      // Hapus buku
+      // =============================
+      async function deleteBook() {
+        if (selected === null) return;
+        const id = books[selected].id;
+
+        if (confirm("Yakin ingin menghapus buku ini?")) {
+          await fetch("../back-end/buku.php", {
+            method: "DELETE",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ id }),
+          });
+          await loadBooks();
+        }
+      }
+
+      // =============================
+      // Cari dari Google Books API
+      // =============================
       async function searchGoogleBooks() {
         const query = document.getElementById("searchBook").value.trim();
-        const resultsDiv = document.getElementById("searchResults");
-        resultsDiv.innerHTML = "";
-        if (!query) return;
+        const container = document.getElementById("searchResults");
+        container.innerHTML = "";
 
-        const res = await fetch(
-          `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(
-            query
-          )}`
-        );
+        if (!query) return alert("Masukkan kata kunci buku!");
+
+        const res = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(query)}`);
         const data = await res.json();
 
         if (!data.items) {
-          resultsDiv.innerHTML = `<p class='text-gray-600'>Tidak ditemukan hasil.</p>`;
+          container.innerHTML = "<p>Tidak ada hasil.</p>";
           return;
         }
 
         data.items.slice(0, 6).forEach((item) => {
           const info = item.volumeInfo;
           const title = info.title || "Tanpa Judul";
-          const authors = info.authors
-            ? info.authors.join(", ")
-            : "Tidak diketahui";
-          const thumb = info.imageLinks ? info.imageLinks.thumbnail : "";
+          const thumb = info.imageLinks?.thumbnail || "";
+          const kategori = info.categories?.[0] || "Umum";
+
           const div = document.createElement("div");
-          div.className =
-            "border rounded-lg p-3 bg-gray-50 hover:bg-gray-100 transition flex flex-col items-center";
+          div.className = "border rounded-lg p-3 bg-gray-50 flex flex-col items-center";
           div.innerHTML = `
-            <img src="${thumb}" alt="${title}" class="w-24 h-32 object-cover mb-2 rounded">
-            <h3 class="font-semibold text-center">${title}</h3>
-            <p class="text-sm text-gray-600 mb-2">${authors}</p>
+            <img src="${thumb}" class="w-24 h-32 object-cover mb-2 rounded">
+            <p class="font-semibold text-center mb-1">${title}</p>
             <button class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded text-sm"
-              onclick='addFromGoogle("${title.replace(/"/g, "&quot;")}")'>
+              onclick='addFromGoogle(${JSON.stringify({ title, kategori, thumb })})'>
               Tambah ke Daftar
             </button>
           `;
-          resultsDiv.appendChild(div);
+          container.appendChild(div);
         });
       }
 
-      async function addFromGoogle(title) {
+      // =============================
+      // Tambah dari Google API
+      // =============================
+      async function addFromGoogle(book) {
         const today = new Date().toISOString().split("T")[0];
-        const newBook = { nama: title, jenis: "Novel", tanggal: today };
+        const newBook = {
+          nama: book.title,
+          jenis: book.kategori,
+          tanggal: today,
+          gambar: book.thumb,
+        };
 
-        // Tambahkan ke tabel lokal
-        books.push(newBook);
-        renderTable();
+        const res = await fetch("../back-end/buku.php", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(newBook),
+        });
 
-        // Kirim data ke backend PHP
-        try {
-          const res = await fetch("../back-end/buku.php", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(newBook),
-          });
-
-          const result = await res.json();
-
-          if (result.status === "success") {
-            alert(`"${title}" berhasil disimpan ke database!`);
-          } else {
-            alert(
-              `Gagal menyimpan ke database: ${
-                result.message || "Error tak diketahui"
-              }`
-            );
-          }
-        } catch (error) {
-          console.error("Error:", error);
-          alert("Terjadi kesalahan saat mengirim data ke server.");
+        const result = await res.json();
+        if (result.status === "success") {
+          alert(`"${book.title}" berhasil ditambahkan ke database.`);
+          await loadBooks();
+        } else {
+          alert("Gagal menyimpan ke database.");
         }
       }
 
-      renderTable();
+      loadBooks();
     </script>
   </body>
 </html>

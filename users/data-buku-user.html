@@ -1,116 +1,75 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <title>Data Buku User</title>
   </head>
-  <body class="bg-gray-400 min-h-screen relative">
+  <body class="bg-gradient-to-br from-gray-800 to-gray-900 min-h-screen text-white">
+
     <!-- NAVBAR -->
-    <header class="absolute top-0 left-0 w-full z-20">
-      <nav class="flex justify-between p-3 gap-6">
-        <ul
-          class="bg-white/10 text-white rounded-2xl px-3 py-1 hover:bg-gray-400 transition ease-in-out duration-500 shadow-lg font-semibold"
-        >
-          <li><a href="beranda.html">Beranda</a></li>
-        </ul>
+    <header class="fixed top-0 left-0 w-full bg-gray-800/80 backdrop-blur-md z-20 shadow-md">
+      <nav class="flex justify-between items-center p-3 max-w-6xl mx-auto">
+        <ul class="text-white font-bold text-lg">Perpustakaan</ul>
 
         <div class="flex gap-6">
-          <ul
-            class="bg-white/10 text-white/60 rounded-2xl px-3 py-1 hover:bg-gray-400 transition ease-in-out duration-500 shadow-lg font-semibold"
-          >
-            <li><a href="data-buku-user.html">Buku</a></li>
-          </ul>
-          <ul
-            class="bg-white/10 text-white/60 rounded-2xl px-3 py-1 hover:bg-gray-400 transition ease-in-out duration-500 shadow-lg font-semibold"
-          >
-            <li><a href="event.html">Event</a></li>
-          </ul>
-          <ul
-            class="bg-white/10 text-white/60 rounded-2xl px-3 py-1 hover:bg-gray-400 transition ease-in-out duration-500 shadow-lg font-semibold"
-          >
-            <li><a href="profil.html">Profil</a></li>
-          </ul>
-          <ul
-            class="bg-white/10 text-white/60 rounded-2xl px-3 py-1 hover:bg-gray-400 transition ease-in-out duration-500 shadow-lg font-semibold"
-          >
-            <li><a href="peminjaman.html">Peminjaman</a></li>
-          </ul>
-          <ul
-            class="bg-white/10 text-white/60 rounded-2xl px-3 py-1 hover:bg-gray-400 transition ease-in-out duration-500 shadow-lg font-semibold"
-          >
-            <li><a href="../login.html">Login</a></li>
-          </ul>
+          <a href="beranda.html" class="hover:text-blue-400 transition">Beranda</a>
+          <a href="data-buku-user.html" class="text-blue-400 font-semibold">Buku</a>
+          <a href="event.html" class="hover:text-blue-400 transition">Event</a>
+          <a href="profil.html" class="hover:text-blue-400 transition">Profil</a>
+          <a href="peminjaman.html" class="hover:text-blue-400 transition">Peminjaman</a>
+          <a href="../login.html" class="hover:text-blue-400 transition">Login</a>
         </div>
       </nav>
     </header>
 
     <!-- MAIN CONTENT -->
-    <main class="pt-24 px-6">
-      <h1 class="text-2xl font-semibold text-white mb-6">Daftar Buku</h1>
+    <main class="pt-28 px-6 max-w-6xl mx-auto">
+      <h1 class="text-2xl font-semibold mb-6">📚 Daftar Buku</h1>
 
-      <!-- Grid buku -->
-      <div
-        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
-      >
-        <!-- Card Buku -->
-        <a
-          href="peminjaman.html"
-          class="bg-white/10 hover:bg-white/20 transition rounded-2xl p-4 shadow-lg text-white backdrop-blur-sm"
-        >
-          <img
-            src="../assets/book1.jpg"
-            alt="Buku 1"
-            class="rounded-xl w-full h-48 object-cover mb-3"
-          />
-          <h2 class="text-lg font-semibold">The Art of Coding</h2>
-          <p class="text-sm text-white/70 mt-1">Kategori: Teknologi</p>
-          <p class="text-sm text-white/60">Tersedia</p>
-        </a>
+      <!-- Grid Buku -->
+      <div id="bookGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
 
-        <a
-          href="peminjaman.html"
-          class="bg-white/10 hover:bg-white/20 transition rounded-2xl p-4 shadow-lg text-white backdrop-blur-sm"
-        >
-          <img
-            src="../assets/book2.jpg"
-            alt="Buku 2"
-            class="rounded-xl w-full h-48 object-cover mb-3"
-          />
-          <h2 class="text-lg font-semibold">Filosofi Kopi</h2>
-          <p class="text-sm text-white/70 mt-1">Kategori: Fiksi</p>
-          <p class="text-sm text-white/60">Dipinjam</p>
-        </a>
-
-        <a
-          href="peminjaman.html"
-          class="bg-white/10 hover:bg-white/20 transition rounded-2xl p-4 shadow-lg text-white backdrop-blur-sm"
-        >
-          <img
-            src="../assets/book3.jpg"
-            alt="Buku 3"
-            class="rounded-xl w-full h-48 object-cover mb-3"
-          />
-          <h2 class="text-lg font-semibold">Belajar Tailwind</h2>
-          <p class="text-sm text-white/70 mt-1">Kategori: Pemrograman</p>
-          <p class="text-sm text-white/60">Tersedia</p>
-        </a>
-
-        <a
-          href="peminjaman.html"
-          class="bg-white/10 hover:bg-white/20 transition rounded-2xl p-4 shadow-lg text-white backdrop-blur-sm"
-        >
-          <img
-            src="../assets/book4.jpg"
-            alt="Buku 4"
-            class="rounded-xl w-full h-48 object-cover mb-3"
-          />
-          <h2 class="text-lg font-semibold">Sejarah Dunia</h2>
-          <p class="text-sm text-white/70 mt-1">Kategori: Edukasi</p>
-          <p class="text-sm text-white/60">Tersedia</p>
-        </a>
-      </div>
+      <!-- Loading -->
+      <p id="loading" class="text-center text-gray-400 mt-6">Memuat data buku...</p>
     </main>
+
+    <script>
+      async function loadBooks() {
+        const grid = document.getElementById("bookGrid");
+        const loading = document.getElementById("loading");
+
+        try {
+          const response = await fetch("../back-end/buku.php");
+          const data = await response.json();
+          grid.innerHTML = "";
+          loading.style.display = "none";
+
+          if (data.length === 0) {
+            grid.innerHTML = `<p class='col-span-full text-center text-gray-400'>Belum ada buku tersedia.</p>`;
+            return;
+          }
+
+          data.forEach(book => {
+            grid.innerHTML += `
+              <a href="peminjaman.html" 
+                 class="bg-white/10 hover:bg-white/20 transition rounded-2xl p-4 shadow-lg backdrop-blur-sm flex flex-col">
+                <img src="${book.gambar || '../assets/default-book.jpg'}" 
+                     alt="${book.nama}" 
+                     class="rounded-xl w-full h-48 object-cover mb-3">
+                <h2 class="text-lg font-semibold">${book.nama}</h2>
+                <p class="text-sm text-gray-300 mt-1">Kategori: ${book.jenis}</p>
+                <p class="text-sm text-gray-400">${book.status}</p>
+              </a>`;
+          });
+        } catch (err) {
+          loading.textContent = "Gagal memuat data buku 😢";
+          console.error(err);
+        }
+      }
+
+      loadBooks();
+    </script>
   </body>
 </html>
