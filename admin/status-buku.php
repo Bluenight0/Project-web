@@ -12,23 +12,13 @@ include '../back-end/koneksi.php'; // sesuaikan path koneksinya
 <body class="bg-gray-100 min-h-screen text-gray-800">
   <!-- Header -->
   <header class="fixed top-0 left-0 w-full bg-gray-700/80 backdrop-blur-md z-20 shadow-lg">
-    <nav class="flex justify-between items-center p-3 max-w-6xl mx-auto">
-      <ul class="bg-white/10 text-white rounded-2xl px-3 py-1 hover:bg-gray-400 transition shadow-lg font-semibold">
-        <li><a href="dashboard.html">Admin</a></li>
-      </ul>
-      <div class="flex flex-end gap-6">
-        <ul class="bg-white/10 text-white/60 rounded-2xl px-3 py-1 hover:bg-gray-400 transition shadow-lg font-semibold">
-          <li><a href="status-buku.php">Status Buku</a></li>
-        </ul>
-        <ul class="bg-white/10 text-white/60 rounded-2xl px-3 py-1 hover:bg-gray-400 transition shadow-lg font-semibold">
-          <li><a href="manajemen-buku.html">Data Buku</a></li>
-        </ul>
-        <ul class="bg-white/10 text-white/60 rounded-2xl px-3 py-1 hover:bg-gray-400 transition shadow-lg font-semibold">
-          <li><a href="manajemen-event.html">data events</a></li>
-        </ul>
-        <ul class="bg-white/10 text-white/60 rounded-2xl px-3 py-1 hover:bg-gray-400 transition shadow-lg font-semibold">
-          <li><a href="../login.html">Login</a></li>
-        </ul>
+    <nav class="flex flex-wrap justify-between items-center p-3 max-w-6xl mx-auto">
+      <a href="dashboard.html" class="bg-white/10 text-white rounded-2xl px-3 py-1 hover:bg-gray-400 transition font-semibold shadow-lg">Admin</a>
+      <div class="flex flex-wrap gap-3 mt-2 sm:mt-0">
+        <a href="status-buku.php" class="bg-white/10 text-white/80 rounded-2xl px-3 py-1 hover:bg-gray-400 transition font-semibold shadow-lg">Status Buku</a>
+        <a href="manajemen-buku.html" class="bg-white/10 text-white/80 rounded-2xl px-3 py-1 hover:bg-gray-400 transition font-semibold shadow-lg">Data Buku</a>
+        <a href="manajemen-event.html" class="bg-white/10 text-white/80 rounded-2xl px-3 py-1 hover:bg-gray-400 transition font-semibold shadow-lg">Data events</a>
+        <a href="../login.html" class="bg-white/10 text-white/80 rounded-2xl px-3 py-1 hover:bg-gray-400 transition font-semibold shadow-lg">Login</a>
       </div>
     </nav>
   </header>
