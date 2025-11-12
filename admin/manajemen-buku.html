@@ -4,22 +4,47 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="shortcut icon" href="../assets/favicon_io/favicon.ico" />
     <title>Manajemen Buku</title>
   </head>
 
   <body class="bg-gray-100 min-h-screen text-gray-800">
     <!-- Header -->
-     <header class="fixed top-0 left-0 w-full bg-gray-700/80 backdrop-blur-md z-20 shadow-lg">
-    <nav class="flex flex-wrap justify-between items-center p-3 max-w-6xl mx-auto">
-      <a href="dashboard.html" class="bg-white/10 text-white rounded-2xl px-3 py-1 hover:bg-gray-400 transition font-semibold shadow-lg">Admin</a>
-      <div class="flex flex-wrap gap-3 mt-2 sm:mt-0">
-        <a href="status-buku.php" class="bg-white/10 text-white/80 rounded-2xl px-3 py-1 hover:bg-gray-400 transition font-semibold shadow-lg">Status Buku</a>
-        <a href="manajemen-buku.html" class="bg-white/10 text-white/80 rounded-2xl px-3 py-1 hover:bg-gray-400 transition font-semibold shadow-lg">Data Buku</a>
-        <a href="manajemen-event.html" class="bg-white/10 text-white/80 rounded-2xl px-3 py-1 hover:bg-gray-400 transition font-semibold shadow-lg">Data events</a>
-        <a href="../login.html" class="bg-white/10 text-white/80 rounded-2xl px-3 py-1 hover:bg-gray-400 transition font-semibold shadow-lg">Login</a>
-      </div>
-    </nav>
-  </header>
+    <header
+      class="fixed top-0 left-0 w-full bg-gray-700/80 backdrop-blur-md z-20 shadow-lg"
+    >
+      <nav
+        class="flex flex-wrap justify-between items-center p-3 max-w-6xl mx-auto"
+      >
+        <a
+          href="dashboard.html"
+          class="bg-white/10 text-white rounded-2xl px-3 py-1 hover:bg-gray-400 transition font-semibold shadow-lg"
+          >Admin</a
+        >
+        <div class="flex flex-wrap gap-3 mt-2 sm:mt-0">
+          <a
+            href="status-buku.php"
+            class="bg-white/10 text-white/80 rounded-2xl px-3 py-1 hover:bg-gray-400 transition font-semibold shadow-lg"
+            >Status Buku</a
+          >
+          <a
+            href="manajemen-buku.html"
+            class="bg-white/10 text-white/80 rounded-2xl px-3 py-1 hover:bg-gray-400 transition font-semibold shadow-lg"
+            >Data Buku</a
+          >
+          <a
+            href="manajemen-event.html"
+            class="bg-white/10 text-white/80 rounded-2xl px-3 py-1 hover:bg-gray-400 transition font-semibold shadow-lg"
+            >Data events</a
+          >
+          <a
+            href="../login.html"
+            class="bg-white/10 text-white/80 rounded-2xl px-3 py-1 hover:bg-gray-400 transition font-semibold shadow-lg"
+            >Login</a
+          >
+        </div>
+      </nav>
+    </header>
 
     <main class="pt-24 px-4 sm:px-6 flex flex-col items-center">
       <section class="w-full max-w-5xl bg-white rounded-2xl shadow-md p-6">
@@ -68,16 +93,30 @@
         <div id="searchResults" class="grid md:grid-cols-3 gap-4 mb-6"></div>
 
         <!-- Form Buku -->
-        <form id="formBuku" class="hidden mb-6 border p-4 bg-gray-50 rounded-xl" onsubmit="saveBook(event)">
+        <form
+          id="formBuku"
+          class="hidden mb-6 border p-4 bg-gray-50 rounded-xl"
+          onsubmit="saveBook(event)"
+        >
           <input type="hidden" id="editId" />
           <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
               <label class="block font-semibold text-gray-700">Nama Buku</label>
-              <input id="nama" required class="w-full border rounded-lg p-2 focus:ring focus:ring-blue-300" />
+              <input
+                id="nama"
+                required
+                class="w-full border rounded-lg p-2 focus:ring focus:ring-blue-300"
+              />
             </div>
             <div>
-              <label class="block font-semibold text-gray-700">Jenis Buku</label>
-              <select id="jenis" required class="w-full border rounded-lg p-2 focus:ring focus:ring-blue-300">
+              <label class="block font-semibold text-gray-700"
+                >Jenis Buku</label
+              >
+              <select
+                id="jenis"
+                required
+                class="w-full border rounded-lg p-2 focus:ring focus:ring-blue-300"
+              >
                 <option value="">-- Pilih Jenis Buku --</option>
                 <option value="Novel">Novel</option>
                 <option value="Komik">Komik</option>
@@ -88,18 +127,36 @@
             </div>
             <div>
               <label class="block font-semibold text-gray-700">Tanggal</label>
-              <input type="date" id="tanggal" required class="w-full border rounded-lg p-2 focus:ring focus:ring-blue-300" />
+              <input
+                type="date"
+                id="tanggal"
+                required
+                class="w-full border rounded-lg p-2 focus:ring focus:ring-blue-300"
+              />
             </div>
           </div>
           <div class="flex justify-end mt-4 gap-2">
-            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold">Simpan</button>
-            <button type="button" onclick="toggleForm(false)" class="bg-gray-400 hover:bg-gray-500 text-white px-4 py-2 rounded-lg font-semibold">Batal</button>
+            <button
+              type="submit"
+              class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold"
+            >
+              Simpan
+            </button>
+            <button
+              type="button"
+              onclick="toggleForm(false)"
+              class="bg-gray-400 hover:bg-gray-500 text-white px-4 py-2 rounded-lg font-semibold"
+            >
+              Batal
+            </button>
           </div>
         </form>
 
         <!-- Tabel Buku -->
         <div class="overflow-x-auto">
-          <table class="min-w-full border border-gray-300 rounded-lg overflow-hidden">
+          <table
+            class="min-w-full border border-gray-300 rounded-lg overflow-hidden"
+          >
             <thead class="bg-gray-700 text-white">
               <tr>
                 <th class="px-4 py-2 text-left">Nama</th>
@@ -152,7 +209,8 @@
         books.forEach((b, i) => {
           const row = document.createElement("tr");
           row.className =
-            "hover:bg-gray-100 cursor-pointer" + (selected === i ? " bg-blue-100" : "");
+            "hover:bg-gray-100 cursor-pointer" +
+            (selected === i ? " bg-blue-100" : "");
           row.onclick = () => selectRow(i);
           row.innerHTML = `
             <td class="px-4 py-2 border-t">${b.nama}</td>
@@ -273,7 +331,11 @@
 
         if (!query) return alert("Masukkan kata kunci buku!");
 
-        const res = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(query)}`);
+        const res = await fetch(
+          `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(
+            query
+          )}`
+        );
         const data = await res.json();
 
         if (!data.items) {
@@ -288,12 +350,17 @@
           const kategori = info.categories?.[0] || "Umum";
 
           const div = document.createElement("div");
-          div.className = "border rounded-lg p-3 bg-gray-50 flex flex-col items-center";
+          div.className =
+            "border rounded-lg p-3 bg-gray-50 flex flex-col items-center";
           div.innerHTML = `
             <img src="${thumb}" class="w-24 h-32 object-cover mb-2 rounded">
             <p class="font-semibold text-center mb-1">${title}</p>
             <button class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded text-sm"
-              onclick='addFromGoogle(${JSON.stringify({ title, kategori, thumb })})'>
+              onclick='addFromGoogle(${JSON.stringify({
+                title,
+                kategori,
+                thumb,
+              })})'>
               Tambah ke Daftar
             </button>
           `;
