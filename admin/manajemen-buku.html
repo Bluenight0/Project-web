@@ -1,81 +1,89 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <title>manajemen buku</title>
+    <title>Manajemen Buku</title>
   </head>
+
   <body class="bg-gray-100 min-h-screen text-gray-800">
     <!-- Header -->
     <header class="fixed top-0 left-0 w-full bg-gray-700/80 backdrop-blur-md z-20 shadow-lg">
       <nav class="flex justify-between items-center p-3 max-w-6xl mx-auto">
-        <ul
-            class="bg-white/10 text-white rounded-2xl px-3 py-1 hover:bg-gray-400 transition ease-in-out duration-500 shadow-lg font-semibold"
-          >
-            <li><a href="dashboard.html">Admin</a></li>
-          </ul>
-        <div class=" flex flex-end gap-6">
-          <ul
-            class="bg-white/10 text-white/60 rounded-2xl px-3 py-1 hover:bg-gray-400 transition ease-in-out duration-500 shadow-lg font-semibold"
-          >
-            <li><a href="status-buku.html">Status Buku</a></li>
-          </ul>
-          <ul
-            class="bg-white/10 text-white/60 rounded-2xl px-3 py-1 hover:bg-gray-400 transition ease-in-out duration-500 shadow-lg font-semibold"
-          >
-            <li><a href="manajemen-buku.html">Data Buku</a></li>
-          </ul>
-          <ul
-            class="bg-white/10 text-white/60 rounded-2xl px-3 py-1 hover:bg-gray-400 transition ease-in-out duration-500 shadow-lg font-semibold"
-          >
-            <li><a href="Pengguna.html">Pengguna</a></li>
-          </ul>
-          <ul
-            class="bg-white/10 text-white/60 rounded-2xl px-3 py-1 hover:bg-gray-400 transition ease-in-out duration-500 shadow-lg font-semibold"
-          >
-            <li><a href="../login.html">Login</a></li>
-          </ul>
+        <ul class="bg-white/10 text-white rounded-2xl px-3 py-1 font-semibold">
+          <li><a href="dashboard.html">Admin</a></li>
+        </ul>
+        <div class="flex flex-wrap justify-end gap-3">
+          <a href="status-buku.html" class="menu-item">Status Buku</a>
+          <a href="manajemen-buku.html" class="menu-item">Data Buku</a>
+          <a href="Pengguna.html" class="menu-item">Pengguna</a>
+          <a href="../login.html" class="menu-item">Login</a>
         </div>
       </nav>
     </header>
 
-    <!-- Main Content -->
-    <main class="pt-24 px-6 flex flex-col items-center">
+    <!-- Main -->
+    <main class="pt-24 px-4 sm:px-6 flex flex-col items-center">
       <section class="w-full max-w-5xl bg-white rounded-2xl shadow-md p-6">
         <!-- Tombol CRUD -->
-        <div class="flex justify-end gap-3 mb-6">
-          <button
-            class="bg-green-500 hover:bg-green-600 text-white font-semibold px-4 py-2 rounded-lg shadow transition"
-            onclick="toggleForm(true)"
-          >
-            Tambah
-          </button>
-          <button
-            class="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold px-4 py-2 rounded-lg shadow transition"
-          >
-            Edit
-          </button>
-          <button
-            class="bg-red-500 hover:bg-red-600 text-white font-semibold px-4 py-2 rounded-lg shadow transition"
-          >
-            Hapus
-          </button>
+        <div class="flex flex-wrap justify-between items-center mb-6 gap-4">
+          <div class="flex gap-3">
+            <button
+              class="bg-green-500 hover:bg-green-600 text-white font-semibold px-4 py-2 rounded-lg shadow transition"
+              onclick="showForm('add')"
+            >
+              Tambah Manual
+            </button>
+            <button
+              id="btnEdit"
+              disabled
+              class="bg-yellow-400 text-white font-semibold px-4 py-2 rounded-lg shadow opacity-50 cursor-not-allowed transition"
+            >
+              Edit
+            </button>
+            <button
+              id="btnDelete"
+              disabled
+              class="bg-red-500 text-white font-semibold px-4 py-2 rounded-lg shadow opacity-50 cursor-not-allowed transition"
+            >
+              Hapus
+            </button>
+          </div>
+
+          <!-- Pencarian Google Books -->
+          <div class="flex gap-2 items-center w-full md:w-auto">
+            <input
+              type="text"
+              id="searchBook"
+              placeholder="Cari buku di Google..."
+              class="border border-gray-300 rounded-lg p-2 w-full md:w-64 focus:ring focus:ring-blue-300"
+            />
+            <button
+              class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold"
+              onclick="searchGoogleBooks()"
+            >
+              Cari
+            </button>
+          </div>
         </div>
+
+        <!-- Hasil Pencarian Google Books -->
+        <div id="searchResults" class="grid md:grid-cols-3 gap-4 mb-6"></div>
 
         <!-- Form Tambah/Edit -->
         <form
           id="formBuku"
           class="hidden mb-6 border border-gray-300 rounded-xl p-4 bg-gray-50"
-          action="../back-end/buku.php"
-          method="POST"
+          onsubmit="saveBook(event)"
         >
+          <input type="hidden" id="editIndex" />
           <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
               <label class="block font-semibold text-gray-700">Nama Buku</label>
               <input
                 type="text"
-                name="nama"
+                id="nama"
                 required
                 class="w-full border border-gray-300 rounded-lg p-2 focus:ring focus:ring-blue-300"
               />
@@ -83,7 +91,7 @@
             <div>
               <label class="block font-semibold text-gray-700">Jenis Buku</label>
               <select
-                name="jenis"
+                id="jenis"
                 required
                 class="w-full border border-gray-300 rounded-lg p-2 bg-white focus:ring focus:ring-blue-300"
               >
@@ -99,7 +107,7 @@
               <label class="block font-semibold text-gray-700">Tanggal</label>
               <input
                 type="date"
-                name="tanggal"
+                id="tanggal"
                 required
                 class="w-full border border-gray-300 rounded-lg p-2 focus:ring focus:ring-blue-300"
               />
@@ -122,7 +130,7 @@
           </div>
         </form>
 
-        <!-- Tabel Data -->
+        <!-- Tabel Buku -->
         <div class="overflow-x-auto">
           <table class="min-w-full border border-gray-300 rounded-lg overflow-hidden">
             <thead class="bg-gray-700 text-white">
@@ -132,35 +140,161 @@
                 <th class="px-4 py-2 text-left">Tanggal</th>
               </tr>
             </thead>
-            <tbody>
-              <!-- contoh data, nanti ini diganti dengan PHP
-              <?php
-              // contoh integrasi PHP (nanti disesuaikan)
-              // $result = mysqli_query($conn, "SELECT * FROM buku");
-              // while($row = mysqli_fetch_assoc($result)) {
-              //     echo "<tr class='hover:bg-gray-100'>
-              //         <td class='px-4 py-2 border-t'>{$row['nama']}</td>
-              //         <td class='px-4 py-2 border-t'>{$row['jenis']}</td>
-              //         <td class='px-4 py-2 border-t'>{$row['tanggal']}</td>
-              //     </tr>";
-              // }
-              ?> -->
-              <tr class="hover:bg-gray-100">
-                <td class="px-4 py-2 border-t">Buku A</td>
-                <td class="px-4 py-2 border-t">Novel</td>
-                <td class="px-4 py-2 border-t">2025-11-06</td>
-              </tr>
-            </tbody>
+            <tbody id="tableBody" class="text-gray-700 bg-white"></tbody>
           </table>
         </div>
       </section>
     </main>
 
-    <script>
-      function toggleForm(show) {
-        const form = document.getElementById("formBuku");
-        form.classList.toggle("hidden", !show);
+    <style>
+      .menu-item {
+        background: rgba(255, 255, 255, 0.1);
+        color: rgba(255, 255, 255, 0.7);
+        border-radius: 1rem;
+        padding: 0.25rem 0.75rem;
+        font-weight: 600;
+        transition: 0.3s;
       }
+      .menu-item:hover {
+        background: rgba(156, 163, 175, 0.6);
+        color: white;
+      }
+      @media (max-width: 640px) {
+        nav {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+        .menu-item {
+          display: block;
+          width: 100%;
+          text-align: left;
+        }
+      }
+    </style>
+
+    <script>
+      let books = [];
+      let selectedIndex = null;
+
+      function renderTable() {
+        const body = document.getElementById("tableBody");
+        body.innerHTML = "";
+        books.forEach((b, i) => {
+          const row = document.createElement("tr");
+          row.className =
+            "hover:bg-gray-100 cursor-pointer" +
+            (selectedIndex === i ? " bg-blue-100" : "");
+          row.onclick = () => selectRow(i);
+          row.innerHTML = `
+            <td class="px-4 py-2 border-t">${b.nama}</td>
+            <td class="px-4 py-2 border-t">${b.jenis}</td>
+            <td class="px-4 py-2 border-t">${b.tanggal}</td>
+          `;
+          body.appendChild(row);
+        });
+      }
+
+      function selectRow(i) {
+        selectedIndex = i;
+        document.getElementById("btnEdit").disabled = false;
+        document.getElementById("btnDelete").disabled = false;
+        document.getElementById("btnEdit").classList.remove("opacity-50", "cursor-not-allowed");
+        document.getElementById("btnDelete").classList.remove("opacity-50", "cursor-not-allowed");
+        renderTable();
+        document.getElementById("btnEdit").onclick = () => showForm("edit");
+        document.getElementById("btnDelete").onclick = deleteBook;
+      }
+
+      function showForm(mode) {
+        toggleForm(true);
+        if (mode === "add") {
+          document.getElementById("formBuku").reset();
+          document.getElementById("editIndex").value = "";
+        } else if (mode === "edit" && selectedIndex !== null) {
+          const b = books[selectedIndex];
+          document.getElementById("nama").value = b.nama;
+          document.getElementById("jenis").value = b.jenis;
+          document.getElementById("tanggal").value = b.tanggal;
+          document.getElementById("editIndex").value = selectedIndex;
+        }
+      }
+
+      function toggleForm(show) {
+        document.getElementById("formBuku").classList.toggle("hidden", !show);
+      }
+
+      function saveBook(e) {
+        e.preventDefault();
+        const nama = document.getElementById("nama").value;
+        const jenis = document.getElementById("jenis").value;
+        const tanggal = document.getElementById("tanggal").value;
+        const editIndex = document.getElementById("editIndex").value;
+
+        if (editIndex) {
+          books[editIndex] = { nama, jenis, tanggal };
+        } else {
+          books.push({ nama, jenis, tanggal });
+        }
+
+        toggleForm(false);
+        selectedIndex = null;
+        renderTable();
+      }
+
+      function deleteBook() {
+        if (selectedIndex !== null && confirm("Hapus buku ini?")) {
+          books.splice(selectedIndex, 1);
+          selectedIndex = null;
+          renderTable();
+        }
+      }
+
+      // 🔍 Pencarian Buku dari Google Books API
+      async function searchGoogleBooks() {
+        const query = document.getElementById("searchBook").value.trim();
+        const resultsDiv = document.getElementById("searchResults");
+        resultsDiv.innerHTML = "";
+        if (!query) return;
+
+        const res = await fetch(
+          `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(query)}`
+        );
+        const data = await res.json();
+
+        if (!data.items) {
+          resultsDiv.innerHTML = `<p class='text-gray-600'>Tidak ditemukan hasil.</p>`;
+          return;
+        }
+
+        data.items.slice(0, 6).forEach((item) => {
+          const info = item.volumeInfo;
+          const title = info.title || "Tanpa Judul";
+          const authors = info.authors ? info.authors.join(", ") : "Tidak diketahui";
+          const thumb = info.imageLinks ? info.imageLinks.thumbnail : "";
+          const div = document.createElement("div");
+          div.className =
+            "border rounded-lg p-3 bg-gray-50 hover:bg-gray-100 transition flex flex-col items-center";
+          div.innerHTML = `
+            <img src="${thumb}" alt="${title}" class="w-24 h-32 object-cover mb-2 rounded">
+            <h3 class="font-semibold text-center">${title}</h3>
+            <p class="text-sm text-gray-600 mb-2">${authors}</p>
+            <button class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded text-sm"
+              onclick='addFromGoogle("${title.replace(/"/g, "&quot;")}")'>
+              Tambah ke Daftar
+            </button>
+          `;
+          resultsDiv.appendChild(div);
+        });
+      }
+
+      function addFromGoogle(title) {
+        const today = new Date().toISOString().split("T")[0];
+        books.push({ nama: title, jenis: "Novel", tanggal: today });
+        renderTable();
+        alert(`"${title}" telah ditambahkan ke daftar.`);
+      }
+
+      renderTable();
     </script>
   </body>
 </html>
