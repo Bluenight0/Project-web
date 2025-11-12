@@ -1,24 +1,22 @@
 <?php
-require 'koneksi.php';
+// koneksi ke database
+include 'koneksi.php'; // pastikan file ini berisi koneksi MySQL kamu
 
-$aksi = $_POST['aksi'] ?? '';
-$id   = $_POST['id'] ?? '';
-$nama = $_POST['nama'] ?? '';
-$jenis = $_POST['jenis'] ?? '';
-$tanggal = $_POST['tanggal'] ?? '';
+// menerima data JSON
+$data = json_decode(file_get_contents("php://input"), true);
 
-if ($aksi == "tambah") {
-    $sql = "INSERT INTO buku (nama, jenis, tanggal) VALUES ('$nama','$jenis','$tanggal')";
-    mysqli_query($koneksi, $sql);
-} elseif ($aksi == "edit" && $id) {
-    $sql = "UPDATE buku SET nama='$nama', jenis='$jenis', tanggal='$tanggal' WHERE id=$id";
-    mysqli_query($koneksi, $sql);
-} elseif ($aksi == "hapus" && $id) {
-    $sql = "DELETE FROM buku WHERE id=$id";
-    mysqli_query($koneksi, $sql);
+if (isset($data['nama']) && isset($data['jenis']) && isset($data['tanggal'])) {
+    $nama = mysqli_real_escape_string($conn, $data['nama']);
+    $jenis = mysqli_real_escape_string($conn, $data['jenis']);
+    $tanggal = mysqli_real_escape_string($conn, $data['tanggal']);
+
+    $query = "INSERT INTO buku (nama, jenis, tanggal) VALUES ('$nama', '$jenis', '$tanggal')";
+    if (mysqli_query($conn, $query)) {
+        echo json_encode(["status" => "success"]);
+    } else {
+        echo json_encode(["status" => "error", "message" => mysqli_error($conn)]);
+    }
+} else {
+    echo json_encode(["status" => "invalid_data"]);
 }
-
-// setelah aksi selesai, kembali ke index.php
-header("Location: index.php");
-exit;
 ?>

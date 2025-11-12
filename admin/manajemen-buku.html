@@ -9,7 +9,9 @@
 
   <body class="bg-gray-100 min-h-screen text-gray-800">
     <!-- Header -->
-    <header class="fixed top-0 left-0 w-full bg-gray-700/80 backdrop-blur-md z-20 shadow-lg">
+    <header
+      class="fixed top-0 left-0 w-full bg-gray-700/80 backdrop-blur-md z-20 shadow-lg"
+    >
       <nav class="flex justify-between items-center p-3 max-w-6xl mx-auto">
         <ul class="bg-white/10 text-white rounded-2xl px-3 py-1 font-semibold">
           <li><a href="dashboard.html">Admin</a></li>
@@ -89,7 +91,9 @@
               />
             </div>
             <div>
-              <label class="block font-semibold text-gray-700">Jenis Buku</label>
+              <label class="block font-semibold text-gray-700"
+                >Jenis Buku</label
+              >
               <select
                 id="jenis"
                 required
@@ -132,7 +136,9 @@
 
         <!-- Tabel Buku -->
         <div class="overflow-x-auto">
-          <table class="min-w-full border border-gray-300 rounded-lg overflow-hidden">
+          <table
+            class="min-w-full border border-gray-300 rounded-lg overflow-hidden"
+          >
             <thead class="bg-gray-700 text-white">
               <tr>
                 <th class="px-4 py-2 text-left">Nama</th>
@@ -198,8 +204,12 @@
         selectedIndex = i;
         document.getElementById("btnEdit").disabled = false;
         document.getElementById("btnDelete").disabled = false;
-        document.getElementById("btnEdit").classList.remove("opacity-50", "cursor-not-allowed");
-        document.getElementById("btnDelete").classList.remove("opacity-50", "cursor-not-allowed");
+        document
+          .getElementById("btnEdit")
+          .classList.remove("opacity-50", "cursor-not-allowed");
+        document
+          .getElementById("btnDelete")
+          .classList.remove("opacity-50", "cursor-not-allowed");
         renderTable();
         document.getElementById("btnEdit").onclick = () => showForm("edit");
         document.getElementById("btnDelete").onclick = deleteBook;
@@ -257,7 +267,9 @@
         if (!query) return;
 
         const res = await fetch(
-          `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(query)}`
+          `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(
+            query
+          )}`
         );
         const data = await res.json();
 
@@ -269,7 +281,9 @@
         data.items.slice(0, 6).forEach((item) => {
           const info = item.volumeInfo;
           const title = info.title || "Tanpa Judul";
-          const authors = info.authors ? info.authors.join(", ") : "Tidak diketahui";
+          const authors = info.authors
+            ? info.authors.join(", ")
+            : "Tidak diketahui";
           const thumb = info.imageLinks ? info.imageLinks.thumbnail : "";
           const div = document.createElement("div");
           div.className =
@@ -287,11 +301,39 @@
         });
       }
 
-      function addFromGoogle(title) {
+      async function addFromGoogle(title) {
         const today = new Date().toISOString().split("T")[0];
-        books.push({ nama: title, jenis: "Novel", tanggal: today });
+        const newBook = { nama: title, jenis: "Novel", tanggal: today };
+
+        // Tambahkan ke tabel lokal
+        books.push(newBook);
         renderTable();
-        alert(`"${title}" telah ditambahkan ke daftar.`);
+
+        // Kirim data ke backend PHP
+        try {
+          const res = await fetch("../back-end/buku.php", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(newBook),
+          });
+
+          const result = await res.json();
+
+          if (result.status === "success") {
+            alert(`"${title}" berhasil disimpan ke database!`);
+          } else {
+            alert(
+              `Gagal menyimpan ke database: ${
+                result.message || "Error tak diketahui"
+              }`
+            );
+          }
+        } catch (error) {
+          console.error("Error:", error);
+          alert("Terjadi kesalahan saat mengirim data ke server.");
+        }
       }
 
       renderTable();
