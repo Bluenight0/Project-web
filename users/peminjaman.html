@@ -6,32 +6,47 @@
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   <title>Peminjaman Buku</title>
 </head>
-<body class="bg-gray-400 min-h-screen">
+<body class="bg-gray-400 min-h-screen overflow-x-hidden">
 
   <!-- Navbar -->
-  <header class="absolute top-0 left-0 w-full z-20">
-    <nav class="flex justify-between p-3 gap-6">
-      <ul class="bg-white/10 text-white rounded-2xl px-3 py-1 shadow-lg font-semibold">
-        <li><a href="data-buku-user.html">Data Buku</a></li>
-      </ul>
-      <div class="flex gap-6">
-        <ul class="bg-white/10 text-white/60 rounded-2xl px-3 py-1 shadow-lg font-semibold">
-          <li><a href="peminjaman.html">Peminjaman</a></li>
-        </ul>
-        <ul class="bg-white/10 text-white/60 rounded-2xl px-3 py-1 shadow-lg font-semibold">
-          <li><a href="event.html">Event</a></li>
-        </ul>
-        <ul class="bg-white/10 text-white/60 rounded-2xl px-3 py-1 shadow-lg font-semibold">
-          <li><a href="profil.html">Profil</a></li>
-        </ul>
+  <header class="fixed top-0 left-0 w-full z-20 bg-gray-700/40 backdrop-blur-md shadow-md">
+    <nav class="flex flex-wrap justify-between items-center px-4 py-3 gap-3">
+      <!-- Logo / Beranda -->
+      <a
+        href="beranda.html"
+        class="text-white font-bold text-lg bg-white/10 px-3 py-1 rounded-xl hover:bg-gray-400 transition"
+      >Beranda</a>
+
+      <!-- Menu -->
+      <div class="flex flex-wrap justify-center gap-2 sm:gap-4">
+        <a href="data-buku-user.html"
+           class="bg-white/10 text-white/70 px-3 py-1 rounded-xl hover:bg-gray-400 transition font-semibold">
+          Buku
+        </a>
+        <a href="peminjaman.html"
+           class="bg-white/10 text-white px-3 py-1 rounded-xl font-semibold shadow-lg">
+          Peminjaman
+        </a>
+        <a href="event.html"
+           class="bg-white/10 text-white/70 px-3 py-1 rounded-xl hover:bg-gray-400 transition font-semibold">
+          Event
+        </a>
+        <a href="profil.html"
+           class="bg-white/10 text-white/70 px-3 py-1 rounded-xl hover:bg-gray-400 transition font-semibold">
+          Profil
+        </a>
+        <a href="../login.html"
+           class="bg-white/10 text-white/70 px-3 py-1 rounded-xl hover:bg-gray-400 transition font-semibold">
+          Login
+        </a>
       </div>
     </nav>
   </header>
 
   <!-- Main Content -->
-  <main class="pt-24 p-6">
-    <div class="max-w-5xl mx-auto bg-white/10 rounded-2xl shadow-lg p-6 text-white">
-      <h1 class="text-2xl font-semibold mb-4">Peminjaman Buku</h1>
+  <main class="pt-[90px] px-4 sm:px-8 pb-12">
+    <div class="max-w-6xl mx-auto bg-white/10 rounded-2xl shadow-lg p-6 sm:p-8 text-white">
+      <h1 class="text-2xl font-semibold mb-4 text-center sm:text-left">📚 Peminjaman Buku</h1>
 
       <!-- Search Input -->
       <div class="mb-6">
@@ -39,36 +54,36 @@
           id="searchInput"
           type="text"
           placeholder="Cari buku..."
-          class="w-full px-4 py-2 rounded-xl bg-white/20 text-white placeholder-white/60 focus:outline-none"
+          class="w-full px-4 py-2 rounded-xl bg-white/20 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
       </div>
 
       <!-- Card buku -->
-      <div class="grid grid-cols-2 md:grid-cols-3 gap-6" id="bookList">
-        <!-- Contoh data (nanti dari PHP) -->
-        <div class="bg-white/20 rounded-2xl p-4 flex flex-col items-center gap-3">
-          <h2 class="font-semibold">Naruto Vol.1</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6" id="bookList">
+        <!-- Contoh data -->
+        <div class="bg-white/20 rounded-2xl p-4 flex flex-col items-center gap-3 hover:scale-[1.02] transition">
+          <h2 class="font-semibold text-center">Naruto Vol.1</h2>
           <p class="text-sm text-white/70">Jenis: Manga</p>
           <button
-            class="bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded-xl font-semibold"
+            class="bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded-xl font-semibold w-full sm:w-auto"
             onclick="pinjamBuku('Naruto Vol.1')"
           >Pinjam</button>
         </div>
-        <div class="bg-white/20 rounded-2xl p-4 flex flex-col items-center gap-3">
-          <h2 class="font-semibold">Atomic Habits</h2>
+        <div class="bg-white/20 rounded-2xl p-4 flex flex-col items-center gap-3 hover:scale-[1.02] transition">
+          <h2 class="font-semibold text-center">Atomic Habits</h2>
           <p class="text-sm text-white/70">Jenis: Self Improvement</p>
           <button
-            class="bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded-xl font-semibold"
+            class="bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded-xl font-semibold w-full sm:w-auto"
             onclick="pinjamBuku('Atomic Habits')"
           >Pinjam</button>
         </div>
       </div>
 
       <!-- Tabel Peminjaman -->
-      <div class="mt-10">
-        <h2 class="text-xl font-semibold mb-3">Status Peminjaman</h2>
-        <table class="w-full text-left bg-white/10 rounded-2xl overflow-hidden">
-          <thead class="bg-white/20">
+      <div class="mt-10 overflow-x-auto">
+        <h2 class="text-xl font-semibold mb-3 text-center sm:text-left">📖 Status Peminjaman</h2>
+        <table class="min-w-full text-left bg-white/10 rounded-2xl overflow-hidden border border-white/10">
+          <thead class="bg-white/20 text-sm sm:text-base">
             <tr>
               <th class="px-4 py-2">Judul</th>
               <th class="px-4 py-2">Batas Pengembalian</th>
@@ -76,8 +91,8 @@
               <th class="px-4 py-2">Sanksi</th>
             </tr>
           </thead>
-          <tbody id="loanTable">
-            <!-- Data dari PHP -->
+          <tbody id="loanTable" class="text-sm sm:text-base">
+            <!-- Data akan ditambahkan lewat JS -->
           </tbody>
         </table>
       </div>
@@ -85,21 +100,17 @@
   </main>
 
   <script>
-    // Ambil parameter dari URL (judul buku dari data-buku-user.html)
+    // Ambil parameter dari URL (judul buku dari halaman lain)
     const params = new URLSearchParams(window.location.search);
     const judul = params.get("judul");
     if (judul) document.getElementById("searchInput").value = judul;
 
-    // Variabel user dan sanksi
+    // Variabel simulasi user
     let sedangDihukum = false;
     let waktuHukum = null;
-
-    // Simpan data peminjaman di memory (simulasi PHP)
     const peminjaman = [];
 
-    // Fungsi pinjam buku
     function pinjamBuku(namaBuku) {
-      // Cek sanksi aktif (3 hari)
       if (sedangDihukum && waktuHukum) {
         const now = new Date();
         const selisih = Math.floor((now - waktuHukum) / (1000 * 60 * 60 * 24));
@@ -107,7 +118,7 @@
           alert(`⚠️ Kamu masih dalam masa sanksi (${3 - selisih} hari tersisa). Tidak bisa pinjam buku.`);
           return;
         } else {
-          sedangDihukum = false; // sanksi selesai
+          sedangDihukum = false;
           waktuHukum = null;
         }
       }
@@ -116,7 +127,6 @@
         return;
       }
 
-      // Countdown 20 detik (visual simulasi)
       let countdown = 20;
       const interval = setInterval(() => {
         countdown--;
@@ -126,7 +136,6 @@
         }
       }, 1000);
 
-      // Setelah 20 detik, pinjam otomatis (simulasi sukses)
       setTimeout(() => {
         clearInterval(interval);
         const batas = new Date();
@@ -135,7 +144,6 @@
       }, 20000);
     }
 
-    // Tambahkan data peminjaman ke tabel
     function tambahKeTabel(namaBuku, batas) {
       const tbody = document.getElementById("loanTable");
       const tr = document.createElement("tr");
@@ -148,12 +156,9 @@
       tbody.appendChild(tr);
 
       peminjaman.push({ namaBuku, batas, status: "pinjam" });
-
-      // Cek keterlambatan setiap kali user buka halaman
       setInterval(() => cekKeterlambatan(tr, batas), 5000);
     }
 
-    // Cek keterlambatan berdasarkan tanggal hari ini
     function cekKeterlambatan(row, batas) {
       const now = new Date();
       if (now > batas) {
