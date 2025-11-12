@@ -4,40 +4,33 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-  <title>Event | User</title>
+  <title>Event | Perpustakaan</title>
 </head>
-<body class="bg-gray-400 min-h-screen">
+<body class="bg-gradient-to-b from-gray-700 via-gray-600 to-gray-500 min-h-screen font-sans">
 
   <!-- Navbar -->
-  <header class="absolute top-0 left-0 w-full z-20">
-    <nav class="flex justify-between p-3 gap-6">
-      <ul class="bg-white/10 text-white rounded-2xl px-3 py-1 hover:bg-gray-400 transition shadow-lg font-semibold">
-        <li><a href="beranda.html">Beranda</a></li>
-      </ul>
-      <div class="flex flex-end gap-6">
-        <ul class="bg-white/10 text-white/60 rounded-2xl px-3 py-1 hover:bg-gray-400 transition shadow-lg font-semibold">
-          <li><a href="data-buku-user.html">Data Buku</a></li>
-        </ul>
-        <ul class="bg-white/10 text-white/60 rounded-2xl px-3 py-1 hover:bg-gray-400 transition shadow-lg font-semibold">
-          <li><a href="profil.html">Profil</a></li>
-        </ul>
-        <ul class="bg-white/10 text-white/60 rounded-2xl px-3 py-1 hover:bg-gray-400 transition shadow-lg font-semibold">
-          <li><a href="event.html" class="text-white">Event</a></li>
-        </ul>
-        <ul class="bg-white/10 text-white/60 rounded-2xl px-3 py-1 hover:bg-gray-400 transition shadow-lg font-semibold">
-          <li><a href="peminjaman.html">Peminjaman</a></li>
-        </ul>
-        <ul class="bg-white/10 text-white/60 rounded-2xl px-3 py-1 hover:bg-gray-400 transition shadow-lg font-semibold">
-          <li><a href="../login.html">Login</a></li>
-        </ul>
+  <header class="fixed top-0 left-0 w-full z-20 bg-gray-800/60 backdrop-blur-md shadow-md">
+    <nav class="flex flex-wrap justify-between items-center px-6 py-3">
+      <a href="beranda.html" class="text-white font-bold text-lg bg-white/10 px-4 py-2 rounded-xl hover:bg-white/20 transition">
+        Beranda
+      </a>
+      <div class="flex flex-wrap justify-center gap-2 mt-2 sm:mt-0">
+        <a href="data-buku-user.html" class="bg-white/10 text-white/80 px-3 py-1 rounded-xl hover:bg-white/20 transition font-semibold">Buku</a>
+        <a href="event.html" class="bg-white/10 text-white/80 px-3 py-1 rounded-xl hover:bg-white/20 transition font-semibold">Event</a>
+        <a href="peminjaman.html" class="bg-white/10 text-white/80 px-3 py-1 rounded-xl hover:bg-white/20 transition font-semibold">Peminjaman</a>
+        <a href="profil.html" class="bg-white/10 text-white/80 px-3 py-1 rounded-xl hover:bg-white/20 transition font-semibold">Profile</a>
+        <a href="../login.html" class="bg-white/10 text-white/80 px-3 py-1 rounded-xl hover:bg-white/20 transition font-semibold">Login</a>
       </div>
     </nav>
   </header>
 
   <!-- Main -->
-  <main class="pt-28 px-6">
-    <h1 class="text-2xl font-bold text-white mb-6">Event yang Tersedia</h1>
-    <div id="event-list" class="grid gap-4"></div>
+  <main class="pt-28 px-6 sm:px-12">
+    <h1 class="text-3xl sm:text-4xl font-bold text-white mb-8 text-center sm:text-left drop-shadow-lg">
+      Event Perpustakaan
+    </h1>
+
+    <div id="event-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
   </main>
 
   <script>
@@ -52,35 +45,33 @@
 
         if (!Array.isArray(events) || events.length === 0) {
           eventList.innerHTML =
-            "<p class='text-white text-center'>Belum ada event tersedia.</p>";
+            "<p class='text-white text-center col-span-full'>Belum ada event tersedia.</p>";
           return;
         }
 
-        events.forEach((event) => {
+        events.forEach(event => {
           const div = document.createElement("div");
           div.className =
-            "bg-white/10 rounded-2xl p-4 text-white shadow-lg flex justify-between items-center flex-wrap";
+            "bg-white/10 backdrop-blur-md rounded-2xl p-6 text-white shadow-lg flex flex-col justify-between transition transform hover:scale-105 hover:shadow-2xl";
 
           let ikutButton = event.ikut ? 
-            `<button class="bg-gray-400 cursor-not-allowed text-white px-3 py-1 rounded-xl shadow" disabled>Sudah Ikut</button>` :
-            `<button class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded-xl shadow" onclick="verifikasiIkut(${event.id})">Ikuti</button>`;
+            `<button class="bg-gray-500 cursor-not-allowed text-white px-4 py-2 rounded-xl shadow mt-4" disabled>Sudah Ikut</button>` :
+            `<button class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-xl shadow mt-4" onclick="verifikasiIkut(${event.id})">Ikuti</button>`;
 
           div.innerHTML = `
             <div>
-              <h2 class="text-xl font-semibold">${event.nama}</h2>
-              <p class="text-sm text-white/70">${event.lokasi}</p>
-              <p class="text-sm mt-1">Tanggal: <span class="text-white/80">${event.tanggal}</span></p>
+              <h2 class="text-xl font-semibold mb-1">${event.nama}</h2>
+              <p class="text-sm text-white/70 mb-1"><strong>Lokasi:</strong> ${event.lokasi}</p>
+              <p class="text-sm text-white/70"><strong>Tanggal:</strong> ${event.tanggal}</p>
             </div>
-            <div class="flex gap-3 mt-3 md:mt-0">
-              ${ikutButton}
-            </div>
+            ${ikutButton}
           `;
           eventList.appendChild(div);
         });
       } catch (err) {
         console.error("Gagal mengambil event:", err);
         eventList.innerHTML =
-          "<p class='text-red-400'>Gagal memuat data event.</p>";
+          "<p class='text-red-400 col-span-full text-center'>Gagal memuat data event.</p>";
       }
     }
 
@@ -114,8 +105,8 @@
       }
     }
 
-    // Load events otomatis
     loadEvents();
   </script>
+
 </body>
 </html>

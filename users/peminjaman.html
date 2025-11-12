@@ -1,286 +1,217 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <title>Peminjaman Buku</title>
-  </head>
-  <body class="bg-gray-400 min-h-screen overflow-x-hidden">
-    <!-- Navbar -->
-    <header
-      class="fixed top-0 left-0 w-full z-20 bg-gray-700/40 backdrop-blur-md shadow-md"
-    >
-      <nav class="flex flex-wrap justify-between items-center px-4 py-3 gap-3">
-        <a
-          href="beranda.html"
-          class="text-white font-bold text-lg bg-white/10 px-3 py-1 rounded-xl hover:bg-gray-400 transition"
-          >Beranda</a
-        >
-        <div class="flex flex-wrap justify-center gap-2 sm:gap-4">
-          <a
-            href="data-buku-user.html"
-            class="bg-white/10 text-white/70 px-3 py-1 rounded-xl hover:bg-gray-400 transition font-semibold"
-            >Buku</a
-          >
-          <a
-            href="peminjaman.html"
-            class="bg-white/10 text-white px-3 py-1 rounded-xl font-semibold shadow-lg"
-            >Peminjaman</a
-          >
-          <a
-            href="event.html"
-            class="bg-white/10 text-white/70 px-3 py-1 rounded-xl hover:bg-gray-400 transition font-semibold"
-            >Event</a
-          >
-          <a
-            href="profil.html"
-            class="bg-white/10 text-white/70 px-3 py-1 rounded-xl hover:bg-gray-400 transition font-semibold"
-            >Profil</a
-          >
-          <a
-            href="../login.html"
-            class="bg-white/10 text-white/70 px-3 py-1 rounded-xl hover:bg-gray-400 transition font-semibold"
-            >Login</a
-          >
-        </div>
-      </nav>
-    </header>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <title>Peminjaman Buku | Perpustakaan</title>
+</head>
+<body class="bg-gradient-to-br from-gray-800 to-gray-900 min-h-screen text-white font-sans">
 
-    <!-- Main -->
-    <main class="pt-[90px] px-4 sm:px-8 pb-12">
-      <div
-        class="max-w-6xl mx-auto bg-white/10 rounded-2xl shadow-lg p-6 sm:p-8 text-white"
-      >
-        <h1 class="text-2xl font-semibold mb-4 text-center sm:text-left">
-          📚 Peminjaman Buku
-        </h1>
-
-        <!-- 💡 Banner Sanksi -->
-        <div
-          id="sanksiBanner"
-          class="hidden bg-red-600/70 text-white text-center py-2 rounded-xl mb-4 font-semibold"
-        >
-          ⛔ Kamu sedang dalam masa sanksi. Sisa hari:
-          <span id="sisaHari">3</span>
-        </div>
-
-        <!-- Search -->
-        <div class="mb-6">
-          <input
-            id="searchInput"
-            type="text"
-            placeholder="Cari buku..."
-            class="w-full px-4 py-2 rounded-xl bg-white/20 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-        </div>
-
-        <!-- Buku -->
-        <div
-          class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"
-          id="bookList"
-        ></div>
-
-        <!-- Tabel Peminjaman -->
-        <div class="mt-10 overflow-x-auto">
-          <h2 class="text-xl font-semibold mb-3 text-center sm:text-left">
-            📖 Status Peminjaman
-          </h2>
-          <table
-            class="min-w-full text-left bg-white/10 rounded-2xl overflow-hidden border border-white/10"
-          >
-            <thead class="bg-white/20 text-sm sm:text-base">
-              <tr>
-                <th class="px-4 py-2">Judul</th>
-                <th class="px-4 py-2">Tanggal Pinjam</th>
-                <th class="px-4 py-2">Batas Waktu</th>
-                <th class="px-4 py-2">Status</th>
-                <th class="px-4 py-2">Aksi</th>
-              </tr>
-            </thead>
-            <tbody id="loanTable"></tbody>
-          </table>
-        </div>
+  <!-- Navbar -->
+  <header class="fixed top-0 left-0 w-full z-20 bg-gray-800/60 backdrop-blur-md shadow-md">
+    <nav class="flex flex-wrap justify-between items-center px-6 py-3">
+      <a href="beranda.html" class="text-white font-bold text-lg bg-white/10 px-4 py-2 rounded-xl hover:bg-white/20 transition">
+        Beranda
+      </a>
+      <div class="flex flex-wrap justify-center gap-2 mt-2 sm:mt-0">
+        <a href="data-buku-user.html" class="bg-white/10 text-white/80 px-3 py-1 rounded-xl hover:bg-white/20 transition font-semibold">Buku</a>
+        <a href="event.html" class="bg-white/10 text-white/80 px-3 py-1 rounded-xl hover:bg-white/20 transition font-semibold">Event</a>
+        <a href="peminjaman.html" class="bg-white/10 text-white/80 px-3 py-1 rounded-xl hover:bg-white/20 transition font-semibold">Peminjaman</a>
+        <a href="profil.html" class="bg-white/10 text-white/80 px-3 py-1 rounded-xl hover:bg-white/20 transition font-semibold">Profile</a>
+        <a href="../login.html" class="bg-white/10 text-white/80 px-3 py-1 rounded-xl hover:bg-white/20 transition font-semibold">Login</a>
       </div>
-    </main>
+    </nav>
+  </header>
 
-    <script>
-      const currentUser = "user_demo"; // nanti diganti session
-      const bookList = document.getElementById("bookList");
-      const searchInput = document.getElementById("searchInput");
-      const loanTable = document.getElementById("loanTable");
+  <!-- Main Content -->
+  <main class="pt-28 px-6 sm:px-12 pb-12 max-w-7xl mx-auto">
+    <div class="bg-white/10 backdrop-blur-md rounded-2xl shadow-lg p-6 sm:p-8">
+      <h1 class="text-3xl sm:text-4xl font-bold mb-6 text-center sm:text-left drop-shadow-lg">
+        📚 Peminjaman Buku
+      </h1>
 
-      const sanksiBanner = document.getElementById("sanksiBanner"); // 💡
-      const sisaHariSpan = document.getElementById("sisaHari"); // 💡
+      <!-- Banner Sanksi -->
+      <div id="sanksiBanner" class="hidden bg-red-600/70 backdrop-blur-md text-white text-center py-2 rounded-xl mb-6 font-semibold shadow-md">
+        ⛔ Kamu sedang dalam masa sanksi. Sisa hari: <span id="sisaHari">3</span>
+      </div>
 
-      let peminjaman = [];
-      let sedangDihukum = false;
-      let waktuHukum = null;
+      <!-- Search -->
+      <div class="mb-6">
+        <input
+          id="searchInput"
+          type="text"
+          placeholder="Cari buku..."
+          class="w-full px-4 py-3 rounded-xl bg-white/20 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+      </div>
 
-      async function loadBooks() {
-        const res = await fetch("../back-end/buku.php");
-        const books = await res.json();
-        renderBooks(books);
-      }
+      <!-- Buku -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" id="bookList"></div>
 
-      function renderBooks(books) {
-        bookList.innerHTML = "";
-        books.forEach((book) => {
-          const card = document.createElement("div");
-          card.className =
-            "bg-white/20 rounded-2xl p-4 flex flex-col items-center gap-3 hover:scale-[1.02] transition";
-          card.innerHTML = `
+      <!-- Tabel Peminjaman -->
+      <div class="mt-10 overflow-x-auto">
+        <h2 class="text-2xl font-semibold mb-3 text-center sm:text-left drop-shadow-lg">📖 Status Peminjaman</h2>
+        <table class="min-w-full bg-white/10 rounded-2xl overflow-hidden border border-white/10 text-sm sm:text-base">
+          <thead class="bg-white/20">
+            <tr>
+              <th class="px-4 py-2">Judul</th>
+              <th class="px-4 py-2">Tanggal Pinjam</th>
+              <th class="px-4 py-2">Batas Waktu</th>
+              <th class="px-4 py-2">Status</th>
+              <th class="px-4 py-2">Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="loanTable"></tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const currentUser = "user_demo"; 
+    const bookList = document.getElementById("bookList");
+    const searchInput = document.getElementById("searchInput");
+    const loanTable = document.getElementById("loanTable");
+    const sanksiBanner = document.getElementById("sanksiBanner"); 
+    const sisaHariSpan = document.getElementById("sisaHari"); 
+
+    let peminjaman = [];
+    let sedangDihukum = false;
+    let waktuHukum = null;
+
+    async function loadBooks() {
+      const res = await fetch("../back-end/buku.php");
+      const books = await res.json();
+      renderBooks(books);
+    }
+
+    function renderBooks(books) {
+      bookList.innerHTML = "";
+      books.forEach((book) => {
+        const card = document.createElement("div");
+        card.className = "bg-white/10 backdrop-blur-md rounded-2xl p-4 flex flex-col items-center gap-3 hover:scale-[1.03] hover:shadow-2xl transition";
+        card.innerHTML = `
           <h2 class="font-semibold text-center">${book.nama}</h2>
           <p class="text-sm text-white/70">Jenis: ${book.jenis}</p>
-          <button
-            class="bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded-xl font-semibold w-full sm:w-auto"
-            onclick="pinjamBuku('${book.nama}')"
-          >Pinjam</button>
+          <button class="bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded-xl font-semibold w-full sm:w-auto" onclick="pinjamBuku('${book.nama}')">Pinjam</button>
         `;
-          bookList.appendChild(card);
-        });
-      }
+        bookList.appendChild(card);
+      });
+    }
 
-      async function pinjamBuku(namaBuku) {
-        if (sedangDihukum && waktuHukum) {
-          const now = new Date();
-          const selisih = Math.floor(
-            (now - waktuHukum) / (1000 * 60 * 60 * 24)
-          );
-          if (selisih < 3) {
-            alert(
-              `⚠️ Kamu masih dalam masa sanksi (${
-                3 - selisih
-              } hari tersisa). Tidak bisa pinjam buku.`
-            );
-            return;
-          } else {
-            sedangDihukum = false;
-            waktuHukum = null;
-            sanksiBanner.classList.add("hidden");
-          }
+    async function pinjamBuku(namaBuku) {
+      if (sedangDihukum && waktuHukum) {
+        const now = new Date();
+        const selisih = Math.floor((now - waktuHukum) / (1000*60*60*24));
+        if (selisih < 3) {
+          alert(`⚠️ Kamu masih dalam masa sanksi (${3 - selisih} hari tersisa).`);
+          return;
+        } else {
+          sedangDihukum = false;
+          waktuHukum = null;
+          sanksiBanner.classList.add("hidden");
+        }
+      }
+      if (!confirm(`Apakah kamu yakin ingin meminjam "${namaBuku}"?`)) return;
+
+      const batas = new Date();
+      batas.setDate(batas.getDate() + 3);
+
+      tambahKeTabel(namaBuku, batas);
+
+      await fetch("../back-end/peminjaman.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ nama_buku: namaBuku, nama_peminjam: currentUser }),
+      });
+    }
+
+    async function loadPeminjaman() {
+      const res = await fetch("../back-end/peminjaman.php");
+      const data = await res.json();
+      peminjaman = data.filter((d) => d.nama_peminjam === currentUser);
+      renderTabel();
+    }
+
+    function renderTabel() {
+      loanTable.innerHTML = "";
+      peminjaman.forEach((p) => {
+        const tr = document.createElement("tr");
+        const batas = new Date(p.tgl_pinjam);
+        batas.setDate(batas.getDate() + p.batas_waktu);
+        const terlambat = new Date() > batas && p.status === "Dipinjam";
+
+        if (terlambat) {
+          updateStatus(p.id, "Terlambat");
+          sedangDihukum = true;
+          waktuHukum = new Date();
+          tampilkanSanksi();
         }
 
-        if (!confirm(`Apakah kamu yakin ingin meminjam "${namaBuku}"?`)) return;
-
-        const batas = new Date();
-        batas.setDate(batas.getDate() + 3);
-
-        tambahKeTabel(namaBuku, batas);
-
-        await fetch("../back-end/peminjaman.php", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            nama_buku: namaBuku,
-            nama_peminjam: currentUser,
-          }),
-        });
-      }
-
-      async function loadPeminjaman() {
-        const res = await fetch("../back-end/peminjaman.php");
-        const data = await res.json();
-        peminjaman = data.filter((d) => d.nama_peminjam === currentUser);
-        renderTabel();
-      }
-
-      function renderTabel() {
-        loanTable.innerHTML = "";
-        peminjaman.forEach((p) => {
-          const tr = document.createElement("tr");
-          const batas = new Date(p.tgl_pinjam);
-          batas.setDate(batas.getDate() + p.batas_waktu);
-          const terlambat = new Date() > batas && p.status === "Dipinjam";
-
-          if (terlambat) {
-            updateStatus(p.id, "Terlambat");
-            sedangDihukum = true;
-            waktuHukum = new Date();
-            tampilkanSanksi(); // 💡 tampilkan banner
-          }
-
-          tr.innerHTML = `
+        tr.innerHTML = `
           <td class="px-4 py-2">${p.nama_buku}</td>
           <td class="px-4 py-2">${p.tgl_pinjam}</td>
           <td class="px-4 py-2">${batas.toLocaleDateString()}</td>
-          <td class="px-4 py-2 ${
-            terlambat
-              ? "text-red-400"
-              : p.status === "Dikembalikan"
-              ? "text-green-400"
-              : "text-yellow-400"
-          }">${p.status}</td>
-          <td class="px-4 py-2">
-            ${
-              p.status === "Dipinjam"
-                ? `<button class="bg-green-600 hover:bg-green-700 px-3 py-1 rounded-xl text-white" onclick="kembalikanBuku(${p.id})">Kembalikan</button>`
-                : "-"
-            }
-          </td>
+          <td class="px-4 py-2 ${terlambat ? 'text-red-400' : p.status === 'Dikembalikan' ? 'text-green-400' : 'text-yellow-400'}">${p.status}</td>
+          <td class="px-4 py-2">${p.status === 'Dipinjam' ? `<button class="bg-green-600 hover:bg-green-700 px-3 py-1 rounded-xl text-white" onclick="kembalikanBuku(${p.id})">Kembalikan</button>` : '-'}</td>
         `;
-          loanTable.appendChild(tr);
-        });
-      }
-
-      async function kembalikanBuku(id) {
-        const res = await fetch("../back-end/peminjaman.php", {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ id, status: "Dikembalikan" }),
-        });
-        const result = await res.json();
-        if (result.status === "success") {
-          alert("✅ Buku berhasil dikembalikan!");
-          loadPeminjaman();
-        }
-      }
-
-      async function updateStatus(id, status) {
-        await fetch("../back-end/peminjaman.php", {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ id, status }),
-        });
-      }
-
-      // 💡 Fungsi banner sanksi
-      function tampilkanSanksi() {
-        if (!waktuHukum) return;
-        sanksiBanner.classList.remove("hidden");
-        const now = new Date();
-        const selisih = Math.floor((now - waktuHukum) / (1000 * 60 * 60 * 24));
-        const sisa = Math.max(0, 3 - selisih);
-        sisaHariSpan.textContent = sisa;
-        if (sisa <= 0) sanksiBanner.classList.add("hidden");
-        else setTimeout(tampilkanSanksi, 1000 * 60 * 60); // update tiap jam
-      }
-
-      searchInput.addEventListener("input", async (e) => {
-        const res = await fetch("../back-end/buku.php");
-        const books = await res.json();
-        const filtered = books.filter((b) =>
-          b.nama.toLowerCase().includes(e.target.value.toLowerCase())
-        );
-        renderBooks(filtered);
+        loanTable.appendChild(tr);
       });
-      async function cekSanksiUser() {
-        const res = await fetch(
-          "../back-end/user_sanksi.php?user=" + currentUser
-        );
-        const data = await res.json();
+    }
 
-        if (data.sanksi_aktif == 1) {
-          sedangDihukum = true;
-          waktuHukum = new Date(data.sanksi_mulai);
-          tampilkanSanksi();
-        }
+    async function kembalikanBuku(id) {
+      const res = await fetch("../back-end/peminjaman.php", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id, status: "Dikembalikan" }),
+      });
+      const result = await res.json();
+      if (result.status === "success") {
+        alert("✅ Buku berhasil dikembalikan!");
+        loadPeminjaman();
       }
-      cekSanksiUser();
+    }
 
+    async function updateStatus(id, status) {
+      await fetch("../back-end/peminjaman.php", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id, status }),
+      });
+    }
 
-      loadBooks();
-      loadPeminjaman();
-    </script>
-  </body>
+    function tampilkanSanksi() {
+      if (!waktuHukum) return;
+      sanksiBanner.classList.remove("hidden");
+      const now = new Date();
+      const selisih = Math.floor((now - waktuHukum) / (1000*60*60*24));
+      const sisa = Math.max(0, 3 - selisih);
+      sisaHariSpan.textContent = sisa;
+      if (sisa <= 0) sanksiBanner.classList.add("hidden");
+      else setTimeout(tampilkanSanksi, 1000*60*60);
+    }
+
+    searchInput.addEventListener("input", async (e) => {
+      const res = await fetch("../back-end/buku.php");
+      const books = await res.json();
+      const filtered = books.filter((b) => b.nama.toLowerCase().includes(e.target.value.toLowerCase()));
+      renderBooks(filtered);
+    });
+
+    async function cekSanksiUser() {
+      const res = await fetch("../back-end/user_sanksi.php?user=" + currentUser);
+      const data = await res.json();
+      if (data.sanksi_aktif == 1) {
+        sedangDihukum = true;
+        waktuHukum = new Date(data.sanksi_mulai);
+        tampilkanSanksi();
+      }
+    }
+    cekSanksiUser();
+    loadBooks();
+    loadPeminjaman();
+  </script>
+
+</body>
 </html>
