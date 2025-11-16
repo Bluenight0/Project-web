@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <style type="text/tailwindcss">
+    @theme {
+      --color-clifford: #da373d;
+    }
+  </style>
+  <title>Dashboard Admin</title>
+</head>
+<body class="min-h-screen bg-gray-600 overflow-x-hidden">
+
+  <?php
+  include '../layout/header_user.html';
+  ?>
+  
+
+  <!-- MAIN HERO -->
+  <main class="pt-[70px]">
+    <div class="relative w-full h-[300px] sm:h-[380px] md:h-[420px] overflow-hidden">
+      <img src="../assets/libarry.jpg" alt="Library" class="w-full h-full object-cover scale-110 origin-bottom" />
+      <div class="absolute top-1/3 left-6 sm:left-12 text-white drop-shadow-lg">
+        <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight">Library esk</h1>
+        <p class="mt-2 text-sm md:text-lg">Open today 9:00 am - 9:00 pm</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- SECTION CONTENT -->
+  <section class="w-full mt-4 px-4 sm:px-6 pb-10">
+    <div class="flex flex-col lg:flex-row justify-center items-start gap-8 max-w-6xl mx-auto">
+
+      <!-- Kalender -->
+      <div class="ring-2 ring-white rounded-lg shadow-lg flex flex-col items-center w-full sm:w-[300px] md:w-[350px] bg-gray-700/50 p-3">
+        <p id="bulanSekarang" class="text-white py-1 rounded-md font-semibold mb-3 text-center overline w-full"></p>
+        <div id="tanggal" class="grid grid-cols-7 gap-1 p-1 rounded text-center text-white w-full"></div>
+      </div>
+
+      <!-- Card Keterangan -->
+      <div class="bg-gray-400/70 p-3 rounded-lg shadow-lg flex flex-col gap-4 w-full sm:w-[400px]">
+        <div class="bg-white p-3 rounded">
+          <p class="text-gray-700">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius, exercitationem.</p>
+          <p class="text-gray-700">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis, molestias!</p>
+        </div>
+        <div class="bg-yellow-300 p-3 rounded">
+          <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quia, numquam.</p>
+          <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Unde, libero.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <script>
+    const tanggalContainer = document.getElementById("tanggal");
+    const bulanSekarang = document.getElementById("bulanSekarang");
+    const today = new Date();
+
+    const monthNames = [
+      "Januari", "Februari", "Maret", "April", "Mei", "Juni",
+      "Juli", "Agustus", "September", "Oktober", "November", "Desember"
+    ];
+
+    bulanSekarang.textContent = `${monthNames[today.getMonth()]} ${today.getFullYear()}`;
+
+    const totalDays = new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate();
+
+    for (let i = 1; i <= totalDays; i++) {
+      const div = document.createElement("div");
+      div.className = "p-2 rounded-md transition duration-300 hover:bg-gray-500 cursor-pointer";
+      div.innerHTML = `<span>${i}</span>`;
+
+      if (i === today.getDate()) {
+        div.classList.add("bg-blue-500", "font-bold", "text-white", "shadow-md", "scale-105");
+      }
+
+      tanggalContainer.appendChild(div);
+    }
+  </script>
+
+</body>
+</html>
