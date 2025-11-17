@@ -14,21 +14,10 @@
 </head>
 <body class="min-h-screen bg-gray-600 overflow-x-hidden">
 
-  <!-- HEADER -->
-  <header class="fixed top-0 left-0 w-full z-20 bg-gray-700/40 backdrop-blur-md shadow-md">
-    <nav class="flex flex-wrap justify-between items-center px-4 py-2">
-      <a href="beranda.html" class="text-white font-bold text-lg bg-white/10 px-3 py-1 rounded-xl hover:bg-gray-400 transition">
-        Beranda
-      </a>
-      <div class="flex flex-wrap justify-center gap-2 mt-2 sm:mt-0">
-        <a href="data-buku-user.html" class="bg-white/10 text-white/70 px-3 py-1 rounded-xl hover:bg-gray-400 transition font-semibold">Buku</a>
-        <a href="event.html" class="bg-white/10 text-white/70 px-3 py-1 rounded-xl hover:bg-gray-400 transition font-semibold">Event</a>
-        <a href="peminjaman.html" class="bg-white/10 text-white/70 px-3 py-1 rounded-xl hover:bg-gray-400 transition font-semibold">Peminjaman</a>
-        <a href="profil.html" class="bg-white/10 text-white/70 px-3 py-1 rounded-xl hover:bg-gray-400 transition font-semibold">Profile</a>
-        <a href="../login.html" class="bg-white/10 text-white/70 px-3 py-1 rounded-xl hover:bg-gray-400 transition font-semibold">Login</a>
-      </div>
-    </nav>
-  </header>
+  <?php
+  include '../layout/header_user.html';
+  ?>
+  
 
   <!-- MAIN HERO -->
   <main class="pt-[70px]">

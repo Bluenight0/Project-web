@@ -26,7 +26,7 @@ $event = mysqli_fetch_assoc($result);
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
   <!-- AOS CSS -->
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-<link rel="stylesheet" href="asset/style.css">
+<link rel="stylesheet" href="assets/style.css">
 
   
 </head>
@@ -47,17 +47,19 @@ $event = mysqli_fetch_assoc($result);
       <!-- 🔹 Kanan (Menu) -->
       <div class="collapse navbar-collapse justify-content-end me-3" id="navbarNav">
         <ul class="navbar-nav">
+          <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <!-- href diubah menjadi trigger modal -->
+                        <a class="nav-link" href="#koleksi-buku">Koleksi Buku</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Layanan</a>
+                    </li>
+                </ul>
+            </div>
           <li class="nav-item">
-            <a class="nav-link active" href="#">Beranda</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Koleksi Buku</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Layanan</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Tentang Kami</a>
+            <a class="nav-link" href="#footerq">Tentang Kami</a>
           </li>
 
           <!-- 🔽 Dropdown Login -->
@@ -67,8 +69,8 @@ $event = mysqli_fetch_assoc($result);
               Login
             </a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="loginDropdown">
-              <li><a class="dropdown-item" href="user.php">Login User</a></li>
-              <li><a class="dropdown-item" href="admin.php">Login Admin</a></li>
+              <li><a class="dropdown-item" href="back-end/user.php">Login User</a></li>
+              <li><a class="dropdown-item" href="back-end/auth.php">Login Admin</a></li>
             </ul>
           </li>
         </ul>
@@ -260,7 +262,7 @@ $event = mysqli_fetch_assoc($result);
   </section>
 
   <!-- Koleksi Buku -->
-  <section id="koleksi" class="container mt-5">
+  <section id="koleksi-buku" class="container mt-5">
     <h2 class="text-center mb-4">📚 Koleksi Buku Unggulan</h2>
 
     <div class="book-slider">
@@ -287,40 +289,41 @@ $event = mysqli_fetch_assoc($result);
 
 
   <!-- 📢 Popup Event Modal -->
-  <div class="modal fade" id="eventModal" tabindex="-1" aria-labelledby="eventModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content shadow-lg">
-        <div class="modal-header bg-primary text-white">
-          <h5 class="modal-title" id="eventModalLabel">
-            🎉 EVENT TERBARU
-          </h5>
-          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <p> <?php echo htmlspecialchars($event['judul']); ?></p>
-          <p><?php echo nl2br(htmlspecialchars($event['deskripsi'])); ?></p>
-          <ul>
-            <li>🗓️
-              <?php echo date("d", strtotime($event['tanggal_mulai'])); ?>–
-              <?php echo date("d F Y", strtotime($event['tanggal_selesai'])); ?>
-            </li>
-            <li>📍 <?php echo htmlspecialchars($event['lokasi']); ?></li>
-          </ul>
-        </div>
-        <div class="modal-footer">
-          <a href="<?php echo htmlspecialchars($event['link_event']); ?>" class="btn btn-primary" target="_blank">
-            🔗 Lihat Detail
-          </a>
-        </div>
-
+  <?php if ($event): ?>
+<div class="modal fade" id="eventModal" tabindex="-1" aria-labelledby="eventModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content shadow-lg">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title" id="eventModalLabel">
+          🎉 EVENT TERBARU
+        </h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p><?php echo htmlspecialchars($event['judul']); ?></p>
+        <p><?php echo nl2br(htmlspecialchars($event['deskripsi'])); ?></p>
+        <ul>
+          <li>🗓️
+            <?php echo date("d", strtotime($event['tanggal_mulai'])); ?>–
+            <?php echo date("d F Y", strtotime($event['tanggal_selesai'])); ?>
+          </li>
+          <li>📍 <?php echo htmlspecialchars($event['lokasi']); ?></li>
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <a href="<?php echo htmlspecialchars($event['link_event']); ?>" class="btn btn-primary" target="_blank">
+          🔗 Lihat Detail
+        </a>
       </div>
     </div>
   </div>
+</div>
+<?php endif; ?>
 
 
 
   <!-- ===== Footer Section ===== -->
-  <footer class="bg-dark text-light pt-5 pb-3 mt-5">
+  <footer class="bg-dark text-light pt-5 pb-3 mt-5" id="footerq">
     <div class="container">
       <div class="row g-4">
 
@@ -357,7 +360,7 @@ $event = mysqli_fetch_assoc($result);
           <div class="bg-secondary bg-opacity-25 p-3 rounded text-center shadow-sm">
             <?php
 
-            include 'koneksi.php';
+            include 'back-end/koneksi.php';
             $sql = "SELECT COUNT(*) AS total_anggota FROM anggota_perpus WHERE status = 'aktif'";
             $result = mysqli_query($koneksi, $sql);
             $data = mysqli_fetch_assoc($result);
@@ -424,17 +427,13 @@ $event = mysqli_fetch_assoc($result);
         });
       </script>
       <!-- 🎬 Script agar popup muncul otomatis -->
-      <script>
-        window.addEventListener("load", function () {
-          const eventModal = new bootstrap.Modal(
-            document.getElementById("eventModal")
-          );
-          setTimeout(() => {
-            eventModal.show();
-          }, 800); // muncul setelah 0.8 detik
-        });
-      </script>
-
+      <?php if ($event): // Tambahkan kondisi PHP di SINI ?> <script>
+// Tampilkan modal otomatis hanya kalau ada event #
+//  var myModal = new bootstrap.Modal(document.getElementById('eventModal'));
+window.addEventListener('load', () => {
+myModal.show(); });
+</script>
+      <?php endif;?>
 </body>
 
 </html>

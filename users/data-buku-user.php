@@ -9,21 +9,9 @@
 </head>
 <body class="bg-gradient-to-br from-gray-800 to-gray-900 min-h-screen text-white font-sans">
 
-  <!-- NAVBAR -->
-  <header class="fixed top-0 left-0 w-full z-20 bg-gray-800/60 backdrop-blur-md shadow-md">
-    <nav class="flex flex-wrap justify-between items-center px-6 py-3">
-      <a href="beranda.html" class="text-white font-bold text-lg bg-white/10 px-4 py-2 rounded-xl hover:bg-white/20 transition">
-        Beranda
-      </a>
-      <div class="flex flex-wrap justify-center gap-2 mt-2 sm:mt-0">
-        <a href="data-buku-user.html" class="bg-white/10 text-white/80 px-3 py-1 rounded-xl hover:bg-white/20 transition font-semibold">Buku</a>
-        <a href="event.html" class="bg-white/10 text-white/80 px-3 py-1 rounded-xl hover:bg-white/20 transition font-semibold">Event</a>
-        <a href="peminjaman.html" class="bg-white/10 text-white/80 px-3 py-1 rounded-xl hover:bg-white/20 transition font-semibold">Peminjaman</a>
-        <a href="profil.html" class="bg-white/10 text-white/80 px-3 py-1 rounded-xl hover:bg-white/20 transition font-semibold">Profile</a>
-        <a href="../login.html" class="bg-white/10 text-white/80 px-3 py-1 rounded-xl hover:bg-white/20 transition font-semibold">Login</a>
-      </div>
-    </nav>
-  </header>
+  <?php
+  include '../layout/header_user.html';
+  ?>
 
   <!-- MAIN CONTENT -->
   <main class="pt-28 px-6 max-w-7xl mx-auto">

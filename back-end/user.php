@@ -4,16 +4,18 @@ include "koneksi.php";
 session_start();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $id = $_POST['id_anggota'];
-    $password = $_POST['password']; 
-    $nama = $_POST['nama_anggota'];
+    $login = trim($_POST['login']);        // bisa ID atau nama
+    $password = trim($_POST['password']);  // tanpa hash
 
-    $query = "SELECT * FROM anggota_perpus WHERE id_anggota='$id' AND password='$password'";
-    $result = mysqli_query($koneksi, $query);
+    // Query: cari user berdasarkan id_anggota ATAU nama
+    $query = "SELECT * FROM anggota_perpus 
+              WHERE (id_anggota = '$login' OR nama = '$login') 
+              LIMIT 1";
+              $result = mysqli_query($koneksi, $query);
 
     if (mysqli_num_rows($result) > 0) {
-        $_SESSION['id_anggota'] = $id;
-        header("Location: index.php");
+        $_SESSION['id_anggota'] =$row['id_anggota'];
+        header("Location: ../users/index.php");
         exit;
     } else {
         echo "<script>alert('Username atau password salah!'); window.location='user.php';</script>";
@@ -110,15 +112,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="login-box">
         <h2>Login User</h2>
         <form action="user.php" method="POST">
+            
+            
             <div class="mb-3">
-                <label for="id_anggota" class="form-label">ID Anggota</label>
-                <input type="text" class="form-control" name="id_anggota" id="id_anggota"
-                    placeholder="Masukkan id_anggota" required />
-            </div>
-            <div class="mb-3">
-                <label for="nama_anggota" class="form-label">Username</label>
-                <input type="text" class="form-control" name="nama_anggota" id="nama_anggota"
-                    placeholder="Masukkan nama anggota" required />
+                <label for="nama_anggota" class="form-label">Username/Id Anggota</label>
+                <input type="text" class="form-control" name="login" placeholder="Masukkan nama anggota" required />
 
             </div>
             <div class="mb-3">
