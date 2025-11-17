@@ -7,6 +7,7 @@ include '../back-end/koneksi.php'; // sesuaikan path koneksinya
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <link rel="shortcut icon" href="../assets/favicon_io/favicon.ico" />
   <title>Status Buku</title>
 </head>
 <body class="bg-gray-100 min-h-screen text-gray-800">
