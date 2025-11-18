@@ -1,108 +1,130 @@
-<?php
-include '../back-end/koneksi.php'; // sesuaikan path koneksinya
-?>
+<?php include '../layout/header_admin.html'; ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-  <link rel="shortcut icon" href="../assets/favicon_io/favicon.ico" />
-  <title>Status Buku</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Status Buku</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
-<body class="bg-gray-100 min-h-screen text-gray-800">
-  <!-- Header -->
-  <header class="fixed top-0 left-0 w-full bg-gray-700/80 backdrop-blur-md z-20 shadow-lg">
-    <nav class="flex flex-wrap justify-between items-center p-3 max-w-6xl mx-auto">
-      <a href="dashboard.html" class="bg-white/10 text-white rounded-2xl px-3 py-1 hover:bg-gray-400 transition font-semibold shadow-lg">Admin</a>
-      <div class="flex flex-wrap gap-3 mt-2 sm:mt-0">
-        <a href="status-buku.php" class="bg-white/10 text-white/80 rounded-2xl px-3 py-1 hover:bg-gray-400 transition font-semibold shadow-lg">Status Buku</a>
-        <a href="manajemen-buku.html" class="bg-white/10 text-white/80 rounded-2xl px-3 py-1 hover:bg-gray-400 transition font-semibold shadow-lg">Data Buku</a>
-        <a href="manajemen-event.html" class="bg-white/10 text-white/80 rounded-2xl px-3 py-1 hover:bg-gray-400 transition font-semibold shadow-lg">Data events</a>
-        <a href="../login.html" class="bg-white/10 text-white/80 rounded-2xl px-3 py-1 hover:bg-gray-400 transition font-semibold shadow-lg">Login</a>
-      </div>
-    </nav>
-  </header>
 
-  <!-- Main Content -->
-  <main class="pt-24 px-6 flex flex-col items-center">
-    <section class="w-full max-w-5xl bg-white rounded-2xl shadow-md p-6">
-      <h1 class="text-2xl font-bold text-gray-700 mb-4">Status Peminjaman Buku</h1>
+<body class="bg-gray-100">
 
-      <!-- Form Pencarian -->
-      <form method="GET" class="flex flex-col md:flex-row justify-between mb-6 gap-3">
-        <input
-          type="text"
-          name="search"
-          placeholder="Cari nama buku atau pengguna..."
-          class="w-full md:w-2/3 border border-gray-300 rounded-lg p-2 focus:ring focus:ring-blue-300"
-          value="<?= isset($_GET['search']) ? htmlspecialchars($_GET['search']) : '' ?>"
-        />
-        <button
-          type="submit"
-          class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold"
-        >
-          Cari
-        </button>
-      </form>
+    <main class="p-6">
+        <h1 class="text-2xl font-semibold mb-6">Status Peminjaman Buku</h1>
 
-      <!-- Tabel Status Buku -->
-      <div class="overflow-x-auto">
-        <table class="min-w-full border border-gray-300 rounded-lg overflow-hidden">
-          <thead class="bg-gray-700 text-white">
-            <tr>
-              <th class="px-4 py-2 text-left">Nama Buku</th>
-              <th class="px-4 py-2 text-left">Peminjam</th>
-              <th class="px-4 py-2 text-left">Tanggal Pinjam</th>
-              <th class="px-4 py-2 text-left">Tanggal Kembali</th>
-              <th class="px-4 py-2 text-left">Batas Waktu</th>
-              <th class="px-4 py-2 text-left">Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            <?php
-            $search = isset($_GET['search']) ? mysqli_real_escape_string($conn, $_GET['search']) : '';
-            $query = "SELECT * FROM peminjaman";
-            if ($search) {
-              $query .= " WHERE nama_buku LIKE '%$search%' OR nama_peminjam LIKE '%$search%'";
+        <!-- Table -->
+        <div class="bg-white rounded shadow p-4 overflow-x-auto">
+            <table class="min-w-full border">
+                <thead class="bg-gray-700 text-white">
+                    <tr>
+                        <th class="p-2 border">ID</th>
+                        <th class="p-2 border">Nama Peminjam</th>
+                        <th class="p-2 border">Judul Buku</th>
+                        <th class="p-2 border">Tanggal Pinjam</th>
+                        <th class="p-2 border">Tanggal Kembali</th>
+                        <th class="p-2 border">Status</th>
+                        <th class="p-2 border">Aksi</th>
+                    </tr>
+                </thead>
+
+                <tbody id="status-table"></tbody>
+            </table>
+        </div>
+
+        <!-- Modal -->
+        <div id="status-modal" class="hidden fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center">
+            <div class="bg-white p-6 rounded w-96 shadow-lg">
+                <h2 class="text-xl font-semibold mb-4">Ubah Status</h2>
+
+                <input type="hidden" id="edit-id">
+
+                <label class="block mb-4">
+                    <span class="text-sm">Status</span>
+                    <select id="edit-status" class="w-full border p-2 rounded">
+                        <option value="dipinjam">Dipinjam</option>
+                        <option value="dikembalikan">Dikembalikan</option>
+                        <option value="telat">Telat</option>
+                    </select>
+                </label>
+
+                <div class="flex justify-end gap-2">
+                    <button onclick="closeStatusModal()" class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">Batal</button>
+                    <button onclick="saveStatus()" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Simpan</button>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        async function loadStatus() {
+            try {
+                const response = await fetch("api/get-status.php");
+                const data = await response.json();
+
+                const tbody = document.getElementById("status-table");
+                tbody.innerHTML = "";
+
+                data.forEach(st => {
+                    const tr = document.createElement("tr");
+
+                    tr.innerHTML = `
+                        <td class="border p-2">${st.id}</td>
+                        <td class="border p-2">${st.nama}</td>
+                        <td class="border p-2">${st.judul}</td>
+                        <td class="border p-2">${st.tgl_pinjam}</td>
+                        <td class="border p-2">${st.tgl_kembali ?? "-"}</td>
+                        <td class="border p-2 capitalize">${st.status}</td>
+                        <td class="border p-2 text-center">
+                            <button class="px-3 py-1 bg-yellow-400 rounded hover:bg-yellow-500"
+                                onclick='openStatusEdit(${JSON.stringify(st)})'>
+                                Edit
+                            </button>
+                        </td>
+                    `;
+
+                    tbody.appendChild(tr);
+                });
+            } catch (err) {
+                console.error("Gagal memuat status:", err);
             }
-            $query .= " ORDER BY tgl_pinjam DESC";
+        }
 
-            $result = mysqli_query($conn, $query);
+        function openStatusEdit(st) {
+            document.getElementById("edit-id").value = st.id;
+            document.getElementById("edit-status").value = st.status;
+            document.getElementById("status-modal").classList.remove("hidden");
+        }
 
-            if (mysqli_num_rows($result) > 0) {
-              while ($row = mysqli_fetch_assoc($result)) {
-                $statusClass = match ($row['status']) {
-                  'Dipinjam' => 'bg-yellow-500',
-                  'Dikembalikan' => 'bg-green-500',
-                  'Terlambat' => 'bg-red-500',
-                  default => 'bg-gray-400'
-                };
-                echo "
-                <tr class='hover:bg-gray-100'>
-                  <td class='px-4 py-2 border-t'>{$row['nama_buku']}</td>
-                  <td class='px-4 py-2 border-t'>{$row['nama_peminjam']}</td>
-                  <td class='px-4 py-2 border-t'>{$row['tgl_pinjam']}</td>
-                  <td class='px-4 py-2 border-t'>".($row['tgl_kembali'] ?: '-')."</td>
-                  <td class='px-4 py-2 border-t'>{$row['batas_waktu']} Hari</td>
-                  <td class='px-4 py-2 border-t'>
-                    <span class='text-white px-3 py-1 rounded-lg $statusClass'>{$row['status']}</span>
-                  </td>
-                </tr>";
-              }
-            } else {
-              echo "
-              <tr>
-                <td colspan='6' class='text-center py-4 text-gray-500'>
-                  Tidak ada data peminjaman ditemukan.
-                </td>
-              </tr>";
+        function closeStatusModal() {
+            document.getElementById("status-modal").classList.add("hidden");
+        }
+
+        async function saveStatus() {
+            const formData = new FormData();
+            formData.append("id", document.getElementById("edit-id").value);
+            formData.append("status", document.getElementById("edit-status").value);
+
+            try {
+                const response = await fetch("api/update-status.php", {
+                    method: "POST",
+                    body: formData
+                });
+
+                const result = await response.text();
+                console.log(result);
+
+                closeStatusModal();
+                loadStatus();
+            } catch (err) {
+                console.error("Error update status:", err);
             }
-            ?>
-          </tbody>
-        </table>
-      </div>
-    </section>
-  </main>
+        }
+
+        document.addEventListener("DOMContentLoaded", loadStatus);
+    </script>
+
 </body>
 </html>

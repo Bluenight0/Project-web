@@ -1,12 +1,12 @@
 <?php
-include 'koneksi.php';
+include "../back-end/koneksi.php";
 
 header("Content-Type: application/json");
 $method = $_SERVER['REQUEST_METHOD'];
 
 if ($method === 'GET') {
     // 🔹 Ambil semua data buku
-    $result = mysqli_query($conn, "SELECT * FROM buku ORDER BY id DESC");
+    $result = mysqli_query($koneksi, "SELECT * FROM buku ORDER BY id_buku DESC");
     $books = [];
     while ($row = mysqli_fetch_assoc($result)) {
         $books[] = $row;
@@ -19,19 +19,19 @@ elseif ($method === 'POST') {
     $data = json_decode(file_get_contents("php://input"), true);
 
     if (isset($data['nama'], $data['jenis'], $data['tanggal'])) {
-        $nama = mysqli_real_escape_string($conn, $data['nama']);
-        $jenis = mysqli_real_escape_string($conn, $data['jenis']);
-        $tanggal = mysqli_real_escape_string($conn, $data['tanggal']);
-        $gambar = isset($data['gambar']) ? mysqli_real_escape_string($conn, $data['gambar']) : '';
-        $status = isset($data['status']) ? mysqli_real_escape_string($conn, $data['status']) : 'Tersedia';
+        $nama = mysqli_real_escape_string($koneksi, $data['nama']);
+        $jenis = mysqli_real_escape_string($koneksi, $data['jenis']);
+        $tanggal = mysqli_real_escape_string($koneksi, $data['tanggal']);
+        $gambar = isset($data['gambar']) ? mysqli_real_escape_string($koneksi, $data['gambar']) : '';
+        $status = isset($data['status']) ? mysqli_real_escape_string($koneksi, $data['status']) : 'Tersedia';
 
         $query = "INSERT INTO buku (nama, jenis, tanggal, gambar, status) 
                   VALUES ('$nama', '$jenis', '$tanggal', '$gambar', '$status')";
 
-        if (mysqli_query($conn, $query)) {
+        if (mysqli_query($koneksi, $query)) {
             echo json_encode(["status" => "success"]);
         } else {
-            echo json_encode(["status" => "error", "message" => mysqli_error($conn)]);
+            echo json_encode(["status" => "error", "message" => mysqli_error($koneksi)]);
         }
     } else {
         echo json_encode(["status" => "invalid_data"]);
@@ -44,20 +44,20 @@ elseif ($method === 'PUT') {
 
     if (isset($data['id'], $data['nama'], $data['jenis'], $data['tanggal'])) {
         $id = intval($data['id']);
-        $nama = mysqli_real_escape_string($conn, $data['nama']);
-        $jenis = mysqli_real_escape_string($conn, $data['jenis']);
-        $tanggal = mysqli_real_escape_string($conn, $data['tanggal']);
-        $gambar = isset($data['gambar']) ? mysqli_real_escape_string($conn, $data['gambar']) : '';
-        $status = isset($data['status']) ? mysqli_real_escape_string($conn, $data['status']) : 'Tersedia';
+        $nama = mysqli_real_escape_string($koneksi, $data['nama']);
+        $jenis = mysqli_real_escape_string($koneksi, $data['jenis']);
+        $tanggal = mysqli_real_escape_string($koneksi, $data['tanggal']);
+        $gambar = isset($data['gambar']) ? mysqli_real_escape_string($koneksi, $data['gambar']) : '';
+        $status = isset($data['status']) ? mysqli_real_escape_string($koneksi, $data['status']) : 'Tersedia';
 
         $query = "UPDATE buku 
                   SET nama='$nama', jenis='$jenis', tanggal='$tanggal', gambar='$gambar', status='$status' 
                   WHERE id=$id";
 
-        if (mysqli_query($conn, $query)) {
+        if (mysqli_query($koneksi, $query)) {
             echo json_encode(["status" => "success"]);
         } else {
-            echo json_encode(["status" => "error", "message" => mysqli_error($conn)]);
+            echo json_encode(["status" => "error", "message" => mysqli_error($koneksi)]);
         }
     } else {
         echo json_encode(["status" => "invalid_data"]);
@@ -72,10 +72,10 @@ elseif ($method === 'DELETE') {
         $id = intval($data['id']);
         $query = "DELETE FROM buku WHERE id=$id";
 
-        if (mysqli_query($conn, $query)) {
+        if (mysqli_query($koneksi, $query)) {
             echo json_encode(["status" => "success"]);
         } else {
-            echo json_encode(["status" => "error", "message" => mysqli_error($conn)]);
+            echo json_encode(["status" => "error", "message" => mysqli_error($koneksi)]);
         }
     } else {
         echo json_encode(["status" => "invalid_data"]);

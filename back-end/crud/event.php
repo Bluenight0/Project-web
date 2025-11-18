@@ -1,7 +1,7 @@
 <?php
 header("Content-Type: application/json");
 session_start();
-include "koneksi.php";
+include "../back-end/koneksi.php";
 
 // Pastikan user login
 $user_id = isset($_SESSION['user_id']) ? intval($_SESSION['user_id']) : 0;
