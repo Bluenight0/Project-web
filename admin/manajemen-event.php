@@ -1,23 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-  <title>Manajemen Event</title>
-</head>
-<body class="bg-gray-100 min-h-screen text-gray-800">
-   <header class="fixed top-0 left-0 w-full bg-gray-700/80 backdrop-blur-md z-20 shadow-lg">
-    <nav class="flex flex-wrap justify-between items-center p-3 max-w-6xl mx-auto">
-      <a href="dashboard.html" class="bg-white/10 text-white rounded-2xl px-3 py-1 hover:bg-gray-400 transition font-semibold shadow-lg">Admin</a>
-      <div class="flex flex-wrap gap-3 mt-2 sm:mt-0">
-        <a href="status-buku.php" class="bg-white/10 text-white/80 rounded-2xl px-3 py-1 hover:bg-gray-400 transition font-semibold shadow-lg">Status Buku</a>
-        <a href="manajemen-buku.html" class="bg-white/10 text-white/80 rounded-2xl px-3 py-1 hover:bg-gray-400 transition font-semibold shadow-lg">Data Buku</a>
-        <a href="manajemen-event.html" class="bg-white/10 text-white/80 rounded-2xl px-3 py-1 hover:bg-gray-400 transition font-semibold shadow-lg">Data events</a>
-        <a href="../login.html" class="bg-white/10 text-white/80 rounded-2xl px-3 py-1 hover:bg-gray-400 transition font-semibold shadow-lg">Login</a>
-      </div>
-    </nav>
-  </header>
+<?php
+include '../layout/header_admin.html';
+?>
 
   <main class="pt-28 px-4 flex flex-col items-center">
     <section class="w-full max-w-6xl bg-white rounded-2xl shadow-md p-6">

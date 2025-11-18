@@ -1,27 +1,6 @@
 <?php
-include '../back-end/koneksi.php'; // sesuaikan path koneksinya
+include '../layout/header_admin.html';
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-  <title>Status Buku</title>
-</head>
-<body class="bg-gray-100 min-h-screen text-gray-800">
-  <!-- Header -->
-  <header class="fixed top-0 left-0 w-full bg-gray-700/80 backdrop-blur-md z-20 shadow-lg">
-    <nav class="flex flex-wrap justify-between items-center p-3 max-w-6xl mx-auto">
-      <a href="dashboard.html" class="bg-white/10 text-white rounded-2xl px-3 py-1 hover:bg-gray-400 transition font-semibold shadow-lg">Admin</a>
-      <div class="flex flex-wrap gap-3 mt-2 sm:mt-0">
-        <a href="status-buku.php" class="bg-white/10 text-white/80 rounded-2xl px-3 py-1 hover:bg-gray-400 transition font-semibold shadow-lg">Status Buku</a>
-        <a href="manajemen-buku.html" class="bg-white/10 text-white/80 rounded-2xl px-3 py-1 hover:bg-gray-400 transition font-semibold shadow-lg">Data Buku</a>
-        <a href="manajemen-event.html" class="bg-white/10 text-white/80 rounded-2xl px-3 py-1 hover:bg-gray-400 transition font-semibold shadow-lg">Data events</a>
-        <a href="../login.html" class="bg-white/10 text-white/80 rounded-2xl px-3 py-1 hover:bg-gray-400 transition font-semibold shadow-lg">Login</a>
-      </div>
-    </nav>
-  </header>
 
   <!-- Main Content -->
   <main class="pt-24 px-6 flex flex-col items-center">
@@ -60,14 +39,14 @@ include '../back-end/koneksi.php'; // sesuaikan path koneksinya
           </thead>
           <tbody>
             <?php
-            $search = isset($_GET['search']) ? mysqli_real_escape_string($conn, $_GET['search']) : '';
+            $search = isset($_GET['search']) ? mysqli_real_escape_string($koneksi, $_GET['search']) : '';
             $query = "SELECT * FROM peminjaman";
             if ($search) {
               $query .= " WHERE nama_buku LIKE '%$search%' OR nama_peminjam LIKE '%$search%'";
             }
             $query .= " ORDER BY tgl_pinjam DESC";
 
-            $result = mysqli_query($conn, $query);
+            $result = mysqli_query($koneksi, $query);
 
             if (mysqli_num_rows($result) > 0) {
               while ($row = mysqli_fetch_assoc($result)) {

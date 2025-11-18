@@ -14,6 +14,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               $result = mysqli_query($koneksi, $query);
 
     if (mysqli_num_rows($result) > 0) {
+        $row = mysqli_fetch_assoc($result);
+
         $_SESSION['id_anggota'] =$row['id_anggota'];
         header("Location: ../users/index.php");
         exit;

@@ -1,12 +1,12 @@
 <?php
 header("Content-Type: application/json");
-include "koneksi.php";
+include "../back-end/koneksi.php";
 
 $method = $_SERVER["REQUEST_METHOD"];
 
 switch ($method) {
   case "GET":
-    $result = mysqli_query($conn, "SELECT * FROM peminjaman ORDER BY tgl_pinjam DESC");
+    $result = mysqli_query($koneksi, "SELECT * FROM peminjaman ORDER BY tgl_pinjam DESC");
     $rows = [];
     while ($row = mysqli_fetch_assoc($result)) {
       $rows[] = $row;
@@ -16,14 +16,14 @@ switch ($method) {
 
   case "POST":
     $data = json_decode(file_get_contents("php://input"), true);
-    $namaBuku = mysqli_real_escape_string($conn, $data["nama_buku"]);
-    $namaPeminjam = mysqli_real_escape_string($conn, $data["nama_peminjam"]);
+    $namaBuku = mysqli_real_escape_string($koneksi, $data["nama_buku"]);
+    $namaPeminjam = mysqli_real_escape_string($koneksi, $data["nama_peminjam"]);
     $tglPinjam = date("Y-m-d");
     $batasWaktu = 3;
 
     $query = "INSERT INTO peminjaman (nama_buku, nama_peminjam, tgl_pinjam, batas_waktu, status)
               VALUES ('$namaBuku', '$namaPeminjam', '$tglPinjam', $batasWaktu, 'Dipinjam')";
-    $ok = mysqli_query($conn, $query);
+    $ok = mysqli_query($koneksi, $query);
 
     echo json_encode(["status" => $ok ? "success" : "error"]);
     break;
@@ -31,11 +31,11 @@ switch ($method) {
   case "PUT":
     $data = json_decode(file_get_contents("php://input"), true);
     $id = intval($data["id"]);
-    $status = mysqli_real_escape_string($conn, $data["status"]);
+    $status = mysqli_real_escape_string($koneksi, $data["status"]);
     $tglKembali = $status === "Dikembalikan" ? date("Y-m-d") : null;
 
     $query = "UPDATE peminjaman SET status='$status', tgl_kembali='$tglKembali' WHERE id=$id";
-    $ok = mysqli_query($conn, $query);
+    $ok = mysqli_query($koneksi, $query);
 
     echo json_encode(["status" => $ok ? "success" : "error"]);
     break;

@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -113,14 +114,14 @@ button:hover {
     <div class="card shadow p-3 rounded" style="width: 22rem">
       <div class="card-body">
         <h3>login</h3>
-        <form method="POST" action="">
+        <form method="POST" action="login.php">
           <div class="mb-3">
             <label for="Admin" class="form-label">Username:</label>
-            <input type="text" class="form-control" id="Admin" placeholder="Enter Username" name="Admin" />
+            <input type="text" class="form-control" id="Admin" placeholder="Enter Username" name="nama_admin" />
           </div>
           <div class="mb-3">
-            <label for="Password" class="form-label">Password:</label>
-            <input type="password" class="form-control" id="Password" placeholder="Enter password" name="Password" />
+            <label for="password" class="form-label">Password:</label>
+            <input type="password" class="form-control" id="Password" placeholder="Enter password" name="password" />
           </div>
           <button type="submit" class="btn btn-primary">Submit</button>
         </form>
@@ -190,7 +191,8 @@ form.addEventListener("submit", async (event) => {
       easing: "easeInBack",
       duration: 700,
       complete: () => {
-        window.location.href = "./admin/dashbboard.html";
+        window.location.href = "/projek-pustaka/admin/index.php";
+
       },
     });
   } else {
