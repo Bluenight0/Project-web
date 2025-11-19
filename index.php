@@ -26,9 +26,31 @@ $event = mysqli_fetch_assoc($result);
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
   <!-- AOS CSS -->
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-<link rel="stylesheet" href="assets/style.css">
+  <link rel="stylesheet" href="assets/style.css">
+  <style>
+    .service-card {
+        border-radius: 1.5rem;
+        background: #ffffff;
+        transition: 0.3s ease;
+    }
+    .service-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 18px 35px rgba(0,0,0,0.08);
+    }
 
-  
+    .icon-circle {
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        background: #f1f5f9;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #0d6efd;
+    }
+</style>
+
+
 </head>
 
 <body>
@@ -48,16 +70,16 @@ $event = mysqli_fetch_assoc($result);
       <div class="collapse navbar-collapse justify-content-end me-3" id="navbarNav">
         <ul class="navbar-nav">
           <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <!-- href diubah menjadi trigger modal -->
-                        <a class="nav-link" href="#koleksi-buku">Koleksi Buku</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Layanan</a>
-                    </li>
-                </ul>
-            </div>
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <!-- href diubah menjadi trigger modal -->
+                <a class="nav-link" href="#koleksi-buku">Koleksi Buku</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Layanan</a>
+              </li>
+            </ul>
+          </div>
           <li class="nav-item">
             <a class="nav-link" href="#footerq">Tentang Kami</a>
           </li>
@@ -260,6 +282,49 @@ $event = mysqli_fetch_assoc($result);
       </div>
     </div>
   </section>
+  <!-- layanan -->
+  <div class="container py-5">
+    <h3 class="mb-4 fw-bold text-center">Layanan Kami</h3>
+
+    <div class="d-flex justify-content-between gap-4 flex-wrap">
+
+        <!-- CARD 1 -->
+        <div class="card border-0 shadow-sm service-card p-2" style="width: 22rem;">
+            <div class="card-body text-center">
+                <div class="icon-circle mb-3">
+                    <i class="bi bi-person-plus fs-3"></i>
+                </div>
+                <h5 class="card-title fw-semibold">Pendaftaran Anggota</h5>
+            </div>
+        </div>
+
+        <!-- CARD 2 -->
+        <div class="card border-0 shadow-sm service-card p-2" style="width: 22rem;">
+            <div class="card-body text-center">
+                <div class="icon-circle mb-3">
+                    <i class="bi bi-book fs-3"></i>
+                </div>
+                <h5 class="card-title fw-semibold">Peminjaman Buku</h5>
+            </div>
+        </div>
+
+        <!-- CARD 3 -->
+        <div class="card border-0 shadow-sm service-card p-2" style="width: 22rem;">
+            <div class="card-body text-center">
+                <div class="icon-circle mb-3">
+                    <i class="bi bi-calendar-event fs-3"></i>
+                </div>
+                <h5 class="card-title fw-semibold">Pendaftaran Event</h5>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+<!-- Bootstrap Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap
 
   <!-- Koleksi Buku -->
   <section id="koleksi-buku" class="container mt-5">
@@ -290,35 +355,35 @@ $event = mysqli_fetch_assoc($result);
 
   <!-- 📢 Popup Event Modal -->
   <?php if ($event): ?>
-<div class="modal fade" id="eventModal" tabindex="-1" aria-labelledby="eventModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content shadow-lg">
-      <div class="modal-header bg-primary text-white">
-        <h5 class="modal-title" id="eventModalLabel">
-          🎉 EVENT TERBARU
-        </h5>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <p><?php echo htmlspecialchars($event['judul']); ?></p>
-        <p><?php echo nl2br(htmlspecialchars($event['deskripsi'])); ?></p>
-        <ul>
-          <li>🗓️
-            <?php echo date("d", strtotime($event['tanggal_mulai'])); ?>–
-            <?php echo date("d F Y", strtotime($event['tanggal_selesai'])); ?>
-          </li>
-          <li>📍 <?php echo htmlspecialchars($event['lokasi']); ?></li>
-        </ul>
-      </div>
-      <div class="modal-footer">
-        <a href="<?php echo htmlspecialchars($event['link_event']); ?>" class="btn btn-primary" target="_blank">
-          🔗 Lihat Detail
-        </a>
+    <div class="modal fade" id="eventModal" tabindex="-1" aria-labelledby="eventModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content shadow-lg">
+          <div class="modal-header bg-primary text-white">
+            <h5 class="modal-title" id="eventModalLabel">
+              🎉 EVENT TERBARU
+            </h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <p><?php echo htmlspecialchars($event['judul']); ?></p>
+            <p><?php echo nl2br(htmlspecialchars($event['deskripsi'])); ?></p>
+            <ul>
+              <li>🗓️
+                <?php echo date("d", strtotime($event['tanggal_mulai'])); ?>–
+                <?php echo date("d F Y", strtotime($event['tanggal_selesai'])); ?>
+              </li>
+              <li>📍 <?php echo htmlspecialchars($event['lokasi']); ?></li>
+            </ul>
+          </div>
+          <div class="modal-footer">
+            <a href="<?php echo htmlspecialchars($event['link_event']); ?>" class="btn btn-primary" target="_blank">
+              🔗 Lihat Detail
+            </a>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</div>
-<?php endif; ?>
+  <?php endif; ?>
 
 
 
@@ -383,57 +448,59 @@ $event = mysqli_fetch_assoc($result);
           </ul>
         </div>
       </div>
-      </footer>
+  </footer>
 
 
 
 
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-      <script>
-        const heroCarousel = document.querySelector('#heroCarousel');
-        const carousel = new bootstrap.Carousel(heroCarousel, {
-          interval: 3000,
-          ride: 'carousel'
-        });
-      </script>
-      <!-- aos src -->
-      <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-      <script>
-        AOS.init({
-          duration: 1000, // durasi animasi (ms)
-          once: false,     // animasi muncul
-          mirror: true, //animasi tetap mucul
-        });
-      </script>
-      <!-- jQuery -->
-      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-      <!-- Turn.js  -->
-      <script src="library/turn.js-master/turn.js"></script>
+  <script>
+    const heroCarousel = document.querySelector('#heroCarousel');
+    const carousel = new bootstrap.Carousel(heroCarousel, {
+      interval: 3000,
+      ride: 'carousel'
+    });
+  </script>
+  <!-- aos src -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init({
+      duration: 1000, // durasi animasi (ms)
+      once: false,     // animasi muncul
+      mirror: true, //animasi tetap mucul
+    });
+  </script>
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <!-- Turn.js  -->
+  <script src="library/turn.js-master/turn.js"></script>
 
-      <script>
-        $(document).ready(function () {
-          $("#book").turn({
-            width: 1000,
-            height: 700,
-            autoCenter: true,
-            elevation: 60,
-            gradients: true
-          });
+  <script>
+    $(document).ready(function () {
+      $("#book").turn({
+        width: 1000,
+        height: 700,
+        autoCenter: true,
+        elevation: 60,
+        gradients: true
+      });
 
-          document.getElementById("openBook").addEventListener("click", function () {
-            $("#book").turn("page", 2);
-          });
-        });
-      </script>
-      <!-- 🎬 Script agar popup muncul otomatis -->
-      <?php if ($event): // Tambahkan kondisi PHP di SINI ?> <script>
-// Tampilkan modal otomatis hanya kalau ada event #
-//  var myModal = new bootstrap.Modal(document.getElementById('eventModal'));
-window.addEventListener('load', () => {
-myModal.show(); });
-</script>
-      <?php endif;?>
+      document.getElementById("openBook").addEventListener("click", function () {
+        $("#book").turn("page", 2);
+      });
+    });
+  </script>
+  <!-- 🎬 Script agar popup muncul otomatis -->
+  <?php if ($event): // Tambahkan kondisi PHP di SINI ?>
+    <script>
+      // Tampilkan modal otomatis hanya kalau ada event #
+      //  var myModal = new bootstrap.Modal(document.getElementById('eventModal'));
+      window.addEventListener('load', () => {
+        myModal.show();
+      });
+    </script>
+  <?php endif; ?>
 </body>
 
 </html>
