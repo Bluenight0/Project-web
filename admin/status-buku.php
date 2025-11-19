@@ -14,20 +14,15 @@
 
   <main class="pt-24 px-4 sm:px-6 pb-16 max-w-7xl mx-auto">
 
-    <!-- TITLE -->
     <h1 class="text-3xl sm:text-4xl font-extrabold mb-6 text-teal-300 drop-shadow-lg">
       Status Peminjaman Buku
     </h1>
 
-    <!-- WRAPPER FILTER STATUS -->
+    <!-- FILTER STATUS -->
     <div class="w-full flex justify-end mb-4 px-4">
       <select id="filter-status" class="
-            bg-gray-900/60
-            text-teal-200
-            border border-white/20
-            backdrop-blur-xl
-            rounded-xl
-            px-4 py-2
+            bg-gray-900/60 text-teal-200 border border-white/20
+            backdrop-blur-xl rounded-xl px-4 py-2
             shadow-[0_0_10px_rgba(0,0,0,0.4)]
             focus:outline-none focus:ring-2 focus:ring-teal-400
         ">
@@ -38,7 +33,7 @@
       </select>
     </div>
 
-    <!-- TABEL STATUS BUKU -->
+    <!-- TABEL STATUS -->
     <div class="overflow-x-auto px-4">
       <table class="min-w-full text-sm text-white">
         <thead>
@@ -53,50 +48,21 @@
           </tr>
         </thead>
 
-        <tbody id="status-table">
-          <!-- Contoh data (nanti diganti JS senpai) -->
-          <tr class="border-b border-white/10">
-            <td class="p-3">1</td>
-            <td class="p-3">Adit</td>
-            <td class="p-3">Pemrograman Web</td>
-            <td class="p-3">2025-11-01</td>
-            <td class="p-3">2025-11-08</td>
-
-            <td class="p-3">
-              <span class="px-3 py-1 rounded-full text-xs font-semibold bg-blue-400 text-gray-900">
-                Dipinjam
-              </span>
-            </td>
-
-            <td class="p-3 text-center">
-              <button
-                class="px-3 py-1 rounded-xl bg-yellow-300 text-slate-900 font-semibold hover:bg-yellow-200 transition">
-                Update
-              </button>
-            </td>
-          </tr>
-
-          <!-- Dan seterusnya… -->
-        </tbody>
+        <tbody id="status-table"></tbody>
       </table>
     </div>
 
-
     <script>
-      // ======================
-      // STATUS -> CLASS MAP (sesuai database senpai)
-      // ======================
+      // Warna label status
       const statusClass = {
         dipinjam: "bg-blue-400 text-slate-900",
         dikembalikan: "bg-green-400 text-slate-900",
         terlambat: "bg-red-400 text-slate-900",
       };
 
-      // ======================
-      // LOAD STATUS BUKU
-      // ======================
+      // Load status peminjaman
       async function loadStatus() {
-        const res = await fetch("api/get-status.php");
+        const res = await fetch("../back-end/crud/get-status.php");
         const data = await res.json();
 
         const filter = document.getElementById("filter-status").value;
@@ -106,9 +72,9 @@
           : data;
 
         document.getElementById("status-table").innerHTML = filtered.map(s => {
-          const key = s.status.toLowerCase(); // fix utama
+          const key = s.status.toLowerCase();
           return `
-            <tr>
+            <tr class="border-b border-white/10">
                 <td class="p-3">${s.id}</td>
                 <td class="p-3">${s.nama_peminjam}</td>
                 <td class="p-3">${s.judul}</td>
@@ -116,16 +82,16 @@
                 <td class="p-3">${s.jatuh_tempo}</td>
 
                 <td class="p-3">
-                    <span class="px-3 py-1 rounded-full text-xs font-semibold 
-                        ${statusClass[key] || 'bg-white/20'}">
+                    <span class="px-3 py-1 rounded-full text-xs font-semibold ${statusClass[key] || 'bg-white/20'}">
                         ${s.status}
                     </span>
                 </td>
 
                 <td class="p-3 text-center">
-                    <button onclick='openModal(${JSON.stringify(s)})'
-                        class="px-3 py-1 rounded-xl bg-yellow-300 text-slate-900 font-semibold hover:bg-yellow-200 transition">
-                        Update
+                    <button 
+                      onclick='openUpdateModal(${JSON.stringify(s)})'
+                      class="px-3 py-1 rounded-xl bg-yellow-300 text-slate-900 font-semibold hover:bg-yellow-200 transition">
+                      Update
                     </button>
                 </td>
             </tr>
@@ -133,9 +99,12 @@
         }).join('');
       }
 
+      // reload saat filter berubah
+      document.getElementById("filter-status").addEventListener("change", loadStatus);
+
+      // jalankan pertama kali
+      document.addEventListener("DOMContentLoaded", loadStatus);
     </script>
 
-
 </body>
-
 </html>
