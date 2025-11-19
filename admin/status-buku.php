@@ -1,130 +1,141 @@
-<?php include '../layout/header_admin.html'; ?>
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Status Buku</title>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <title>Status Peminjaman Buku</title>
 </head>
 
-<body class="bg-gray-100">
+<body class="min-h-screen bg-gradient-to-br from-slate-900 via-slate-950 to-teal-900 text-white">
 
-    <main class="p-6">
-        <h1 class="text-2xl font-semibold mb-6">Status Peminjaman Buku</h1>
+  <?php include '../layout/header_admin.html'; ?>
 
-        <!-- Table -->
-        <div class="bg-white rounded shadow p-4 overflow-x-auto">
-            <table class="min-w-full border">
-                <thead class="bg-gray-700 text-white">
-                    <tr>
-                        <th class="p-2 border">ID</th>
-                        <th class="p-2 border">Nama Peminjam</th>
-                        <th class="p-2 border">Judul Buku</th>
-                        <th class="p-2 border">Tanggal Pinjam</th>
-                        <th class="p-2 border">Tanggal Kembali</th>
-                        <th class="p-2 border">Status</th>
-                        <th class="p-2 border">Aksi</th>
-                    </tr>
-                </thead>
+  <main class="pt-24 px-4 sm:px-6 pb-16 max-w-7xl mx-auto">
 
-                <tbody id="status-table"></tbody>
-            </table>
-        </div>
+    <!-- TITLE -->
+    <h1 class="text-3xl sm:text-4xl font-extrabold mb-6 text-teal-300 drop-shadow-lg">
+      Status Peminjaman Buku
+    </h1>
 
-        <!-- Modal -->
-        <div id="status-modal" class="hidden fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center">
-            <div class="bg-white p-6 rounded w-96 shadow-lg">
-                <h2 class="text-xl font-semibold mb-4">Ubah Status</h2>
+    <!-- WRAPPER FILTER STATUS -->
+    <div class="w-full flex justify-end mb-4 px-4">
+      <select id="filter-status" class="
+            bg-gray-900/60
+            text-teal-200
+            border border-white/20
+            backdrop-blur-xl
+            rounded-xl
+            px-4 py-2
+            shadow-[0_0_10px_rgba(0,0,0,0.4)]
+            focus:outline-none focus:ring-2 focus:ring-teal-400
+        ">
+        <option value="">Semua Status</option>
+        <option value="dipinjam" class="text-black">Dipinjam</option>
+        <option value="dikembalikan" class="text-black">Dikembalikan</option>
+        <option value="terlambat" class="text-black">Terlambat</option>
+      </select>
+    </div>
 
-                <input type="hidden" id="edit-id">
+    <!-- TABEL STATUS BUKU -->
+    <div class="overflow-x-auto px-4">
+      <table class="min-w-full text-sm text-white">
+        <thead>
+          <tr class="bg-gray-800/70 backdrop-blur-md">
+            <th class="p-3 text-left">ID</th>
+            <th class="p-3 text-left">Peminjam</th>
+            <th class="p-3 text-left">Judul</th>
+            <th class="p-3 text-left">Tgl Pinjam</th>
+            <th class="p-3 text-left">Jatuh Tempo</th>
+            <th class="p-3 text-left">Status</th>
+            <th class="p-3 text-center">Aksi</th>
+          </tr>
+        </thead>
 
-                <label class="block mb-4">
-                    <span class="text-sm">Status</span>
-                    <select id="edit-status" class="w-full border p-2 rounded">
-                        <option value="dipinjam">Dipinjam</option>
-                        <option value="dikembalikan">Dikembalikan</option>
-                        <option value="telat">Telat</option>
-                    </select>
-                </label>
+        <tbody id="status-table">
+          <!-- Contoh data (nanti diganti JS senpai) -->
+          <tr class="border-b border-white/10">
+            <td class="p-3">1</td>
+            <td class="p-3">Adit</td>
+            <td class="p-3">Pemrograman Web</td>
+            <td class="p-3">2025-11-01</td>
+            <td class="p-3">2025-11-08</td>
 
-                <div class="flex justify-end gap-2">
-                    <button onclick="closeStatusModal()" class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">Batal</button>
-                    <button onclick="saveStatus()" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Simpan</button>
-                </div>
-            </div>
-        </div>
+            <td class="p-3">
+              <span class="px-3 py-1 rounded-full text-xs font-semibold bg-blue-400 text-gray-900">
+                Dipinjam
+              </span>
+            </td>
 
-    </main>
+            <td class="p-3 text-center">
+              <button
+                class="px-3 py-1 rounded-xl bg-yellow-300 text-slate-900 font-semibold hover:bg-yellow-200 transition">
+                Update
+              </button>
+            </td>
+          </tr>
+
+          <!-- Dan seterusnya… -->
+        </tbody>
+      </table>
+    </div>
+
 
     <script>
-        async function loadStatus() {
-            try {
-                const response = await fetch("api/get-status.php");
-                const data = await response.json();
+      // ======================
+      // STATUS -> CLASS MAP (sesuai database senpai)
+      // ======================
+      const statusClass = {
+        dipinjam: "bg-blue-400 text-slate-900",
+        dikembalikan: "bg-green-400 text-slate-900",
+        terlambat: "bg-red-400 text-slate-900",
+      };
 
-                const tbody = document.getElementById("status-table");
-                tbody.innerHTML = "";
+      // ======================
+      // LOAD STATUS BUKU
+      // ======================
+      async function loadStatus() {
+        const res = await fetch("api/get-status.php");
+        const data = await res.json();
 
-                data.forEach(st => {
-                    const tr = document.createElement("tr");
+        const filter = document.getElementById("filter-status").value;
 
-                    tr.innerHTML = `
-                        <td class="border p-2">${st.id}</td>
-                        <td class="border p-2">${st.nama}</td>
-                        <td class="border p-2">${st.judul}</td>
-                        <td class="border p-2">${st.tgl_pinjam}</td>
-                        <td class="border p-2">${st.tgl_kembali ?? "-"}</td>
-                        <td class="border p-2 capitalize">${st.status}</td>
-                        <td class="border p-2 text-center">
-                            <button class="px-3 py-1 bg-yellow-400 rounded hover:bg-yellow-500"
-                                onclick='openStatusEdit(${JSON.stringify(st)})'>
-                                Edit
-                            </button>
-                        </td>
-                    `;
+        const filtered = filter
+          ? data.filter(i => i.status.toLowerCase() === filter)
+          : data;
 
-                    tbody.appendChild(tr);
-                });
-            } catch (err) {
-                console.error("Gagal memuat status:", err);
-            }
-        }
+        document.getElementById("status-table").innerHTML = filtered.map(s => {
+          const key = s.status.toLowerCase(); // fix utama
+          return `
+            <tr>
+                <td class="p-3">${s.id}</td>
+                <td class="p-3">${s.nama_peminjam}</td>
+                <td class="p-3">${s.judul}</td>
+                <td class="p-3">${s.tgl_pinjam}</td>
+                <td class="p-3">${s.jatuh_tempo}</td>
 
-        function openStatusEdit(st) {
-            document.getElementById("edit-id").value = st.id;
-            document.getElementById("edit-status").value = st.status;
-            document.getElementById("status-modal").classList.remove("hidden");
-        }
+                <td class="p-3">
+                    <span class="px-3 py-1 rounded-full text-xs font-semibold 
+                        ${statusClass[key] || 'bg-white/20'}">
+                        ${s.status}
+                    </span>
+                </td>
 
-        function closeStatusModal() {
-            document.getElementById("status-modal").classList.add("hidden");
-        }
+                <td class="p-3 text-center">
+                    <button onclick='openModal(${JSON.stringify(s)})'
+                        class="px-3 py-1 rounded-xl bg-yellow-300 text-slate-900 font-semibold hover:bg-yellow-200 transition">
+                        Update
+                    </button>
+                </td>
+            </tr>
+        `;
+        }).join('');
+      }
 
-        async function saveStatus() {
-            const formData = new FormData();
-            formData.append("id", document.getElementById("edit-id").value);
-            formData.append("status", document.getElementById("edit-status").value);
-
-            try {
-                const response = await fetch("api/update-status.php", {
-                    method: "POST",
-                    body: formData
-                });
-
-                const result = await response.text();
-                console.log(result);
-
-                closeStatusModal();
-                loadStatus();
-            } catch (err) {
-                console.error("Error update status:", err);
-            }
-        }
-
-        document.addEventListener("DOMContentLoaded", loadStatus);
     </script>
 
+
 </body>
+
 </html>

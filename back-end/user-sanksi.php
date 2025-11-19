@@ -1,14 +1,24 @@
 <?php
-include 'koneksi.php';
+session_start();
+include "../back-end/koneksi.php";
 header("Content-Type: application/json");
 
-if (isset($_GET['user'])) {
-  $user = mysqli_real_escape_string($conn, $_GET['user']);
-  $result = mysqli_query($conn, "SELECT sanksi_aktif, sanksi_mulai FROM users WHERE username='$user'");
-  if ($row = mysqli_fetch_assoc($result)) {
-    echo json_encode($row);
-  } else {
-    echo json_encode(["sanksi_aktif" => 0]);
-  }
+if (!isset($_SESSION['id_anggota'])) {
+    echo json_encode(["status" => "error", "message" => "Belum login"]);
+    exit;
 }
-?>
+
+$user = $_SESSION['id_anggota'];
+
+$result = mysqli_query($koneksi,
+    "SELECT * FROM sanksi 
+     WHERE id_anggota='$user'
+     ORDER BY id DESC"
+);
+
+$rows = [];
+while ($r = mysqli_fetch_assoc($result)) {
+    $rows[] = $r;
+}
+
+echo json_encode($rows);

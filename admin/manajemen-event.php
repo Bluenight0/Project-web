@@ -1,136 +1,185 @@
-<?php include '../layout/header_admin.html'; ?>
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manajemen Event</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <title>Manajemen Event</title>
 </head>
 
-<body class="bg-gray-100">
+<body class="min-h-screen bg-gradient-to-br from-slate-900 via-slate-950 to-cyan-900 text-white">
 
-    <main class="p-6">
-        <h1 class="text-2xl font-semibold mb-6">Manajemen Event</h1>
+<?php include '../layout/header_admin.html'; ?>
 
-        <!-- Table -->
-        <div class="bg-white rounded shadow p-4 overflow-x-auto">
-            <table class="min-w-full border">
-                <thead class="bg-gray-700 text-white">
-                    <tr>
-                        <th class="p-2 border">ID</th>
-                        <th class="p-2 border">Judul</th>
-                        <th class="p-2 border">Tanggal</th>
-                        <th class="p-2 border">Deskripsi</th>
-                        <th class="p-2 border">Aksi</th>
-                    </tr>
-                </thead>
-                <tbody id="event-table"></tbody>
-            </table>
+<main class="pt-24 px-4 sm:px-6 pb-16 max-w-6xl mx-auto">
+
+    <!-- TITLE -->
+    <h1 class="text-3xl sm:text-4xl font-extrabold mb-6 text-cyan-300 drop-shadow-lg">
+        Manajemen Event Perpustakaan
+    </h1>
+
+    <!-- CARD WRAPPER GLASS -->
+    <div class="bg-white/10 backdrop-blur-xl border border-white/20 
+                rounded-3xl shadow-[0_20px_60px_rgba(0,0,0,0.5)] p-6">
+
+        <!-- TOMBOL TAMBAH -->
+        <div class="flex justify-end mb-4">
+            <button onclick="openAddModal()"
+                class="px-4 py-2 rounded-xl bg-cyan-400 text-slate-900 font-semibold shadow hover:bg-cyan-300 transition">
+                + Tambah Event
+            </button>
         </div>
 
-        <!-- Modal -->
-        <div id="event-modal" class="hidden fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center">
-            <div class="bg-white p-6 rounded w-96 shadow-lg">
-                <h2 class="text-xl font-semibold mb-4">Edit Event</h2>
+        <!-- TABEL EVENT -->
+        <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+                <thead class="bg-white/10 text-cyan-200">
+                    <tr>
+                        <th class="p-3">ID</th>
+                        <th class="p-3">Nama Event</th>
+                        <th class="p-3">Tanggal</th>
+                        <th class="p-3">Lokasi</th>
+                        <th class="p-3">Keterangan</th>
+                        <th class="p-3 text-center">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody id="event-table" class="divide-y divide-white/10 text-slate-200">
+                    <!-- Data dari JS -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
 
-                <input type="hidden" id="edit-id">
+<!-- MODAL ADD/EDIT -->
+<div id="event-modal"
+     class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
 
-                <label class="block mb-2">
-                    <span class="text-sm">Judul</span>
-                    <input id="edit-judul" class="w-full border p-2 rounded" type="text">
-                </label>
+    <div class="bg-white/10 backdrop-blur-xl border border-white/20 
+                rounded-3xl p-6 w-full max-w-md 
+                shadow-[0_20px_60px_rgba(0,0,0,0.6)]">
 
-                <label class="block mb-2">
-                    <span class="text-sm">Tanggal</span>
-                    <input id="edit-tanggal" class="w-full border p-2 rounded" type="date">
-                </label>
+        <h2 id="modal-title" class="text-xl font-bold text-cyan-300 mb-4"></h2>
 
-                <label class="block mb-4">
-                    <span class="text-sm">Deskripsi</span>
-                    <textarea id="edit-deskripsi" class="w-full border p-2 rounded h-24"></textarea>
-                </label>
+        <div class="space-y-3">
+            <input id="edit-id" type="hidden">
 
-                <div class="flex justify-end gap-2">
-                    <button onclick="closeEventModal()" class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">Batal</button>
-                    <button onclick="saveEvent()" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Simpan</button>
-                </div>
+            <div>
+                <label class="text-sm text-cyan-200">Nama Event</label>
+                <input id="edit-nama"
+                       class="w-full bg-white/20 border border-white/30 rounded-xl p-2 text-white outline-none">
+            </div>
+
+            <div>
+                <label class="text-sm text-cyan-200">Tanggal</label>
+                <input id="edit-tanggal" type="date"
+                       class="w-full bg-white/20 border border-white/30 rounded-xl p-2 text-white outline-none">
+            </div>
+
+            <div>
+                <label class="text-sm text-cyan-200">Lokasi</label>
+                <input id="edit-lokasi"
+                       class="w-full bg-white/20 border border-white/30 rounded-xl p-2 text-white outline-none">
+            </div>
+
+            <div>
+                <label class="text-sm text-cyan-200">Keterangan</label>
+                <textarea id="edit-keterangan"
+                          class="w-full bg-white/20 border border-white/30 rounded-xl p-2 text-white h-24 outline-none"></textarea>
             </div>
         </div>
 
-    </main>
+        <div class="flex justify-end gap-3 mt-5">
+            <button onclick="closeModal()"
+                class="px-4 py-2 rounded-xl bg-red-400 text-slate-900 font-semibold hover:bg-red-300 transition">
+                Batal
+            </button>
 
-    <script>
-        async function loadEvents() {
-            try {
-                const response = await fetch("api/get-events.php");
-                const data = await response.json();
+            <button onclick="saveEvent()"
+                class="px-4 py-2 rounded-xl bg-cyan-400 text-slate-900 font-semibold hover:bg-cyan-300 transition">
+                Simpan
+            </button>
+        </div>
+    </div>
+</div>
 
-                const tbody = document.getElementById("event-table");
-                tbody.innerHTML = "";
+<script>
+// ======================
+// LOAD EVENT LIST
+// ======================
+async function loadEvents() {
+    const response = await fetch("api/get-events.php");
+    const events = await response.json();
 
-                data.forEach(event => {
-                    const tr = document.createElement("tr");
+    document.getElementById("event-table").innerHTML = events.map(e => `
+        <tr>
+            <td class="p-3">${e.id}</td>
+            <td class="p-3">${e.nama}</td>
+            <td class="p-3">${e.tanggal}</td>
+            <td class="p-3">${e.lokasi}</td>
+            <td class="p-3">${e.keterangan}</td>
+            <td class="p-3 text-center">
+                <button onclick='openEdit(${JSON.stringify(e)})'
+                    class="px-3 py-1 rounded-xl bg-yellow-300 text-slate-900 font-semibold hover:bg-yellow-200 transition">
+                    Edit
+                </button>
+            </td>
+        </tr>
+    `).join('');
+}
 
-                    tr.innerHTML = `
-                        <td class="border p-2">${event.id}</td>
-                        <td class="border p-2">${event.judul}</td>
-                        <td class="border p-2">${event.tanggal}</td>
-                        <td class="border p-2">${event.deskripsi}</td>
-                        <td class="border p-2 text-center">
-                            <button class="px-3 py-1 bg-yellow-400 rounded hover:bg-yellow-500"
-                                onclick='openEventEdit(${JSON.stringify(event)})'>
-                                Edit
-                            </button>
-                        </td>
-                    `;
+// ======================
+// OPEN MODAL
+// ======================
+function openAddModal() {
+    document.getElementById("modal-title").textContent = "Tambah Event";
+    document.getElementById("edit-id").value = "";
+    document.getElementById("event-modal").classList.remove("hidden");
 
-                    tbody.appendChild(tr);
-                });
-            } catch (error) {
-                console.error("Gagal memuat event:", error);
-            }
-        }
+    ["nama","tanggal","lokasi","keterangan"].forEach(v => {
+        document.getElementById(`edit-${v}`).value = "";
+    });
+}
 
-        function openEventEdit(ev) {
-            document.getElementById("edit-id").value = ev.id;
-            document.getElementById("edit-judul").value = ev.judul;
-            document.getElementById("edit-tanggal").value = ev.tanggal;
-            document.getElementById("edit-deskripsi").value = ev.deskripsi;
+function openEdit(ev) {
+    document.getElementById("modal-title").textContent = "Edit Event";
+    document.getElementById("event-modal").classList.remove("hidden");
 
-            document.getElementById("event-modal").classList.remove("hidden");
-        }
+    document.getElementById("edit-id").value        = ev.id;
+    document.getElementById("edit-nama").value      = ev.nama;
+    document.getElementById("edit-tanggal").value   = ev.tanggal;
+    document.getElementById("edit-lokasi").value    = ev.lokasi;
+    document.getElementById("edit-keterangan").value= ev.keterangan;
+}
 
-        function closeEventModal() {
-            document.getElementById("event-modal").classList.add("hidden");
-        }
+// ======================
+// CLOSE MODAL
+// ======================
+function closeModal() {
+    document.getElementById("event-modal").classList.add("hidden");
+}
 
-        async function saveEvent() {
-            const formData = new FormData();
-            formData.append("id", document.getElementById("edit-id").value);
-            formData.append("judul", document.getElementById("edit-judul").value);
-            formData.append("tanggal", document.getElementById("edit-tanggal").value);
-            formData.append("deskripsi", document.getElementById("edit-deskripsi").value);
+// ======================
+// SAVE EVENT
+// ======================
+async function saveEvent() {
+    const fd = new FormData();
 
-            try {
-                const response = await fetch("api/update-event.php", {
-                    method: "POST",
-                    body: formData
-                });
+    ["id","nama","tanggal","lokasi","keterangan"].forEach(k => {
+        fd.append(k, document.getElementById(`edit-${k}`).value);
+    });
 
-                const result = await response.text();
-                console.log(result);
+    await fetch("api/update-event.php", {
+        method: "POST",
+        body: fd
+    });
 
-                closeEventModal();
-                loadEvents();
-            } catch (error) {
-                console.error("Error update event:", error);
-            }
-        }
+    closeModal();
+    loadEvents();
+}
 
-        document.addEventListener("DOMContentLoaded", loadEvents);
-    </script>
+document.addEventListener("DOMContentLoaded", loadEvents);
+</script>
 
 </body>
 </html>

@@ -1,88 +1,100 @@
 <?php
 include "../back-end/koneksi.php";
-
 header("Content-Type: application/json");
-$method = $_SERVER['REQUEST_METHOD'];
 
-if ($method === 'GET') {
-    // 🔹 Ambil semua data buku
-    $result = mysqli_query($koneksi, "SELECT * FROM buku ORDER BY id_buku DESC");
-    $books = [];
-    while ($row = mysqli_fetch_assoc($result)) {
-        $books[] = $row;
+$method = $_SERVER["REQUEST_METHOD"];
+
+if ($method === "GET") {
+
+    // Ambil semua buku
+    $q = mysqli_query($koneksi, "SELECT * FROM buku ORDER BY id_buku DESC");
+    $data = [];
+
+    while ($row = mysqli_fetch_assoc($q)) {
+        $data[] = [
+            "id_buku" => $row["id_buku"],
+            "nama" => $row["nama"],
+            "jenis" => $row["jenis"],
+            "tanggal" => $row["tanggal"],
+            "gambar" => $row["gambar"],
+            "status" => $row["status"]
+        ];
     }
-    echo json_encode($books);
+
+    echo json_encode($data);
+    exit;
 }
 
-elseif ($method === 'POST') {
-    // 🔹 Tambah buku baru
-    $data = json_decode(file_get_contents("php://input"), true);
 
-    if (isset($data['nama'], $data['jenis'], $data['tanggal'])) {
-        $nama = mysqli_real_escape_string($koneksi, $data['nama']);
-        $jenis = mysqli_real_escape_string($koneksi, $data['jenis']);
-        $tanggal = mysqli_real_escape_string($koneksi, $data['tanggal']);
-        $gambar = isset($data['gambar']) ? mysqli_real_escape_string($koneksi, $data['gambar']) : '';
-        $status = isset($data['status']) ? mysqli_real_escape_string($koneksi, $data['status']) : 'Tersedia';
+elseif ($method === "POST") {
 
-        $query = "INSERT INTO buku (nama, jenis, tanggal, gambar, status) 
-                  VALUES ('$nama', '$jenis', '$tanggal', '$gambar', '$status')";
+    $input = json_decode(file_get_contents("php://input"), true);
 
-        if (mysqli_query($koneksi, $query)) {
-            echo json_encode(["status" => "success"]);
-        } else {
-            echo json_encode(["status" => "error", "message" => mysqli_error($koneksi)]);
-        }
-    } else {
-        echo json_encode(["status" => "invalid_data"]);
+    if (!isset($input["nama"], $input["jenis"], $input["tanggal"])) {
+        echo json_encode(["status" => "invalid"]);
+        exit;
     }
+
+    $nama = mysqli_real_escape_string($koneksi, $input["nama"]);
+    $jenis = mysqli_real_escape_string($koneksi, $input["jenis"]);
+    $tanggal = mysqli_real_escape_string($koneksi, $input["tanggal"]);
+    $gambar = mysqli_real_escape_string($koneksi, $input["gambar"] ?? "");
+    $status = mysqli_real_escape_string($koneksi, $input["status"] ?? "Tersedia");
+
+    $sql = "INSERT INTO buku (nama, jenis, tanggal, gambar, status) 
+            VALUES ('$nama', '$jenis', '$tanggal', '$gambar', '$status')";
+
+    echo json_encode([
+        "status" => mysqli_query($koneksi, $sql) ? "success" : "error"
+    ]);
+    exit;
 }
 
-elseif ($method === 'PUT') {
-    // 🔹 Edit data buku
-    $data = json_decode(file_get_contents("php://input"), true);
 
-    if (isset($data['id'], $data['nama'], $data['jenis'], $data['tanggal'])) {
-        $id = intval($data['id']);
-        $nama = mysqli_real_escape_string($koneksi, $data['nama']);
-        $jenis = mysqli_real_escape_string($koneksi, $data['jenis']);
-        $tanggal = mysqli_real_escape_string($koneksi, $data['tanggal']);
-        $gambar = isset($data['gambar']) ? mysqli_real_escape_string($koneksi, $data['gambar']) : '';
-        $status = isset($data['status']) ? mysqli_real_escape_string($koneksi, $data['status']) : 'Tersedia';
+elseif ($method === "PUT") {
 
-        $query = "UPDATE buku 
-                  SET nama='$nama', jenis='$jenis', tanggal='$tanggal', gambar='$gambar', status='$status' 
-                  WHERE id=$id";
+    $input = json_decode(file_get_contents("php://input"), true);
 
-        if (mysqli_query($koneksi, $query)) {
-            echo json_encode(["status" => "success"]);
-        } else {
-            echo json_encode(["status" => "error", "message" => mysqli_error($koneksi)]);
-        }
-    } else {
-        echo json_encode(["status" => "invalid_data"]);
+    if (!isset($input["id_buku"])) {
+        echo json_encode(["status" => "invalid"]);
+        exit;
     }
+
+    $id = intval($input["id_buku"]);
+    $nama = mysqli_real_escape_string($koneksi, $input["nama"]);
+    $jenis = mysqli_real_escape_string($koneksi, $input["jenis"]);
+    $tanggal = mysqli_real_escape_string($koneksi, $input["tanggal"]);
+    $gambar = mysqli_real_escape_string($koneksi, $input["gambar"] ?? "");
+    $status = mysqli_real_escape_string($koneksi, $input["status"] ?? "Tersedia");
+
+    $sql = "UPDATE buku 
+            SET nama='$nama', jenis='$jenis', tanggal='$tanggal', gambar='$gambar', status='$status'
+            WHERE id_buku=$id";
+
+    echo json_encode([
+        "status" => mysqli_query($koneksi, $sql) ? "success" : "error"
+    ]);
+    exit;
 }
 
-elseif ($method === 'DELETE') {
-    // 🔹 Hapus data buku
-    $data = json_decode(file_get_contents("php://input"), true);
 
-    if (isset($data['id'])) {
-        $id = intval($data['id']);
-        $query = "DELETE FROM buku WHERE id=$id";
+elseif ($method === "DELETE") {
 
-        if (mysqli_query($koneksi, $query)) {
-            echo json_encode(["status" => "success"]);
-        } else {
-            echo json_encode(["status" => "error", "message" => mysqli_error($koneksi)]);
-        }
-    } else {
-        echo json_encode(["status" => "invalid_data"]);
+    $input = json_decode(file_get_contents("php://input"), true);
+    $id = intval($input["id_buku"] ?? 0);
+
+    if ($id === 0) {
+        echo json_encode(["status" => "invalid"]);
+        exit;
     }
+
+    $sql = "DELETE FROM buku WHERE id_buku=$id";
+
+    echo json_encode([
+        "status" => mysqli_query($koneksi, $sql) ? "success" : "error"
+    ]);
+    exit;
 }
 
-else {
-    echo json_encode(["status" => "unsupported_method"]);
-}
-?>
+
+echo json_encode(["status" => "method_not_allowed"]);

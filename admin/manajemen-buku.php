@@ -1,144 +1,142 @@
-<?php include '../layout/header_admin.html'; ?>
+<?php 
+include '../back-end/koneksi.php';
+?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manajemen Buku</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <title>Manajemen Buku</title>
 </head>
 
-<body class="bg-gray-100">
+<body class="min-h-screen bg-gradient-to-br from-slate-900 via-slate-950 to-cyan-900 text-white">
 
-    <main class="p-6">
-        <h1 class="text-2xl font-semibold mb-6">Manajemen Buku</h1>
+<!-- HEADER -->
+<?php include '../layout/header_admin.html'; ?>
 
-        <!-- Table -->
-        <div class="bg-white rounded shadow p-4 overflow-x-auto">
-            <table class="min-w-full border">
-                <thead class="bg-gray-700 text-white">
+<main class="pt-24 px-4 sm:px-6 pb-16 max-w-6xl mx-auto">
+
+    <h1 class="text-3xl sm:text-4xl font-extrabold mb-6 text-sky-300 drop-shadow-lg">
+        Manajemen Buku
+    </h1>
+
+    <!-- WRAPPER GLASS -->
+    <div class="bg-white/10 backdrop-blur-xl border border-white/20 
+                rounded-3xl shadow-[0_20px_60px_rgba(0,0,0,0.5)] p-6">
+
+        <!-- TOMBOL TAMBAH (BUKA MODAL) -->
+        <div class="flex justify-end mb-4">
+            <button onclick="openAddModal()"
+                class="px-4 py-2 rounded-xl bg-sky-400 text-slate-900 font-semibold shadow hover:bg-sky-300 transition">
+                + Tambah Buku
+            </button>
+        </div>
+
+        <!-- TABLE -->
+        <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+                <thead class="bg-white/10 text-sky-200">
                     <tr>
-                        <th class="p-2 border">ID</th>
-                        <th class="p-2 border">Judul</th>
-                        <th class="p-2 border">Penulis</th>
-                        <th class="p-2 border">Kategori</th>
-                        <th class="p-2 border">Stok</th>
-                        <th class="p-2 border">Aksi</th>
+                        <th class="p-3">ID</th>
+                        <th class="p-3">Nama Buku</th>
+                        <th class="p-3">Jenis</th>
+                        <th class="p-3">Tanggal</th>
+                        <th class="p-3">Gambar</th>
+                        <th class="p-3">Status</th>
+                        <th class="p-3 text-center">Aksi</th>
                     </tr>
                 </thead>
-                <tbody id="book-table"></tbody>
+
+                <tbody class="divide-y divide-white/10 text-slate-200">
+
+                <?php
+                $q = mysqli_query($koneksi, "SELECT * FROM buku ORDER BY id_buku DESC");
+
+                while ($b = mysqli_fetch_assoc($q)):
+                ?>
+                    <tr>
+                        <td class="p-3"><?= $b['id_buku']; ?></td>
+                        <td class="p-3"><?= $b['nama']; ?></td>
+                        <td class="p-3"><?= $b['jenis']; ?></td>
+                        <td class="p-3"><?= $b['tanggal']; ?></td>
+                        <td class="p-3"><?= $b['gambar']; ?></td>
+                        <td class="p-3"><?= $b['status']; ?></td>
+
+                        <td class="p-3 text-center">
+                            <a href="../back-end/crud/buku.php?edit=<?= $b['id_buku']; ?>"
+                               class="px-3 py-1 rounded-xl bg-yellow-300 text-slate-900 font-semibold hover:bg-yellow-200 transition">
+                               Edit
+                            </a>
+
+                            <a href="../back-end/crud/buku.php?hapus=<?= $b['id_buku']; ?>"
+                               onclick="return confirm('Yakin hapus buku ini?')"
+                               class="px-3 py-1 rounded-xl bg-red-400 text-slate-900 font-semibold hover:bg-red-300 transition ml-2">
+                               Hapus
+                            </a>
+                        </td>
+                    </tr>
+
+                <?php endwhile; ?>
+
+                </tbody>
             </table>
         </div>
+    </div>
+</main>
 
-        <!-- Modal -->
-        <div id="edit-modal" class="hidden fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center">
-            <div class="bg-white p-6 rounded w-96 shadow-lg">
-                <h2 class="text-xl font-semibold mb-4">Edit Buku</h2>
 
-                <input type="hidden" id="edit-id">
 
-                <label class="block mb-2">
-                    <span class="text-sm">Judul</span>
-                    <input id="edit-judul" class="w-full border p-2 rounded" type="text">
-                </label>
+<!-- ========== MODAL TAMBAH BUKU ========== -->
+<div id="add-modal" class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm flex justify-center items-center z-50">
+    <div class="bg-white/10 border border-white/20 backdrop-blur-xl p-6 rounded-2xl w-[380px] text-white shadow-xl">
 
-                <label class="block mb-2">
-                    <span class="text-sm">Penulis</span>
-                    <input id="edit-penulis" class="w-full border p-2 rounded" type="text">
-                </label>
+        <h2 class="text-xl font-bold mb-4">Tambah Buku</h2>
 
-                <label class="block mb-2">
-                    <span class="text-sm">Kategori</span>
-                    <input id="edit-kategori" class="w-full border p-2 rounded" type="text">
-                </label>
+        <form action="../back-end/crud/buku.php" method="POST">
 
-                <label class="block mb-4">
-                    <span class="text-sm">Stok</span>
-                    <input id="edit-stok" class="w-full border p-2 rounded" type="number">
-                </label>
+            <input type="text" name="nama" placeholder="Nama Buku"
+                   class="w-full mb-3 p-2 bg-gray-800/60 rounded border border-white/20" required>
 
-                <div class="flex justify-end gap-2">
-                    <button onclick="closeModal()" class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">Batal</button>
-                    <button onclick="saveEdit()" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Simpan</button>
-                </div>
-            </div>
-        </div>
+            <input type="text" name="jenis" placeholder="Jenis Buku"
+                   class="w-full mb-3 p-2 bg-gray-800/60 rounded border border-white/20" required>
 
-    </main>
+            <input type="date" name="tanggal"
+                   class="w-full mb-3 p-2 bg-gray-800/60 rounded border border-white/20" required>
 
-    <script>
-        async function loadBooks() {
-            try {
-                const response = await fetch("api/get-books.php");
-                const data = await response.json();
+            <input type="text" name="gambar" placeholder="Nama File Gambar (optional)"
+                   class="w-full mb-3 p-2 bg-gray-800/60 rounded border border-white/20">
 
-                const tbody = document.getElementById("book-table");
-                tbody.innerHTML = "";
+            <select name="status"
+                    class="w-full mb-4 p-2 bg-gray-800/60 rounded border border-white/20">
+                <option value="Tersedia" class="text-black">Tersedia</option>
+                <option value="Tidak Tersedia" class="text-black">Tidak Tersedia</option>
+            </select>
 
-                data.forEach(book => {
-                    const tr = document.createElement("tr");
+            <button type="submit" name="tambah"
+                class="w-full py-2 bg-sky-400 text-slate-900 font-semibold rounded-xl hover:bg-sky-300">
+                Simpan
+            </button>
+        </form>
 
-                    tr.innerHTML = `
-                        <td class="border p-2">${book.id}</td>
-                        <td class="border p-2">${book.judul}</td>
-                        <td class="border p-2">${book.penulis}</td>
-                        <td class="border p-2">${book.kategori}</td>
-                        <td class="border p-2">${book.stok}</td>
-                        <td class="border p-2 text-center">
-                            <button class="px-3 py-1 bg-yellow-400 rounded hover:bg-yellow-500"
-                                onclick='openEdit(${JSON.stringify(book)})'>
-                                Edit
-                            </button>
-                        </td>
-                    `;
-                    tbody.appendChild(tr);
-                });
-            } catch (err) {
-                console.error("Gagal memuat data:", err);
-            }
-        }
+        <button onclick="closeAddModal()"
+            class="w-full mt-3 py-2 bg-red-400 text-slate-900 font-semibold rounded-xl hover:bg-red-300">
+            Batal
+        </button>
+    </div>
+</div>
 
-        function openEdit(book) {
-            document.getElementById("edit-id").value = book.id;
-            document.getElementById("edit-judul").value = book.judul;
-            document.getElementById("edit-penulis").value = book.penulis;
-            document.getElementById("edit-kategori").value = book.kategori;
-            document.getElementById("edit-stok").value = book.stok;
 
-            document.getElementById("edit-modal").classList.remove("hidden");
-        }
-
-        function closeModal() {
-            document.getElementById("edit-modal").classList.add("hidden");
-        }
-
-        async function saveEdit() {
-            const formData = new FormData();
-            formData.append("id", document.getElementById("edit-id").value);
-            formData.append("judul", document.getElementById("edit-judul").value);
-            formData.append("penulis", document.getElementById("edit-penulis").value);
-            formData.append("kategori", document.getElementById("edit-kategori").value);
-            formData.append("stok", document.getElementById("edit-stok").value);
-
-            try {
-                const response = await fetch("api/update-book.php", {
-                    method: "POST",
-                    body: formData
-                });
-
-                const result = await response.text();
-                console.log(result);
-
-                closeModal();
-                loadBooks();
-            } catch (err) {
-                console.error("Error update:", err);
-            }
-        }
-
-        document.addEventListener("DOMContentLoaded", loadBooks);
-    </script>
+<!-- JS MODAL -->
+<script>
+function openAddModal() {
+    document.getElementById("add-modal").classList.remove("hidden");
+}
+function closeAddModal() {
+    document.getElementById("add-modal").classList.add("hidden");
+}
+</script>
 
 </body>
 </html>
