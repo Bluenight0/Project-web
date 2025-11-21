@@ -3,47 +3,58 @@ header("Content-Type: application/json");
 session_start();
 include "koneksi.php";
 
-// Pastikan user login
-if (!isset($_SESSION['user_id'])) {
-    echo json_encode(["status"=>"error","message"=>"User belum login"]);
+// User harus login
+if (!isset($_SESSION['id_anggota'])) {
+    echo json_encode(["status" => "error", "message" => "Belum login"]);
     exit;
 }
 
-$user_id = intval($_SESSION['user_id']);
+$user_id = $_SESSION['id_anggota'];
 $method = $_SERVER['REQUEST_METHOD'];
 $input = json_decode(file_get_contents("php://input"), true);
 
-switch($method){
-    case 'POST':
-        $event_id = intval($input['event_id']);
+switch ($method) {
 
-        // Cek apakah user sudah ikut event
-        $cek = $conn->query("SELECT id FROM peserta_event WHERE event_id=$event_id AND user_id=$user_id");
-        if($cek && $cek->num_rows > 0){
-            echo json_encode(["status"=>"exists"]);
+    // ============================
+    // IKUT EVENT (POST)
+    // ============================
+    case "POST":
+        $event = intval($input['id_event']);
+
+        // Cek apakah sudah ikut
+        $check = mysqli_query($koneksi,
+            "SELECT id_peserta FROM peserta_event 
+             WHERE id_event=$event AND id_anggota='$user_id'"
+        );
+
+        if (mysqli_num_rows($check) > 0) {
+            echo json_encode(["status" => "error", "message" => "Sudah ikut"]);
             exit;
         }
 
-        $sql = "INSERT INTO peserta_event (event_id, user_id) VALUES ($event_id, $user_id)";
-        if($conn->query($sql)){
-            echo json_encode(["status"=>"success"]);
-        } else {
-            echo json_encode(["status"=>"error","message"=>$conn->error]);
-        }
-    break;
+        // Simpan
+        $insert = mysqli_query($koneksi,
+            "INSERT INTO peserta_event (id_event, id_anggota, tgl_daftar) 
+             VALUES ($event, '$user_id', NOW())"
+        );
 
-    case 'DELETE':
-        $event_id = intval($input['event_id']);
-        $sql = "DELETE FROM peserta_event WHERE event_id=$event_id AND user_id=$user_id";
-        if($conn->query($sql)){
-            echo json_encode(["status"=>"success"]);
-        } else {
-            echo json_encode(["status"=>"error","message"=>$conn->error]);
-        }
-    break;
+        echo json_encode(["status" => $insert ? "success" : "error"]);
+        break;
+
+    // ============================
+    // BATAL IKUT (DELETE)
+    // ============================
+    case "DELETE":
+        $event = intval($input['id_event']);
+        
+        $delete = mysqli_query($koneksi,
+            "DELETE FROM peserta_event 
+             WHERE id_event=$event AND id_anggota='$user_id'"
+        );
+
+        echo json_encode(["status" => $delete ? "success" : "error"]);
+        break;
 
     default:
-        echo json_encode(["status"=>"error","message"=>"Method not allowed"]);
-    break;
+        echo json_encode(["status" => "error", "message" => "Method tidak diizinkan"]);
 }
-?>

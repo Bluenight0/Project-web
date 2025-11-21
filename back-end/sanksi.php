@@ -1,73 +1,72 @@
 <?php
-include 'koneksi.php';
+include "../back-end/koneksi.php";
 header("Content-Type: application/json");
 
-$method = $_SERVER['REQUEST_METHOD'];
+$method = $_SERVER["REQUEST_METHOD"];
+$input = json_decode(file_get_contents("php://input"), true);
 
-if ($method === 'GET') {
-  $result = mysqli_query($conn, "SELECT * FROM peminjaman ORDER BY id DESC");
-  $data = [];
-  while ($row = mysqli_fetch_assoc($result)) {
-    $data[] = $row;
-  }
-  echo json_encode($data);
-}
+switch ($method) {
 
-elseif ($method === 'POST') {
-  $data = json_decode(file_get_contents("php://input"), true);
-  if (isset($data['nama_buku'], $data['nama_peminjam'])) {
-    $nama_buku = mysqli_real_escape_string($conn, $data['nama_buku']);
-    $nama_peminjam = mysqli_real_escape_string($conn, $data['nama_peminjam']);
-    $tgl_pinjam = date("Y-m-d");
-    $batas_waktu = 3;
+    // =====================================
+    // GET — ambil semua data sanksi
+    // =====================================
+    case "GET":
+        $sql = "
+            SELECT 
+                s.id,
+                s.id_anggota,
+                a.nama AS nama_anggota,
+                s.mulai,
+                s.selesai,
+                s.denda
+            FROM sanksi s
+            LEFT JOIN anggota_perpus a
+                ON s.id_anggota = a.id_anggota
+            ORDER BY s.id DESC
+        ";
 
-    $query = "INSERT INTO peminjaman (nama_buku, nama_peminjam, tgl_pinjam, batas_waktu, status)
-              VALUES ('$nama_buku', '$nama_peminjam', '$tgl_pinjam', $batas_waktu, 'Dipinjam')";
-    mysqli_query($conn, $query);
+        $result = mysqli_query($koneksi, $sql);
+        $rows = [];
 
-    echo json_encode(["status" => "success"]);
-  } else {
-    echo json_encode(["status" => "invalid_data"]);
-  }
-}
-
-elseif ($method === 'PUT') {
-  $data = json_decode(file_get_contents("php://input"), true);
-  if (isset($data['id'], $data['status'])) {
-    $id = intval($data['id']);
-    $status = mysqli_real_escape_string($conn, $data['status']);
-
-    mysqli_query($conn, "UPDATE peminjaman SET status='$status' WHERE id=$id");
-
-    // Jika status 'Terlambat' -> aktifkan sanksi user
-    if ($status === 'Terlambat') {
-      $res = mysqli_query($conn, "SELECT nama_peminjam FROM peminjaman WHERE id=$id");
-      $row = mysqli_fetch_assoc($res);
-      $user = $row['nama_peminjam'];
-      mysqli_query($conn, "UPDATE users SET sanksi_aktif=1, sanksi_mulai=NOW() WHERE username='$user'");
-    }
-
-    // Jika status 'Dikembalikan' -> cek apakah sanksi masih aktif dan waktunya habis
-    if ($status === 'Dikembalikan') {
-      $res = mysqli_query($conn, "SELECT nama_peminjam FROM peminjaman WHERE id=$id");
-      $row = mysqli_fetch_assoc($res);
-      $user = $row['nama_peminjam'];
-
-      $check = mysqli_query($conn, "SELECT sanksi_mulai FROM users WHERE username='$user' AND sanksi_aktif=1");
-      if (mysqli_num_rows($check) > 0) {
-        $s = mysqli_fetch_assoc($check);
-        $mulai = strtotime($s['sanksi_mulai']);
-        $now = time();
-        $selisih = floor(($now - $mulai) / (60 * 60 * 24));
-        if ($selisih >= 3) {
-          mysqli_query($conn, "UPDATE users SET sanksi_aktif=0, sanksi_mulai=NULL WHERE username='$user'");
+        while ($r = mysqli_fetch_assoc($result)) {
+            $rows[] = $r;
         }
-      }
-    }
 
-    echo json_encode(["status" => "success"]);
-  } else {
-    echo json_encode(["status" => "invalid_data"]);
-  }
+        echo json_encode($rows);
+        break;
+
+
+    // =====================================
+    // POST — buat sanksi baru
+    // =====================================
+    case "POST":
+        $anggota = $input['id_anggota'];
+        $mulai   = $input['mulai'];
+        $selesai = $input['selesai'];
+        $denda   = $input['denda'];
+
+        $insert = mysqli_query($koneksi,
+            "INSERT INTO sanksi (id_anggota, mulai, selesai, denda)
+             VALUES ('$anggota', '$mulai', '$selesai', '$denda')"
+        );
+
+        echo json_encode(["status" => $insert ? "success" : "error"]);
+        break;
+
+
+    // =====================================
+    // DELETE — hapus sanksi
+    // =====================================
+    case "DELETE":
+        $id = intval($input['id']);
+
+        $delete = mysqli_query($koneksi,
+            "DELETE FROM sanksi WHERE id=$id"
+        );
+
+        echo json_encode(["status" => $delete ? "success" : "error"]);
+        break;
+
+    default:
+        echo json_encode(["status" => "error", "message" => "Method tidak diizinkan"]);
 }
-?>
