@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <title>Manajemen Event</title>
+</head>
+<body class="bg-gray-100 min-h-screen text-gray-800">
+   <header class="fixed top-0 left-0 w-full bg-gray-700/80 backdrop-blur-md z-20 shadow-lg">
+    <nav class="flex flex-wrap justify-between items-center p-3 max-w-6xl mx-auto">
+      <a href="dashboard.html" class="bg-white/10 text-white rounded-2xl px-3 py-1 hover:bg-gray-400 transition font-semibold shadow-lg">Admin</a>
+      <div class="flex flex-wrap gap-3 mt-2 sm:mt-0">
+        <a href="status-buku.php" class="bg-white/10 text-white/80 rounded-2xl px-3 py-1 hover:bg-gray-400 transition font-semibold shadow-lg">Status Buku</a>
+        <a href="manajemen-buku.html" class="bg-white/10 text-white/80 rounded-2xl px-3 py-1 hover:bg-gray-400 transition font-semibold shadow-lg">Data Buku</a>
+        <a href="manajemen-event.html" class="bg-white/10 text-white/80 rounded-2xl px-3 py-1 hover:bg-gray-400 transition font-semibold shadow-lg">Data events</a>
+        <a href="../login.html" class="bg-white/10 text-white/80 rounded-2xl px-3 py-1 hover:bg-gray-400 transition font-semibold shadow-lg">Login</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="pt-28 px-4 flex flex-col items-center">
+    <section class="w-full max-w-6xl bg-white rounded-2xl shadow-md p-6">
+      <h1 class="text-2xl font-bold text-gray-700 mb-6">Manajemen Event Pengguna</h1>
+
+      <!-- Tombol CRUD -->
+      <div class="flex flex-wrap justify-end gap-3 mb-6">
+        <button onclick="toggleForm(true)" class="bg-green-500 hover:bg-green-600 text-white font-semibold px-4 py-2 rounded-lg shadow transition">Tambah Event</button>
+      </div>
+
+      <!-- Form -->
+      <form id="formEvent" class="hidden mb-6 border border-gray-300 rounded-xl p-4 bg-gray-50">
+        <input type="hidden" id="eventId" />
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div>
+            <label class="block font-semibold text-gray-700">Nama Event</label>
+            <input type="text" id="namaEvent" required class="w-full border border-gray-300 rounded-lg p-2 focus:ring focus:ring-blue-300" />
+          </div>
+          <div>
+            <label class="block font-semibold text-gray-700">Tanggal</label>
+            <input type="date" id="tanggalEvent" required class="w-full border border-gray-300 rounded-lg p-2 focus:ring focus:ring-blue-300" />
+          </div>
+          <div>
+            <label class="block font-semibold text-gray-700">Lokasi</label>
+            <input type="text" id="lokasiEvent" required class="w-full border border-gray-300 rounded-lg p-2 focus:ring focus:ring-blue-300" />
+          </div>
+        </div>
+        <div class="flex justify-end mt-4 gap-2">
+          <button type="button" onclick="simpanEvent()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold">Simpan</button>
+          <button type="button" onclick="toggleForm(false)" class="bg-gray-400 hover:bg-gray-500 text-white px-4 py-2 rounded-lg font-semibold">Batal</button>
+        </div>
+      </form>
+
+      <!-- Table -->
+      <div class="overflow-x-auto">
+        <table id="eventTable" class="min-w-full border border-gray-300 rounded-lg overflow-hidden">
+          <thead class="bg-gray-700 text-white">
+            <tr>
+              <th class="px-4 py-2 text-left">Nama</th>
+              <th class="px-4 py-2 text-left">Tanggal</th>
+              <th class="px-4 py-2 text-left">Lokasi</th>
+              <th class="px-4 py-2 text-left">Status</th>
+              <th class="px-4 py-2 text-center">Aksi</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const apiURL = "../back-end/event.php";
+
+    function toggleForm(show) {
+      document.getElementById("formEvent").classList.toggle("hidden", !show);
+    }
+
+    async function loadEvents() {
+      const res = await fetch(apiURL);
+      const data = await res.json();
+      const tbody = document.querySelector("#eventTable tbody");
+      tbody.innerHTML = "";
+      data.forEach(ev => {
+        const row = `
+          <tr class="hover:bg-gray-100">
+            <td class="px-4 py-2 border-t">${ev.nama}</td>
+            <td class="px-4 py-2 border-t">${ev.tanggal}</td>
+            <td class="px-4 py-2 border-t">${ev.lokasi}</td>
+            <td class="px-4 py-2 border-t">${ev.status}</td>
+            <td class="px-4 py-2 border-t text-center">
+              <button onclick='editEvent(${JSON.stringify(ev)})' class="bg-yellow-500 text-white px-3 py-1 rounded-lg mr-2">Edit</button>
+              <button onclick='hapusEvent(${ev.id})' class="bg-red-500 text-white px-3 py-1 rounded-lg">Hapus</button>
+            </td>
+          </tr>`;
+        tbody.insertAdjacentHTML("beforeend", row);
+      });
+    }
+
+    async function simpanEvent() {
+      const id = document.getElementById("eventId").value;
+      const nama = document.getElementById("namaEvent").value;
+      const tanggal = document.getElementById("tanggalEvent").value;
+      const lokasi = document.getElementById("lokasiEvent").value;
+      const status = "Aktif";
+
+      const method = id ? "PUT" : "POST";
+      const body = id ? { id, nama, tanggal, lokasi, status } : { nama, tanggal, lokasi, status };
+
+      const res = await fetch(apiURL, {
+        method,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+
+      const result = await res.json();
+      alert(result.message || result.error);
+      toggleForm(false);
+      document.getElementById("formEvent").reset();
+      loadEvents();
+    }
+
+    function editEvent(ev) {
+      toggleForm(true);
+      document.getElementById("eventId").value = ev.id;
+      document.getElementById("namaEvent").value = ev.nama;
+      document.getElementById("tanggalEvent").value = ev.tanggal;
+      document.getElementById("lokasiEvent").value = ev.lokasi;
+    }
+
+    async function hapusEvent(id) {
+      if (confirm("Yakin ingin menghapus event ini?")) {
+        const res = await fetch(apiURL, {
+          method: "DELETE",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: `id=${id}`,
+        });
+        const result = await res.json();
+        alert(result.message || result.error);
+        loadEvents();
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", loadEvents);
+  </script>
+</body>
+</html>
