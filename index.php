@@ -92,7 +92,7 @@ $event = mysqli_fetch_assoc($result);
             </a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="loginDropdown">
               <li><a class="dropdown-item" href="back-end/user.php">Login User</a></li>
-              <li><a class="dropdown-item" href="back-end/auth.php">Login Admin</a></li>
+              <li><a class="dropdown-item" href="back-end/login.php">Login Admin</a></li>
             </ul>
           </li>
         </ul>

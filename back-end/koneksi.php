@@ -1,5 +1,5 @@
 <?php
-$koneksi = mysqli_connect("localhost", "root", "Aditya", "pustaka");
+$koneksi = mysqli_connect("localhost", "root", "laragon", "pustaka");
 
 // Check connection
 if (mysqli_connect_errno()) {
