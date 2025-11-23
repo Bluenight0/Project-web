@@ -12,7 +12,7 @@
   <title>Login</title>
 
 <style>
-/* —— SEMUA STYLE SENPAI TETAP —— */
+
 body {
   margin: 0;
   height: 100vh;
