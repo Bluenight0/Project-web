@@ -43,7 +43,7 @@
         data.forEach(book => {
           const available = book.status.toLowerCase() === "tersedia";
           grid.innerHTML += `
-            <a href="peminjaman.html" 
+            <a href="peminjaman.php" 
                class="bg-white/10 backdrop-blur-md hover:bg-white/20 transition rounded-2xl p-4 shadow-lg flex flex-col transform hover:scale-105">
               <div class="relative">
                 <img src="${book.gambar || '../assets/default-book.jpg'}" 

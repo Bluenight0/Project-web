@@ -23,27 +23,89 @@ if ($method === "GET") {
 }
 
 if ($method === "POST") {
-    $i = getInput();
 
-    if (empty($i["nama"]) || empty($i["jenis"]) || empty($i["tanggal"])) {
-        echo json_encode(["status" => "invalid"]); exit;
+    // ==========================
+    // 1. UPDATE MODE (PUT override)
+    // ==========================
+    if (isset($_POST["_method"]) && $_POST["_method"] === "PUT") {
+
+        $id_buku = intval($_POST["id_buku"]);
+        $nama    = mysqli_real_escape_string($koneksi, $_POST["nama"]);
+        $jenis   = mysqli_real_escape_string($koneksi, $_POST["jenis"]);
+        $tanggal = mysqli_real_escape_string($koneksi, $_POST["tanggal"]);
+        $gambar  = mysqli_real_escape_string($koneksi, $_POST["gambar"]);
+        $status  = mysqli_real_escape_string($koneksi, $_POST["status"]);
+
+        $file_pdf = null;
+
+        // upload PDF jika ada
+        if (!empty($_FILES["file_pdf"]["name"])) {
+
+            $dir = "../../uploads/pdf_buku/";
+            if (!is_dir($dir)) mkdir($dir, 0777, true);
+
+            $filename = time() . "_" . basename($_FILES["file_pdf"]["name"]);
+            move_uploaded_file($_FILES["file_pdf"]["tmp_name"], $dir . $filename);
+
+            $file_pdf = "uploads/pdf_buku/" . $filename;
+        }
+
+        // query update
+        $sql = "UPDATE buku SET 
+                nama='$nama',
+                jenis='$jenis',
+                tanggal='$tanggal',
+                gambar='$gambar',
+                status='$status'";
+
+        if ($file_pdf) {
+            $sql .= ", file_pdf='$file_pdf'";
+        }
+
+        $sql .= " WHERE id_buku=$id_buku";
+
+        $ok = mysqli_query($koneksi, $sql);
+
+        echo json_encode(["status" => $ok ? "success" : "error"]);
+        exit;
     }
 
-    $nama    = mysqli_real_escape_string($koneksi, $i["nama"]);
-    $jenis   = mysqli_real_escape_string($koneksi, $i["jenis"]);
-    $tanggal = mysqli_real_escape_string($koneksi, $i["tanggal"]);
-    $gambar  = mysqli_real_escape_string($koneksi, $i["gambar"] ?? "");
-    $status  = mysqli_real_escape_string($koneksi, $i["status"] ?? "Tersedia");
+    // ==========================
+    // 2. ADD MODE (TAMBAH BUKU)
+    // ==========================
+    $nama    = mysqli_real_escape_string($koneksi, $_POST["nama"]);
+    $jenis   = mysqli_real_escape_string($koneksi, $_POST["jenis"]);
+    $tanggal = mysqli_real_escape_string($koneksi, $_POST["tanggal"]);
+    $gambar  = mysqli_real_escape_string($koneksi, $_POST["gambar"]);
+    $status  = mysqli_real_escape_string($koneksi, $_POST["status"]);
 
-    $sql = "INSERT INTO buku (nama, jenis, tanggal, gambar, status)
-            VALUES ('$nama', '$jenis', '$tanggal', '$gambar', '$status')";
+    $file_pdf = null;
+
+    // upload file PDF
+    if (!empty($_FILES["file_pdf"]["name"])) {
+
+        $dir = "../../uploads/pdf_buku/";
+        if (!is_dir($dir)) mkdir($dir, 0777, true);
+
+        $filename = time() . "_" . basename($_FILES["file_pdf"]["name"]);
+        move_uploaded_file($_FILES["file_pdf"]["tmp_name"], $dir . $filename);
+
+        $file_pdf = "uploads/pdf_buku/" . $filename;
+    }
+
+    // query insert
+    $sql = "INSERT INTO buku (nama, jenis, tanggal, gambar, status, file_pdf)
+            VALUES ('$nama', '$jenis', '$tanggal', '$gambar', '$status', '$file_pdf')";
 
     $ok = mysqli_query($koneksi, $sql);
 
-    echo json_encode(["status" => $ok ? "success" : "error",
-                      "sql_error" => mysqli_error($koneksi)]);
+    echo json_encode([
+        "status" => $ok ? "success" : "error",
+        "sql_error" => mysqli_error($koneksi)
+    ]);
     exit;
 }
+
 
 if ($method === "DELETE") {
     $i = getInput();
