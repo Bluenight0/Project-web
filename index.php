@@ -191,22 +191,31 @@ $event = mysqli_fetch_assoc($result);
 
       <div class="row g-4">
         <!-- Kegiatan 1 -->
-        <div class="col-md-4" data-aos="fade-up">
-          <div class="card h-100 shadow-sm border-0">
-            <img src="https://i.pinimg.com/736x/30/f3/1f/30f31fba55d05fa5e9e7273b6d543d8d.jpg" class="card-img-top"
-              alt="Pekan Literasi Digital" />
-            <div class="card-body">
-              <h5 class="card-title">Pekan Literasi Digital UNRI 2025</h5>
-              <p class="card-text text-muted">
-                Ayo ikut serta dalam kegiatan literasi digital yang diadakan oleh
-                Perpustakaan Pekanbaru untuk meningkatkan minat baca mahasiswa!
-              </p>
-            </div>
-            <div class="card-footer bg-white border-0 text-end">
-              <a href="#" class="btn btn-outline-primary btn-sm">Selengkapnya</a>
-            </div>
-          </div>
-        </div>
+       <div class="col-md-4" data-aos="fade-up">
+  <div class="card h-100 shadow-sm border-0">  
+    <!-- Gambar tidak memiliki link -->
+    <img src="assets/pekanliterasi.jpeg" class="card-img-top" alt="Pekan Literasi Digital" />
+
+
+    <div class="card-body">
+      <h5 class="card-title">Literasi Digital UNRI 2025</h5>
+      <p class="card-text text-muted">
+        Ayo ikut serta dalam kegiatan literasi digital yang diadakan oleh
+        Perpustakaan Pekanbaru untuk meningkatkan minat baca mahasiswa! dan Dorong Mahasiswa Jadi Kreator Cerdas di Era Digital
+      </p>
+    </div>
+
+    <!-- Tombol ini yang menuju link berita -->
+    <div class="card-footer bg-white border-0 text-end">
+      <a href="https://unri.ac.id/unri-dan-indosat-ooredoo-hutchison-gelar-seminar-literasi-digital-dorong-mahasiswa-jadi-kreator-cerdas-di-era-digital//berita-pekan-literasi" 
+         class="btn btn-outline-primary btn-sm">
+        Selengkapnya
+      </a>
+    </div>
+
+  </div>
+</div>
+
 
         <!-- Kegiatan 2 -->
         <div class="col-md-4" data-aos="fade-up">
