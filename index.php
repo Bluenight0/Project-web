@@ -207,7 +207,7 @@ $event = mysqli_fetch_assoc($result);
 
     <!-- Tombol ini yang menuju link berita -->
     <div class="card-footer bg-white border-0 text-end">
-      <a href="https://unri.ac.id/unri-dan-indosat-ooredoo-hutchison-gelar-seminar-literasi-digital-dorong-mahasiswa-jadi-kreator-cerdas-di-era-digital//berita-pekan-literasi" 
+      <a href="https://https://unri.ac.id/unri-dan-indosat-ooredoo-hutchison-gelar-seminar-literasi-digital-dorong-mahasiswa-jadi-kreator-cerdas-di-era-digital//berita-pekan-literasi" 
          class="btn btn-outline-primary btn-sm">
         Selengkapnya
       </a>
@@ -220,7 +220,7 @@ $event = mysqli_fetch_assoc($result);
         <!-- Kegiatan 2 -->
         <div class="col-md-4" data-aos="fade-up">
           <div class="card h-100 shadow-sm border-0">
-            <img src="https://i.pinimg.com/736x/60/62/10/606210fb476ad26fc2e8884d6d5108b0.jpg" class="card-img-top"
+            <img src="assets/karyailmuah.jpg" class="card-img-top"
               alt="Pelatihan Penulisan Karya Ilmiah" />
             <div class="card-body">
               <h5 class="card-title">Pelatihan Penulisan Karya Ilmiah</h5>
@@ -229,8 +229,9 @@ $event = mysqli_fetch_assoc($result);
                 pustakawan berpengalaman.
               </p>
             </div>
+
             <div class="card-footer bg-white border-0 text-end">
-              <a href="#" class="btn btn-outline-primary btn-sm">Selengkapnya</a>
+              <a href="https://manajemen.unimus.ac.id/pelatihan-penulisan-karya-tulis-ilmiah/" class="btn btn-outline-primary btn-sm">Selengkapnya</a>
             </div>
           </div>
         </div>
@@ -238,7 +239,7 @@ $event = mysqli_fetch_assoc($result);
         <!-- Kegiatan 3 -->
         <div class="col-md-4" data-aos="fade-up">
           <div class="card h-100 shadow-sm border-0">
-            <img src="https://i.pinimg.com/736x/03/91/b5/0391b58fc5c031b8b3a4e7f5193f3f85.jpg" class="card-img-top"
+            <img src="assets/rivew.jpeg" class="card-img-top"
               alt="Lomba Review Buku" />
             <div class="card-body">
               <h5 class="card-title">Lomba Review Buku 2025</h5>
@@ -248,7 +249,7 @@ $event = mysqli_fetch_assoc($result);
               </p>
             </div>
             <div class="card-footer bg-white border-0 text-end">
-              <a href="#" class="btn btn-outline-primary btn-sm">Selengkapnya</a>
+              <a href="https://lib.unri.ac.id/lomba-resensi-buku-unri-library-art-and-books-fest-2025/" class="btn btn-outline-primary btn-sm">Selengkapnya</a>
             </div>
           </div>
         </div>
@@ -256,17 +257,17 @@ $event = mysqli_fetch_assoc($result);
         <!-- Kegiatan 4 -->
         <div class="col-md-4" data-aos="fade-up">
           <div class="card h-100 shadow-sm border-0">
-            <img src="https://i.pinimg.com/736x/30/f3/1f/30f31fba55d05fa5e9e7273b6d543d8d.jpg" class="card-img-top"
+            <img src="assets/download.jpeg" class="card-img-top"
               alt="Pekan Literasi Digital" />
             <div class="card-body">
-              <h5 class="card-title">Pekan Literasi Digital UNRI 2025</h5>
+              <h5 class="card-title">Unri menjajaki kolaborasi penelitian dengan University of Waterloo</h5>
               <p class="card-text text-muted">
-                Ayo ikut serta dalam kegiatan literasi digital yang diadakan oleh
-                Perpustakaan Pekanbaru untuk meningkatkan minat baca mahasiswa!
+                Universitas Riau (Unri) di kota Pekanbaru, provinsi Riau, sedang menjajaki
+                kerja sama penelitian dengan Universitas Waterloo, Kanada, menurut seorang pejabat universitas tersebut, Rabu.
               </p>
             </div>
             <div class="card-footer bg-white border-0 text-end">
-              <a href="#" class="btn btn-outline-primary btn-sm">Selengkapnya</a>
+              <a href="https://en.antaranews.com/news/292434/unri-explores-research-collaboration-with-university-of-waterloo" class="btn btn-outline-primary btn-sm">Selengkapnya</a>
             </div>
           </div>
         </div>
@@ -274,22 +275,39 @@ $event = mysqli_fetch_assoc($result);
         <!-- Kegiatan 5 -->
         <div class="col-md-4" data-aos="fade-up">
           <div class="card h-100 shadow-sm border-0">
-            <img src="https://i.pinimg.com/736x/30/f3/1f/30f31fba55d05fa5e9e7273b6d543d8d.jpg" class="card-img-top"
+            <img src="assets/bantuanadb.jpeg" class="card-img-top"
               alt="Pekan Literasi Digital" />
             <div class="card-body">
-              <h5 class="card-title">Pekan Literasi Digital UNRI 2025</h5>
+              <h5 class="card-title">Unri mulai Fungsikan Gedung-gedung Bantuan ADB</h5>
               <p class="card-text text-muted">
-                Ayo ikut serta dalam kegiatan literasi digital yang diadakan oleh
-                Perpustakaan Pekanbaru untuk meningkatkan minat baca mahasiswa!
+                Universitas Riau (Unri) mulai memfungsikan gedung-gedung baru yang dikerjakan
+                melalui Proyek AKSI (Advanced Knowledge for Sustainable Growth in Indonesia) 
+                bantuan Asian Development Bank (ADB) l, yang kini telah selesai dibangun.
               </p>
             </div>
             <div class="card-footer bg-white border-0 text-end">
-              <a href="#" class="btn btn-outline-primary btn-sm">Selengkapnya</a>
+              <a href="https://unri.ac.id/unri-mulai-fungsikan-gedung-gedung-bantuan-adb/" class="btn btn-outline-primary btn-sm">Selengkapnya</a>
             </div>
           </div>
         </div>
+         <!-- Kegiatan 6 -->
+  <div class="col-md-4" data-aos="fade-up">
+    <div class="card h-100 shadow-sm border-0">
+      <img src="assets/sistemsatu.jpg" class="card-img-top" alt="">
+      <div class="card-body">
+        <h5 class="card-title">Sistem informasi "Satu UNRI" digaungkan</h5>
+        <p class="card-text text-muted">Dalam rangka integrasi aplikasi di 
+          lingkungan Universitas Riau, pihak kampus sosialisasi Sistem Informasi 
+          Akademik terpadu Universitas Riau (Satu UNRI) di Gedung Senangin 
+          Fakultas Perikanan dan Kelautan (FPK) Universitas Riau, Kamis (25/1)..</p>
+      </div>
+      <div class="card-footer bg-white border-0 text-end">
+        <a href="https://riau.antaranews.com/berita/360585/sistem-informasi-satu-unri-digaungkan" class="btn btn-outline-primary btn-sm">Selengkapnya</a>
       </div>
     </div>
+  </div>
+    
+
   </section>
   <!-- layanan -->
   <div class="container py-5">
@@ -331,34 +349,57 @@ $event = mysqli_fetch_assoc($result);
 </div>
 
 
+<div class="book-slider">
 
-<!-- Bootstrap Icons -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap
+  <!-- Buku 1 -->
+  <div class="book">
+    <img src="https://images-na.ssl-images-amazon.com/images/I/81af+MCATTL.jpg" alt="Book 1">
+    <h5>Harry Potter</h5>
+  </div>
 
-  <!-- Koleksi Buku -->
-  <section id="koleksi-buku" class="container mt-5">
-    <h2 class="text-center mb-4">📚 Koleksi Buku Unggulan</h2>
+  <!-- Buku 2 -->
+  <div class="book">
+    <img src="https://images-na.ssl-images-amazon.com/images/I/71KilybDOoL.jpg" alt="Book 2">
+    <h5>The Hobbit</h5>
+  </div>
 
-    <div class="book-slider">
-      <div class="book">
-        <img src="https://images-na.ssl-images-amazon.com/images/I/81af+MCATTL.jpg" alt="Book 1">
-        <h5>Harry Potter</h5>
-      </div>
-      <div class="book">
-        <img src="https://images-na.ssl-images-amazon.com/images/I/71KilybDOoL.jpg" alt="Book 2">
-        <h5>The Hobbit</h5>
-      </div>
-      <div class="book">
-        <img src="https://images-na.ssl-images-amazon.com/images/I/81a4kCNuH+L.jpg" alt="Book 3">
-        <h5>Percy Jackson</h5>
-      </div>
-      <div class="book">
-        <img src="https://ebooks.gramedia.com/ebook-covers/40151/big_covers/ID_GPU2017MTH09TLOTRSPCFOTRUCB_B.jpg"
-          alt="Book 4">
-        <h5>Lord of The Rings</h5>
-      </div>
-    </div>
-  </section>
+  <!-- Buku 3 -->
+  <div class="book">
+    <img src="https://images-na.ssl-images-amazon.com/images/I/81a4kCNuH+L.jpg" alt="Book 3">
+    <h5>Percy Jackson</h5>
+  </div>
+
+  <!-- Buku 4 -->
+  <div class="book">
+    <img src="https://ebooks.gramedia.com/ebook-covers/40151/big_covers/ID_GPU2017MTH09TLOTRSPCFOTRUCB_B.jpg" alt="Book 4">
+    <h5>Lord of The Rings</h5>
+  </div>
+
+  <!-- Buku 5 → TAMBAHAN -->
+  <div class="book">
+    <img src="https://images-na.ssl-images-amazon.com/images/I/81WcnNQ-TBL.jpg" alt="Book 5">
+    <h5>The Great Gatsby</h5>
+  </div>
+
+  <!-- Buku 6 → TAMBAHAN -->
+  <div class="book">
+    <img src="https://images-na.ssl-images-amazon.com/images/I/71g2ednj0JL.jpg" alt="Book 6">
+    <h5>To Kill a Mockingbird</h5>
+  </div>
+
+  <!-- Buku 7 → TAMBAHAN -->
+  <div class="book">
+    <img src="https://images-na.ssl-images-amazon.com/images/I/81iqZ2HHD-L.jpg" alt="Book 7">
+    <h5>1984 - George Orwell</h5>
+  </div>
+
+  <!-- Buku 8 → TAMBAHAN -->
+  <div class="book">
+    <img src="https://images-na.ssl-images-amazon.com/images/I/91uwocAMtSL.jpg" alt="Book 8">
+    <h5>The Alchemist</h5>
+  </div>
+
+</div>
 
 
 
