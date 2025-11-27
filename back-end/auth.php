@@ -14,7 +14,7 @@ $username = $_POST["username"] ?? "";
 $password = $_POST["password"] ?? "";
 
 // DEBUG
-file_put_contents("TES_LOGIN.txt", "USERNAME=$username\nPASSWORD=$password\n", FILE_APPEND);
+// file_put_contents("TES_LOGIN.txt", "USERNAME=$username\nPASSWORD=$password\n", FILE_APPEND);
 
 // ======================================
 // LOGIN ADMIN SEDERHANA DULU

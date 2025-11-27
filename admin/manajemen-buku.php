@@ -70,13 +70,15 @@ include '../back-end/koneksi.php';
                                 <td class="p-3 text-center">
 
                                     <button onclick="openEditModal(
-                                <?= $b['id_buku']; ?>,
-                                `<?= htmlspecialchars($b['nama']); ?>`,
-                                `<?= htmlspecialchars($b['jenis']); ?>`,
-                                `<?= $b['tanggal']; ?>`,
-                                `<?= htmlspecialchars($b['gambar']); ?>`,
-                                `<?= $b['status']; ?>`
-                            )" class="px-3 py-1 rounded-xl bg-yellow-300 text-slate-900 font-semibold hover:bg-yellow-200 transition">
+                                     <?= $b['id_buku']; ?>,
+                                     `<?= htmlspecialchars(addslashes($b['nama'])); ?>`,
+                                     `<?= htmlspecialchars(addslashes($b['jenis'])); ?>`,
+                                     `<?= $b['tanggal']; ?>`,
+                                    `<?= htmlspecialchars(addslashes($b['gambar'])); ?>`,
+                                    `<?= $b['status']; ?>`,
+                                    `<?= htmlspecialchars($b['tipe_buku'] ?? 'fisik'); ?>`
+                                    )"
+                                        class="px-3 py-1 rounded-xl bg-yellow-300 text-slate-900 font-semibold hover:bg-yellow-200 transition">
                                         Edit
                                     </button>
 
@@ -96,14 +98,14 @@ include '../back-end/koneksi.php';
 
 
     <!-- ===========================
-     MODAL (ADD + EDIT)
-=========================== -->
+         MODAL (ADD + EDIT)
+    =========================== -->
     <div id="add-modal" class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm flex justify-center items-center z-50">
-        <div class="bg-white/10 border border-white/20 p-6 rounded-2xl w-[380px] text-white shadow-xl">
+        <div class="bg-white/10 border border-white/20 p-6 rounded-2xl w-[420px] text-white shadow-xl">
 
             <h2 id="modalTitle" class="text-xl font-bold mb-4">Tambah Buku</h2>
 
-            <form onsubmit="return false;">
+            <form id="bookForm" onsubmit="return false;">
 
                 <!-- Search Google Books -->
                 <input type="text" id="searchGoogle" placeholder="Cari buku (Google Books)"
@@ -120,20 +122,32 @@ include '../back-end/koneksi.php';
                 <input type="text" id="nama" placeholder="Nama Buku"
                     class="w-full mb-3 p-2 bg-gray-800/60 rounded border border-white/20" required>
 
-                <input type="text" id="jenis" placeholder="Jenis Buku / Kategori"
-                    class="w-full mb-3 p-2 bg-gray-800/60 rounded border border-white/20" required>
+                <label class="text-sm">Kategori Buku</label>
+                <select id="jenis" class="w-full mb-3 p-2 bg-gray-800/60 rounded border border-white/20 text-white"
+                    required>
+
+                    <option value="Novel">Novel</option>
+                    <option value="Komik">Komik</option>
+                    <option value="Makalah">Makalah</option>
+                    <option value="Sejarah">Sejarah</option>
+                    <option value="Filosofi">Filosofi</option>
+
+                </select>
+
 
                 <input type="date" id="tanggal" class="w-full mb-3 p-2 bg-gray-800/60 rounded border border-white/20"
                     required>
 
+
+
                 <input type="text" id="gambar" placeholder="URL Gambar Buku"
                     class="w-full mb-3 p-2 bg-gray-800/60 rounded border border-white/20">
 
+                <!-- wrapper for file input so closest()/style calls are safe -->
                 <label class="text-sm">Upload PDF Buku</label>
                 <input type="file" id="file_pdf"
                     class="w-full mb-3 p-2 bg-gray-800/60 rounded border border-white/20 text-white"
                     accept="application/pdf">
-
 
                 <select id="status" class="w-full mb-4 p-2 bg-gray-800/60 rounded border border-white/20">
                     <option value="Tersedia" class="text-black">Tersedia</option>
@@ -156,103 +170,87 @@ include '../back-end/koneksi.php';
 
 
     <!-- ===========================
-     JAVASCRIPT
-=========================== -->
-    <script>
+         JAVASCRIPT
+    ========================== -->
+   <script>
 
-        /* ==========================
-            VARIABEL UTAMA
-        ========================== */
-        const modal = document.getElementById("add-modal");
-        const title = document.getElementById("modalTitle");
-        const saveBtn = document.getElementById("saveBtn");
-        const googleBox = document.getElementById("googleResults");
+    /* ==========================
+        VARIABEL UTAMA
+    ========================== */
+    const modal = document.getElementById("add-modal");
+    const title = document.getElementById("modalTitle");
+    const saveBtn = document.getElementById("saveBtn");
+    const googleBox = document.getElementById("googleResults");
 
-        const input = {
-            nama: document.getElementById("nama"),
-            jenis: document.getElementById("jenis"),
-            tanggal: document.getElementById("tanggal"),
-            gambar: document.getElementById("gambar"),
-            status: document.getElementById("status"),
-            search: document.getElementById("searchGoogle"),
-            file_pdf: document.getElementById("file_pdf")
+    const input = {
+        nama: document.getElementById("nama"),
+        jenis: document.getElementById("jenis"),
+        tanggal: document.getElementById("tanggal"),
+        gambar: document.getElementById("gambar"),
+        status: document.getElementById("status"),
+        search: document.getElementById("searchGoogle"),
+        file_pdf: document.getElementById("file_pdf")
+    };
 
-        };
-
-        let editID = null;
+    let editID = null;
 
 
-        /* ==========================
-            OPEN / CLOSE MODAL
-        ========================== */
-        function openEditModal(id, nama, jenis, tanggal, gambar, status) {
-            openAddModal(true, {
-                id,
-                nama,
-                jenis,
-                tanggal,
-                gambar,
-                status
-            });
+    /* ==========================
+        OPEN / CLOSE MODAL
+    ========================== */
+    function openEditModal(id, nama, jenis, tanggal, gambar, status) {
+        openAddModal(true, {
+            id: id,
+            nama: nama,
+            jenis: jenis,
+            tanggal: tanggal,
+            gambar: gambar,
+            status: status
+        });
+    }
+
+    function openAddModal(isEdit = false, data = null) {
+        modal.classList.remove("hidden");
+
+        if (isEdit && data) {
+            title.innerText = "Edit Buku";
+            saveBtn.innerText = "Update Buku";
+            editID = data.id;
+
+            input.nama.value = data.nama || "";
+            input.jenis.value = data.jenis || "";
+            input.tanggal.value = data.tanggal || "";
+            input.gambar.value = data.gambar || "";
+            input.status.value = data.status || "Tersedia";
+
+            saveBtn.onclick = tambahBuku;
+
+        } else {
+            title.innerText = "Tambah Buku";
+            saveBtn.innerText = "Simpan";
+            editID = null;
+
+            input.nama.value = "";
+            input.jenis.value = "";
+            input.tanggal.value = "";
+            input.gambar.value = "";
+            input.status.value = "Tersedia";
+
+            saveBtn.onclick = tambahBuku;
         }
+    }
 
-        function openAddModal(isEdit = false, data = null) {
-            modal.classList.remove("hidden");
-
-            if (isEdit && data) {
-                title.innerText = "Edit Buku";
-                saveBtn.innerText = "Update Buku";
-                editID = data.id;
-
-                input.nama.value = data.nama;
-                input.jenis.value = data.jenis;
-                input.tanggal.value = data.tanggal;
-                input.gambar.value = data.gambar;
-                input.status.value = data.status;
-
-                saveBtn.onclick = submitForm;
-            } else {
-                title.innerText = "Tambah Buku";
-                saveBtn.innerText = "Simpan";
-                editID = null;
-
-                input.nama.value = "";
-                input.jenis.value = "";
-                input.tanggal.value = "";
-                input.gambar.value = "";
-                input.status.value = "Tersedia";
-
-                saveBtn.onclick = submitForm;
-            }
-        }
-
-        function closeAddModal() {
-            modal.classList.add("hidden");
-            googleBox.classList.add("hidden");
-        }
+    function closeAddModal() {
+        modal.classList.add("hidden");
+        googleBox.classList.add("hidden");
+    }
 
 
-        /* ==========================
-            FETCH WRAPPER (OPTIMAL)
-        ========================== */
-        async function apiRequest(method, body = null) {
-            const options = {
-                method,
-                headers: { "Content-Type": "application/json" },
-            };
-
-            if (body) options.body = JSON.stringify(body);
-
-            const res = await fetch("../back-end/crud/buku.php", options);
-            return await res.json();
-        }
-
-
-        /* ==========================
-            SUBMIT (ADD & EDIT)
-        ========================== */
-        async function submitForm() {
-
+    /* ==========================
+        SUBMIT (ADD & EDIT)
+    ========================== */
+    async function tambahBuku() {
+        try {
             const formData = new FormData();
 
             formData.append("nama", input.nama.value);
@@ -261,12 +259,12 @@ include '../back-end/koneksi.php';
             formData.append("gambar", input.gambar.value);
             formData.append("status", input.status.value);
 
-            // upload PDF jika ada
+            // upload PDF
             if (input.file_pdf.files.length > 0) {
                 formData.append("file_pdf", input.file_pdf.files[0]);
             }
 
-            // edit mode
+            // edit
             if (editID !== null) {
                 formData.append("id_buku", editID);
                 formData.append("_method", "PUT");
@@ -283,74 +281,80 @@ include '../back-end/koneksi.php';
                 alert(editID ? "Buku berhasil diperbarui!" : "Buku berhasil ditambahkan!");
                 location.reload();
             } else {
-                alert("Gagal: " + json.sql_error);
-            }
-        }
-
-
-
-        /* ==========================
-            HAPUS BUKU
-        ========================== */
-        async function hapusBuku(id) {
-            if (!confirm("Yakin ingin menghapus buku ini?")) return;
-
-            const json = await apiRequest("DELETE", { id_buku: id });
-
-            if (json.status === "success") {
-                alert("Buku dihapus.");
-                location.reload();
-            } else alert("Gagal menghapus.");
-        }
-
-
-        /* ==========================
-            GOOGLE BOOKS (DISIMPATKAN)
-        ========================== */
-        async function searchGoogleBooks() {
-            const q = input.search.value.trim();
-            if (!q) return alert("Masukkan judul dulu ya senpai…");
-
-            const url = `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(q)}`;
-            const res = await fetch(url);
-            const data = await res.json();
-
-            googleBox.innerHTML = "";
-            googleBox.classList.remove("hidden");
-
-            if (!data.items) {
-                googleBox.innerHTML = `<p class='p-2 text-red-300'>Tidak ditemukan.</p>`;
-                return;
+                alert("Gagal: " + (json.sql_error || json.status));
             }
 
-            data.items.slice(0, 10).forEach(item => {
-                const info = item.volumeInfo;
+        } catch (err) {
+            console.error(err);
+            alert("Error saat menyimpan.");
+        }
+    }
 
-                const title = info.title || "Tidak ada judul";
-                const author = info.authors?.join(", ") || "-";
-                const date = info.publishedDate || "2000-01-01";
-                const thumb = info.imageLinks?.thumbnail || "";
-                const category = info.categories?.[0] || "Umum";
 
-                const div = document.createElement("div");
-                div.className = "p-2 bg-gray-800/50 mb-2 cursor-pointer hover:bg-gray-700 rounded";
-                div.innerHTML = `<b>${title}</b><br><small>${author}</small>`;
+    /* ==========================
+        HAPUS BUKU
+    ========================== */
+    async function hapusBuku(id) {
+        if (!confirm("Yakin ingin menghapus buku ini?")) return;
 
-                div.onclick = () => {
-                    input.nama.value = title;
-                    input.jenis.value = category;
-                    input.tanggal.value = date.length >= 10 ? date : "2000-01-01";
-                    input.gambar.value = thumb;
-                    googleBox.classList.add("hidden");
-                };
+        const res = await fetch("../back-end/crud/buku.php", {
+            method: "DELETE",
+            body: JSON.stringify({ id_buku: id })
+        });
 
-                googleBox.appendChild(div);
-            });
+        const json = await res.json();
+
+        if (json.status === "success") {
+            alert("Buku dihapus.");
+            location.reload();
+        } else alert("Gagal menghapus.");
+    }
+
+
+    /* ==========================
+        GOOGLE BOOKS
+    ========================== */
+    async function searchGoogleBooks() {
+        const q = input.search.value.trim();
+        if (!q) return alert("Masukkan judul dulu.");
+
+        const url = `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(q)}`;
+        const res = await fetch(url);
+        const data = await res.json();
+
+        googleBox.innerHTML = "";
+        googleBox.classList.remove("hidden");
+
+        if (!data.items) {
+            googleBox.innerHTML = `<p class="p-2 text-red-300">Tidak ditemukan.</p>`;
+            return;
         }
 
+        data.items.slice(0, 10).forEach(item => {
+            const info = item.volumeInfo;
+            const title = info.title || "Tidak ada judul";
+            const category = info.categories?.[0] || "Umum";
+            const date = info.publishedDate || "2000-01-01";
+            const thumb = info.imageLinks?.thumbnail || "";
 
+            const div = document.createElement("div");
+            div.className = "p-2 bg-gray-800/50 mb-2 cursor-pointer hover:bg-gray-700 rounded";
+            div.innerHTML = `<b>${title}</b>`;
 
-    </script>
+            div.onclick = () => {
+                input.nama.value = title;
+                input.jenis.value = category;
+                input.tanggal.value = date.length >= 10 ? date : "2000-01-01";
+                input.gambar.value = thumb;
+                googleBox.classList.add("hidden");
+            };
+
+            googleBox.appendChild(div);
+        });
+    }
+
+</script>
+
 
 </body>
 

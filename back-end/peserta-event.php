@@ -3,7 +3,6 @@ header("Content-Type: application/json");
 session_start();
 include "koneksi.php";
 
-// User harus login
 if (!isset($_SESSION['id_anggota'])) {
     echo json_encode(["status" => "error", "message" => "Belum login"]);
     exit;
@@ -19,34 +18,43 @@ switch ($method) {
     // IKUT EVENT (POST)
     // ============================
     case "POST":
-        $event = intval($input['id_event']);
 
-        // Cek apakah sudah ikut
+        // Ambil ID event dari JSON
+        $event = intval($input['event_id'] ?? 0);
+
+        if ($event === 0) {
+            echo json_encode(["status" => "error", "message" => "Event ID tidak valid"]);
+            exit;
+        }
+
+        // Cek apakah user sudah ikut
         $check = mysqli_query($koneksi,
-            "SELECT id_peserta FROM peserta_event 
+            "SELECT id_peserta_event FROM peserta_event 
              WHERE id_event=$event AND id_anggota='$user_id'"
         );
 
         if (mysqli_num_rows($check) > 0) {
-            echo json_encode(["status" => "error", "message" => "Sudah ikut"]);
+            echo json_encode(["status" => "exists"]);
             exit;
         }
 
-        // Simpan
+        // Simpan peserta
         $insert = mysqli_query($koneksi,
-            "INSERT INTO peserta_event (id_event, id_anggota, tgl_daftar) 
-             VALUES ($event, '$user_id', NOW())"
+            "INSERT INTO peserta_event (id_event, id_anggota, tanggal_daftar)
+             VALUES ($event, '$user_id', CURDATE())"
         );
 
         echo json_encode(["status" => $insert ? "success" : "error"]);
         break;
 
+
     // ============================
     // BATAL IKUT (DELETE)
     // ============================
     case "DELETE":
-        $event = intval($input['id_event']);
-        
+
+        $event = intval($input['event_id'] ?? 0);
+
         $delete = mysqli_query($koneksi,
             "DELETE FROM peserta_event 
              WHERE id_event=$event AND id_anggota='$user_id'"
@@ -54,6 +62,7 @@ switch ($method) {
 
         echo json_encode(["status" => $delete ? "success" : "error"]);
         break;
+
 
     default:
         echo json_encode(["status" => "error", "message" => "Method tidak diizinkan"]);
