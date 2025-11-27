@@ -234,17 +234,15 @@ async function pinjamBuku(book) {
 // ======================
 //  LOAD PEMINJAMAN
 // ======================
+// LOAD PEMINJAMAN
 async function loadPeminjaman() {
   try {
-    // BACKEND: ambil semua peminjaman
     const res = await fetch("../back-end/peminjaman.php");
     const data = await res.json();
 
-    // filter berdasarkan user yang login
+    // Filter hanya berdasarkan ID anggota
     peminjaman = Array.isArray(data)
-      ? data.filter((d) =>
-          String(d.id_anggota || d.nama_peminjam) === String(CURRENT_USER_ID || CURRENT_USER_NAME)
-        )
+      ? data.filter((d) => String(d.id_anggota) === String(CURRENT_USER_ID))
       : [];
 
     renderTabel();
@@ -252,6 +250,7 @@ async function loadPeminjaman() {
     console.error("Gagal load peminjaman:", err);
   }
 }
+
 
 function renderTabel() {
   loanTable.innerHTML = "";

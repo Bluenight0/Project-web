@@ -3,7 +3,7 @@ session_start();
 header("Content-Type: application/json");
 include "koneksi.php";
 
-// Cek apakah request POST
+// Pastikan POST
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     echo json_encode(["success" => false, "msg" => "Invalid request"]);
     exit;
@@ -13,38 +13,31 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
 $username = $_POST["username"] ?? "";
 $password = $_POST["password"] ?? "";
 
-// DEBUG
-// file_put_contents("TES_LOGIN.txt", "USERNAME=$username\nPASSWORD=$password\n", FILE_APPEND);
-
-// ======================================
-// LOGIN ADMIN SEDERHANA DULU
-// ======================================
-
-// Cek admin
+// Query cek admin
 $q = mysqli_query(
     $koneksi,
-    "SELECT * FROM admin_perpus WHERE username='$username' LIMIT 1"
+    "SELECT * FROM admin_perpus WHERE nama_admin='$username' LIMIT 1"
 );
 
 if ($q && mysqli_num_rows($q) === 1) {
 
     $admin = mysqli_fetch_assoc($q);
 
-    // TANPA HASH DULU
+    // cocok password (tanpa hash)
     if ($password === $admin["password"]) {
 
         $_SESSION["role"] = "admin";
         $_SESSION["id_admin"] = $admin["id_admin"];
-        $_SESSION["admin_name"] = $admin["username"];
+        $_SESSION["admin_name"] = $admin["nama_admin"];
 
         echo json_encode([
             "success" => true,
             "role" => "admin",
-            "redirect" => "../admin/index.php"
+            "redirect" => "admin/index.php"
         ]);
         exit;
     }
 }
 
-// Kalau gagal:
+// kalau gagal
 echo json_encode(["success" => false, "msg" => "Login gagal"]);
