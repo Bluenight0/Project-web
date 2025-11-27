@@ -91,6 +91,12 @@
                     <input id="edit-link_event"
                         class="w-full bg-white/20 border border-white/30 rounded-xl p-2 text-white">
                 </div>
+                <div>
+                    <label class="text-sm text-cyan-200">Upload Gambar Event</label>
+                    <input type="file" id="edit-gambar"
+                        class="w-full bg-white/20 border border-white/30 rounded-xl p-2 text-white" accept="image/*">
+                </div>
+
 
             </div>
 
@@ -148,24 +154,63 @@
         // ======================
         // OPEN ADD MODAL
         // ======================
-        function openAddModal() {
-            document.getElementById("modal-title").textContent = "Tambah Event";
-            document.getElementById("event-modal").classList.remove("hidden");
 
-            // kosongkan semua input
-            [
-                "id_event",
-                "judul",
-                "tanggal_mulai",
-                "tanggal_selesai",
-                "lokasi",
-                "deskripsi",
-                "link_event"
-            ].forEach(k => {
-                const el = document.getElementById(`edit-${k}`);
-                if (el) el.value = "";
-            });
-        }
+
+        function openAddModal() {
+    document.getElementById("modal-title").textContent = "Tambah Event";
+    document.getElementById("event-modal").classList.remove("hidden");
+
+    // reset field
+    [
+        "id_event",
+        "judul",
+        "tanggal_mulai",
+        "tanggal_selesai",
+        "lokasi",
+        "deskripsi",
+        "link_event"
+    ].forEach(k => {
+        document.getElementById(`edit-${k}`).value = "";
+    });
+
+    // reset input file gambar
+    document.getElementById("edit-gambar").value = "";
+}
+// ======================
+        // OPEN save event
+        // ======================
+
+        async function saveEvent() {
+    const fd = new FormData();
+
+    [
+        "id_event",
+        "judul",
+        "tanggal_mulai",
+        "tanggal_selesai",
+        "lokasi",
+        "deskripsi",
+        "link_event"
+    ].forEach(k => {
+        fd.append(k, document.getElementById(`edit-${k}`).value);
+    });
+
+    // upload file gambar
+    const gambar = document.getElementById("edit-gambar");
+    if (gambar.files.length > 0) {
+        fd.append("gambar", gambar.files[0]);
+    }
+
+    await fetch("../back-end/crud/event.php", {
+        method: "POST",
+        body: fd
+    });
+
+    closeModal();
+    loadEvents();
+}
+
+
 
         // ======================
         // OPEN EDIT MODAL
@@ -190,29 +235,36 @@
         // ======================
         // SAVE (INSERT / UPDATE)
         // ======================
-        async function saveEvent() {
-            const fd = new FormData();
+       async function saveEvent() {
+    const fd = new FormData();
 
-            [
-                "id_event",
-                "judul",
-                "tanggal_mulai",
-                "tanggal_selesai",
-                "lokasi",
-                "deskripsi",
-                "link_event"
-            ].forEach(k => {
-                fd.append(k, document.getElementById(`edit-${k}`).value);
-            });
+    [
+        "id_event",
+        "judul",
+        "tanggal_mulai",
+        "tanggal_selesai",
+        "lokasi",
+        "deskripsi",
+        "link_event"
+    ].forEach(k => {
+        fd.append(k, document.getElementById(`edit-${k}`).value);
+    });
 
-            await fetch("../back-end/crud/event.php", {
-                method: "POST",
-                body: fd
-            });
+    // upload file gambar
+    const gambar = document.getElementById("edit-gambar");
+    if (gambar.files.length > 0) {
+        fd.append("gambar", gambar.files[0]);
+    }
 
-            closeModal();
-            loadEvents();
-        }
+    await fetch("../back-end/crud/event.php", {
+        method: "POST",
+        body: fd
+    });
+
+    closeModal();
+    loadEvents();
+}
+
 
         // ======================
         // DELETE EVENT

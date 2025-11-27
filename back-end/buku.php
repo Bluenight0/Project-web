@@ -6,7 +6,7 @@ $method = $_SERVER['REQUEST_METHOD'];
 
 if ($method === 'GET') {
     // 🔹 Ambil semua data buku
-    $result = mysqli_query($conn, "SELECT * FROM buku ORDER BY id DESC");
+    $result = mysqli_query($koneksi, "SELECT * FROM buku ORDER BY id_buku DESC");
     $books = [];
     while ($row = mysqli_fetch_assoc($result)) {
         $books[] = $row;

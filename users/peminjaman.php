@@ -1,11 +1,10 @@
 <?php
 session_start();
 
-// ambil identitas user dari session login (silakan sesuaikan nama key)
+// ambil identitas user (jika ada)
 $namaUser = $_SESSION['nama_anggota'] ?? 'User';
 $idUser   = $_SESSION['id_anggota'] ?? null;
 ?>
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -122,6 +121,7 @@ $idUser   = $_SESSION['id_anggota'] ?? null;
                 <th class="px-4 py-2 text-left">Batas Waktu</th>
                 <th class="px-4 py-2 text-left">Status</th>
                 <th class="px-4 py-2 text-left">Aksi</th>
+                <th class="px-4 py-2 text-left">QR Code</th> <!-- kolom QR -->
               </tr>
             </thead>
             <tbody id="loanTable" class="divide-y divide-white/5">
@@ -184,5 +184,7 @@ $idUser   = $_SESSION['id_anggota'] ?? null;
 
   <!-- JS PEMINJAMAN USER -->
   <script src="../assets/peminjaman-user.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
 </body>
 </html>

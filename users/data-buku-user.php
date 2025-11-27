@@ -14,6 +14,7 @@
         opacity: 0;
         transform: translateY(10px);
       }
+
       to {
         opacity: 1;
         transform: translateY(0);
@@ -58,19 +59,33 @@
           class="filter-pill px-3 py-1 rounded-full bg-blue-500/80 hover:bg-blue-500 shadow text-white">
           Semua
         </button>
+
         <button data-filter="Novel"
           class="filter-pill px-3 py-1 rounded-full bg-white/10 hover:bg-white/20 border border-white/10">
           Novel
         </button>
+
         <button data-filter="Komik"
           class="filter-pill px-3 py-1 rounded-full bg-white/10 hover:bg-white/20 border border-white/10">
           Komik
         </button>
-        <button data-filter="Referensi"
+
+        <button data-filter="Makalah"
           class="filter-pill px-3 py-1 rounded-full bg-white/10 hover:bg-white/20 border border-white/10">
-          Referensi
+          Makalah
+        </button>
+
+        <button data-filter="Sejarah"
+          class="filter-pill px-3 py-1 rounded-full bg-white/10 hover:bg-white/20 border border-white/10">
+          Sejarah
+        </button>
+
+        <button data-filter="Filosofi"
+          class="filter-pill px-3 py-1 rounded-full bg-white/10 hover:bg-white/20 border border-white/10">
+          Filosofi
         </button>
       </div>
+
     </section>
 
     <!-- Statistik kecil -->
@@ -85,11 +100,21 @@
         <span class="text-xs text-gray-300/80">Tersedia</span>
         <span id="statAvailable" class="text-2xl font-semibold text-emerald-300">0</span>
       </div>
-      <div
-        class="bg-gray-700/50 backdrop-blur-lg border border-white/10 rounded-2xl px-4 py-3 shadow-md flex flex-col gap-1">
-        <span class="text-xs text-gray-300/80">Sedang Dipinjam</span>
-        <span id="statBorrowed" class="text-2xl font-semibold text-amber-300">0</span>
-      </div>
+      <section class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div
+          class="bg-gray-700/50 backdrop-blur-lg border border-white/10 rounded-2xl px-4 py-3 shadow-md flex flex-col gap-1">
+          <span class="text-xs text-gray-300/80">Total Buku</span>
+          <span id="statTotal" class="text-2xl font-semibold text-blue-300">0</span>
+        </div>
+
+        <div
+          class="bg-gray-700/50 backdrop-blur-lg border border-white/10 rounded-2xl px-4 py-3 shadow-md flex flex-col gap-1">
+          <span class="text-xs text-gray-300/80">Tersedia</span>
+          <span id="statAvailable" class="text-2xl font-semibold text-emerald-300">0</span>
+        </div>
+      </section>
+
+
     </section>
 
     <!-- Grid Buku -->
@@ -104,10 +129,9 @@
   </main>
 
   <!-- MODAL DETAIL BUKU -->
-  <!-- Modal diletakkan di bawah (di dalam body, di luar main) supaya bisa overlay seluruh halaman -->
-  <div id="detailModal"
-    class="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 hidden">
+  <div id="detailModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 hidden">
     <div class="bg-gray-800 rounded-2xl shadow-2xl max-w-lg w-11/12 p-5 sm:p-6 border border-white/10 relative">
+
       <button id="closeModal"
         class="absolute top-3 right-3 text-gray-300 hover:text-white text-xl leading-none">&times;</button>
 
@@ -116,30 +140,39 @@
           <img id="modalImage" src="../assets/default-book.jpg" alt="Cover Buku"
             class="w-full h-44 object-cover rounded-xl shadow-md">
         </div>
+
         <div class="sm:w-2/3 space-y-1">
           <h2 id="modalTitle" class="text-xl font-semibold text-white"></h2>
           <p id="modalCategory" class="text-sm text-blue-200"></p>
           <p id="modalDate" class="text-xs text-gray-300"></p>
-          <span id="modalStatusBadge"
-            class="inline-block mt-2 px-3 py-1 rounded-full text-xs font-semibold bg-green-600/90">Status</span>
+
+          
+          <div class="flex items-center gap-2 mt-2">
+            <span id="modalStatusBadge"
+              class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-green-600/90">
+              Status
+            </span>
+          </div>
           <p id="modalDescription" class="text-sm text-gray-200/90 mt-3">
-            Deskripsi singkat buku belum tersedia di backend. Tambahkan kolom deskripsi di tabel bila ingin menampilkan
-            informasi lebih detail.
+            Deskripsi singkat belum tersedia.
           </p>
         </div>
       </div>
-
       <div class="mt-4 flex justify-end">
-        <button
-          class="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-sm font-semibold shadow-md focus:outline-none">
-          Rencanakan Peminjaman
+      <button id="readNowBtn"
+        class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-sm font-semibold shadow-md">
+        Baca Sekarang
+        </div>
         </button>
-      </div>
+    
+
+
     </div>
   </div>
 
+
   <script src="../assets/data-buku-user.js"></script>
- 
+
 
 </body>
 
