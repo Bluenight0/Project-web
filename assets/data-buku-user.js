@@ -16,43 +16,64 @@ const readNowBtn = document.getElementById("readNowBtn");
 
 let books = [];
 let activeFilter = "all";
+const filterMap = {
+  komik: ["comic", "comics", "graphic"],
+  novel: ["novel", "adventure", "story"],
+  makalah: ["paper"],
+  sejarah: ["history"],
+  filosofi: ["philosophy", "filsafat"],
+};
 
 // =============================
 // Ambil data dari database
 // =============================
 async function loadBooks() {
+  try {
     const res = await fetch("../back-end/crud/buku.php");
-    books = await res.json();
+    if (!res.ok) throw new Error("Server error");
 
-    loading.classList.add("hidden");
-    renderBooks();
-    updateStats();
+    books = await res.json();
+  } catch (err) {
+    console.error(err);
+    loading.textContent = "Gagal memuat data buku.";
+    return;
+  }
+
+  loading.classList.add("hidden");
+  renderBooks();
+  updateStats();
 }
 
 // =============================
 // Render Buku
 // =============================
 function renderBooks() {
-    let filtered = books;
+  let filtered = books;
 
-    // FILTER CATEGORY
-    if (activeFilter !== "all") {
-        filtered = filtered.filter(b => b.jenis === activeFilter);
-    }
+  // FILTER CATEGORY
 
-    // SEARCH
-    const q = searchInput.value.toLowerCase();
-    if (q) {
-        filtered = filtered.filter(b => b.nama.toLowerCase().includes(q));
-    }
+  if (activeFilter !== "all") {
+    const keys = filterMap[activeFilter] || [];
+    filtered = filtered.filter((b) =>
+      keys.some((key) => b.jenis.toLowerCase().includes(key))
+    );
+  }
 
-    // Render card grid
-    bookGrid.innerHTML = filtered.map(b => `
+  // SEARCH
+  const q = searchInput.value.toLowerCase();
+  if (q) {
+    filtered = filtered.filter((b) => b.nama.toLowerCase().includes(q));
+  }
+
+  // Render card grid
+  bookGrid.innerHTML = filtered
+    .map(
+      (b) => `
         <div class="bg-gray-800/70 border border-white/10 rounded-xl p-4 shadow-lg hover:shadow-xl transition cursor-pointer"
-             onclick='openDetail(${JSON.stringify(b)})'
+             onclick='openDetail(${b.id_buku})'
              style="animation: fadeInUp .3s ease">
              
-            <img src="${b.gambar || '../assets/default-book.jpg'}"
+            <img src="${b.gambar || "../assets/default-book.jpg"}"
                  class="w-full h-48 object-cover rounded-lg shadow mb-3">
 
             <h3 class="font-semibold text-lg text-white truncate">${b.nama}</h3>
@@ -60,71 +81,77 @@ function renderBooks() {
             <p class="text-gray-400 text-xs">${b.tanggal}</p>
 
             <span class="inline-block mt-2 px-3 py-1 text-xs rounded-full
-                         ${b.status === 'Tersedia' ? 'bg-emerald-600' : 'bg-red-600'}">
+                         ${
+                           b.status === "Tersedia"
+                             ? "bg-emerald-600"
+                             : "bg-red-600"
+                         }">
                 ${b.status}
             </span>
 
         </div>
-    `).join("");
+    `
+    )
+    .join("");
 }
 
 // =============================
 // Open Modal Detail
 // =============================
-function openDetail(b) {
+function openDetail(id) {
+  const b = books.find((x) => x.id_buku == id);
+  modalTitle.textContent = b.nama;
+  modalCategory.textContent = b.jenis;
+  modalDate.textContent = b.tanggal;
+  modalDescription.textContent = "Buku elektronik tersedia untuk dibaca.";
 
-    modalTitle.textContent = b.nama;
-    modalCategory.textContent = b.jenis;
-    modalDate.textContent = b.tanggal;
-    modalDescription.textContent = "Buku elektronik tersedia untuk dibaca.";
+  modalImage.src = b.gambar || "../assets/default-book.jpg";
 
-    modalImage.src = b.gambar || "../assets/default-book.jpg";
+  modalStatusBadge.textContent = b.status;
+  modalStatusBadge.className = `inline-block px-3 py-1 rounded-full text-xs font-semibold 
+         ${b.status === "Tersedia" ? "bg-emerald-600/90" : "bg-red-600/90"}`;
 
-    modalStatusBadge.textContent = b.status;
-    modalStatusBadge.className =
-        `inline-block px-3 py-1 rounded-full text-xs font-semibold 
-         ${b.status === 'Tersedia' ? 'bg-emerald-600/90' : 'bg-red-600/90'}`;
+  detailModal.classList.remove("hidden");
 
-    detailModal.classList.remove("hidden");
-
-    // TOMBOL BACA SEKARANG
-    if (b.file_pdf) {
-        readNowBtn.onclick = () => {
-            window.open("../" + b.file_pdf, "_blank");
-        };
-        readNowBtn.disabled = false;
-    } else {
-        readNowBtn.onclick = null;
-        readNowBtn.disabled = true;
-    }
+  // TOMBOL BACA SEKARANG
+  if (b.file_pdf && b.file_pdf.endsWith(".pdf")) {
+    readNowBtn.disabled = false;
+    readNowBtn.onclick = () => {
+      window.open("../back-end/uploads/" + b.file_pdf, "_blank");
+    };
+    readNowBtn.disabled = false;
+  } else {
+    readNowBtn.onclick = null;
+  }
 }
 
 // Close modal
 document.getElementById("closeModal").onclick = () => {
-    detailModal.classList.add("hidden");
+  detailModal.classList.add("hidden");
 };
 
 // =============================
 // Update Statistik
 // =============================
 function updateStats() {
-    document.getElementById("statTotal").textContent = books.length;
-    document.getElementById("statAvailable").textContent =
-        books.filter(b => b.status === "Tersedia").length;
+  document.getElementById("statTotal").textContent = books.length;
+  document.getElementById("statAvailable").textContent = books.filter(
+    (b) => b.status === "Tersedia"
+  ).length;
 
-    // ❗ Ebook tidak punya sedang dipinjam → hapus statBorrowed
+  // ❗ Ebook tidak punya sedang dipinjam → hapus statBorrowed
 }
 
 // =============================
 // Filter Buttons
 // =============================
-filterButtons.forEach(btn => {
-    btn.onclick = () => {
-        filterButtons.forEach(b => b.classList.remove("bg-blue-500"));
-        btn.classList.add("bg-blue-500");
-        activeFilter = btn.dataset.filter;
-        renderBooks();
-    };
+filterButtons.forEach((btn) => {
+  btn.onclick = () => {
+    filterButtons.forEach((b) => b.classList.remove("bg-blue-500"));
+    btn.classList.add("bg-blue-500");
+    activeFilter = btn.dataset.filter.toLowerCase();
+    renderBooks();
+  };
 });
 
 // Search

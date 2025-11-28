@@ -100,20 +100,6 @@
         <span class="text-xs text-gray-300/80">Tersedia</span>
         <span id="statAvailable" class="text-2xl font-semibold text-emerald-300">0</span>
       </div>
-      <section class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div
-          class="bg-gray-700/50 backdrop-blur-lg border border-white/10 rounded-2xl px-4 py-3 shadow-md flex flex-col gap-1">
-          <span class="text-xs text-gray-300/80">Total Buku</span>
-          <span id="statTotal" class="text-2xl font-semibold text-blue-300">0</span>
-        </div>
-
-        <div
-          class="bg-gray-700/50 backdrop-blur-lg border border-white/10 rounded-2xl px-4 py-3 shadow-md flex flex-col gap-1">
-          <span class="text-xs text-gray-300/80">Tersedia</span>
-          <span id="statAvailable" class="text-2xl font-semibold text-emerald-300">0</span>
-        </div>
-      </section>
-
 
     </section>
 
