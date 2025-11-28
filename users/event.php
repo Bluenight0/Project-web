@@ -70,6 +70,8 @@
       <button id="closeModal" class="absolute top-3 right-3 text-gray-300 hover:text-white text-xl">&times;</button>
 
       <h2 id="modalNama" class="text-2xl font-semibold text-white mb-2"></h2>
+      <img id="modalGambar" class="w-full h-48 object-cover rounded-xl mb-4">
+
       <p id="modalTanggal" class="text-gray-300 mb-1"></p>
       <p id="modalLokasi" class="text-gray-300 mb-4"></p>
 

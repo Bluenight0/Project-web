@@ -13,9 +13,18 @@ let eventData = [];
 // LOAD EVENT
 // ========================
 async function loadEvents() {
+  eventList.innerHTML =
+    "<p class='text-gray-300 col-span-full text-center'>Memuat event...</p>";
   try {
     const res = await fetch("../back-end/crud/event.php");
-    const events = await res.json();
+    if (!res.ok) throw new Error("Server error");
+
+    let events;
+    try {
+      events = await res.json();
+    } catch {
+      throw new Error("Response bukan JSON");
+    }
 
     eventData = events;
     eventList.innerHTML = "";
@@ -55,8 +64,16 @@ async function loadEvents() {
 
       div.innerHTML = `
         ${badge}
+        ${
+          ev.gambar
+            ? `
+            <img src="../back-end/uploads/${ev.gambar}" 
+                class="w-full h-40 object-cover rounded-xl mb-3">
+            `
+            : ""
+        }
 
-        <h2 class="text-xl font-semibold mb-2">${ev.judul}</h2>
+        <h2 class="text-xl font-semibold mb-2 mt-5">${ev.judul}</h2>
 
         <p class="text-sm text-gray-200/80 mb-1">
           <span class="font-semibold text-gray-100">Tanggal:</span> 
@@ -93,7 +110,7 @@ function updateStats(events) {
   let upcoming = 0;
   let active = 0;
 
-  events.forEach(e => {
+  events.forEach((e) => {
     const mulai = new Date(e.tanggal_mulai);
     const selesai = new Date(e.tanggal_selesai);
 
@@ -109,13 +126,20 @@ function updateStats(events) {
 // MODAL DETAIL
 // ========================
 function openModal(id_event) {
-  const ev = eventData.find(e => e.id_event == id_event);
+  const ev = eventData.find((e) => e.id_event == id_event);
+  if (!ev) {
+    alert("Event tidak ditemukan.");
+    return;
+  }
 
   document.getElementById("modalNama").textContent = ev.judul;
+
+  document.getElementById("modalGambar").src =
+    "../back-end/uploads/" + ev.gambar;
+
   document.getElementById("modalTanggal").textContent =
     "Tanggal: " + ev.tanggal_mulai + " – " + ev.tanggal_selesai;
-  document.getElementById("modalLokasi").textContent =
-    "Lokasi: " + ev.lokasi;
+  document.getElementById("modalLokasi").textContent = "Lokasi: " + ev.lokasi;
 
   document.getElementById("modalIkut").onclick = () =>
     verifikasiIkut(ev.id_event);
@@ -124,7 +148,7 @@ function openModal(id_event) {
 }
 
 closeModal.onclick = () => eventModal.classList.add("hidden");
-eventModal.onclick = e => {
+eventModal.onclick = (e) => {
   if (e.target === eventModal) eventModal.classList.add("hidden");
 };
 
@@ -139,9 +163,9 @@ async function verifikasiIkut(id_event) {
     const res = await fetch("../back-end/peserta-event.php", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ event_id: id_event })
+      body: JSON.stringify({ event_id: id_event }),
     });
-
+    if (!res.ok) throw new Error("Gagal mengirim request");
     const result = await res.json();
 
     if (result.status === "success") {
