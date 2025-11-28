@@ -29,76 +29,77 @@ $event = mysqli_fetch_assoc($result);
   <link rel="stylesheet" href="assets/style.css">
   <style>
     .service-card {
-        border-radius: 1.5rem;
-        background: #ffffff;
-        transition: 0.3s ease;
+      border-radius: 1.5rem;
+      background: #ffffff;
+      transition: 0.3s ease;
     }
+
     .service-card:hover {
-        transform: translateY(-6px);
-        box-shadow: 0 18px 35px rgba(0,0,0,0.08);
+      transform: translateY(-6px);
+      box-shadow: 0 18px 35px rgba(0, 0, 0, 0.08);
     }
 
     .icon-circle {
-        width: 70px;
-        height: 70px;
-        border-radius: 50%;
-        background: #f1f5f9;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: #0d6efd;
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: #f1f5f9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #0d6efd;
     }
-</style>
+  </style>
 
 
 </head>
 
 <body>
   <!-- 🌐 Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
-      <!-- 🔹 Kiri (Brand) -->
-      <a class="navbar-brand ms-3" href="#"> Perpustakaan PEKANBARU</a>
+ <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
 
-      <!-- 🔹 Tombol toggle (buat tampilan HP) -->
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+    <!-- Brand (menjorok ke tengah sedikit) -->
+    <a class="navbar-brand" href="#" style="padding-left: 100px; font-weight: 600;">
+      PERPUSTAKAAN PEKANBARU
+    </a>
 
-      <!-- 🔹 Kanan (Menu) -->
-      <div class="collapse navbar-collapse justify-content-end me-3" id="navbarNav">
-        <ul class="navbar-nav">
-          <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-              <li class="nav-item">
-                <!-- href diubah menjadi trigger modal -->
-                <a class="nav-link" href="#koleksi-buku">Koleksi Buku</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Layanan</a>
-              </li>
-            </ul>
-          </div>
-          <li class="nav-item">
-            <a class="nav-link" href="#footerq">Tentang Kami</a>
-          </li>
+    <!-- Toggle -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-          <!-- 🔽 Dropdown Login -->
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="loginDropdown" role="button" data-bs-toggle="dropdown"
-              aria-expanded="false">
-              Login
-            </a>
-            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="loginDropdown">
-              <li><a class="dropdown-item" href="user.php">Login User</a></li>
-              <li><a class="dropdown-item" href="login.php">Login Admin</a></li>
-            </ul>
-          </li>
-        </ul>
-      </div>
+    <div class="collapse navbar-collapse" id="navbarNav">
+
+      <!-- MENU UTAMA (juga menjorok ke tengah) -->
+      <ul class="navbar-nav ms-auto fs-7 fw-semibold" style="padding-left: 600px;">
+        <li class="nav-item"><a class="nav-link" href="#koleksi-buku">Koleksi Buku</a></li>
+        <li class="nav-item"><a class="nav-link" href="#layanan">Layanan</a></li>
+        <li class="nav-item"><a class="nav-link" href="#sejarah">Sejarah</a></li>
+        <li class="nav-item"><a class="nav-link" href="#berita">Berita</a></li>
+        <li class="nav-item"><a class="nav-link" href="#footerq">Tentang Kami</a></li>
+      </ul>
+
+      <!-- LOGIN (selalu di kanan) -->
+      <ul class="navbar-nav ms-auto me-3">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="loginDropdown" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            Login
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="loginDropdown">
+            <li><a class="dropdown-item" href="back-end/user.php">Login User</a></li>
+            <li><a class="dropdown-item" href="back-end/auth.php">Login Admin</a></li>
+          </ul>
+        </li>
+      </ul>
+
     </div>
-  </nav>
+  </div>
+</nav>
+
+
 
   <!-- Hero Section -->
   <section id="heroCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
@@ -112,8 +113,8 @@ $event = mysqli_fetch_assoc($result);
         <div
           class="container text-center text-white d-flex flex-column justify-content-center align-items-center h-100">
           <h1 class="fw-bold mb-3">Selamat Datang di Perpustakaan Pekanbaru</h1>
-          <p class="lead mb-4">Akses ribuan koleksi buku, jurnal, dan e-resource kapan saja dan di mana saja.</p>
-          <a href="koleksi.php" class="btn btn-light btn-lg rounded-pill">📚 Jelajahi Koleksi</a>
+          <p class="lead mb-4">Akses ribuan koleksi buku digital berupa e-resource kapan saja dan di mana saja.</p>
+
         </div>
       </div>
 
@@ -126,7 +127,7 @@ $event = mysqli_fetch_assoc($result);
           class="container text-center text-white d-flex flex-column justify-content-center align-items-center h-100">
           <h1 class="fw-bold mb-3">Temukan Inspirasi Baru Lewat Buku</h1>
           <p class="lead mb-4">Kunjungi koleksi buku terbaru kami setiap minggu.</p>
-          <a href="berita.php" class="btn btn-primary btn-lg rounded-pill">📰 Baca Berita</a>
+
         </div>
       </div>
 
@@ -138,7 +139,7 @@ $event = mysqli_fetch_assoc($result);
           class="container text-center text-white d-flex flex-column justify-content-center align-items-center h-100">
           <h1 class="fw-bold mb-3" data-aos="fade-down">Ikuti Kegiatan Literasi Digital 2025</h1>
           <p class="lead mb-4" data-aos="fade-up">Bergabunglah dalam seminar dan lomba literasi di kampusmu.</p>
-          <a href="event.php" class="btn btn-success btn-lg rounded-pill" data-aos="zoom-in">🎉 Lihat Event</a>
+
         </div>
       </div>
 
@@ -168,22 +169,58 @@ $event = mysqli_fetch_assoc($result);
           <p>Selamat datang di buku digital kami.</p>
           <button id="openBook" class="btn btn-primary">Buka Buku</button>
         </div>
-        <div class="page">📘 <b>Halaman 1:</b><br> Sejarah awal berdirinya perpustakaan kami dimulai dari tahun 1990...
+        <div class="page">
+          📘 <b>Halaman 1 – Sejarah Awal</b><br><br>
+          Perpustakaan Soeman H.S merupakan perpustakaan provinsi terbesar di Riau.
+          Pembangunannya dimulai pada awal tahun 2000-an sebagai upaya Pemerintah
+          Provinsi Riau untuk menyediakan pusat literasi modern bagi masyarakat.
+          <br><br>
+          Nama <b>Soeman H.S</b> dipilih sebagai penghormatan kepada seorang sastrawan besar
+          dari Riau yang berperan dalam perkembangan dunia literasi dan pendidikan di Indonesia.
+          <br><br>
+          Bangunan perpustakaan ini memiliki arsitektur yang unik karena terinspirasi dari
+          bentuk <b>rehal</b> – tempat meletakkan Al-Qur’an – sebagai simbol kebudayaan Melayu.
         </div>
-        <div class="page">📖 <b>Halaman 2:</b><br> Pada tahun 2000, perpustakaan ini berkembang dengan koleksi lebih
-          dari 5000 buku...</div>
-        <div class="page">📚 <b>Halaman 3:</b><br> Sekarang, perpustakaan kami telah bertransformasi menjadi digital dan
-          modern.</div>
+
+        <div class="page">
+          📖 <b>Halaman 2 – Perkembangan Perpustakaan</b><br><br>
+          Perpustakaan ini diresmikan pada tahun <b>2008</b> sebagai pusat literasi dan budaya
+          terbesar di Sumatera. Memiliki enam lantai dengan berbagai fasilitas modern seperti:
+          <br><br>
+          • Ruang baca umum<br>
+          • Ruang koleksi langka dan referensi<br>
+          • Ruang multimedia<br>
+          • Ruang anak & remaja<br>
+          • Auditorium<br>
+          • Meeting room & ruang diskusi<br><br>
+          Perpustakaan Soeman H.S tidak hanya melayani peminjaman buku, tetapi juga menjadi
+          tempat pelaksanaan seminar, pameran, lokakarya, serta kegiatan literasi digital.
+        </div>
+
+        <div class="page">
+          📚 <b>Halaman 3 – Transformasi Digital</b><br><br>
+          Seiring perkembangan teknologi, perpustakaan ini mulai bertransformasi menjadi
+          pusat informasi digital. Kini pengunjung dapat menikmati:
+          <br><br>
+          • Akses e-book dan e-journal<br>
+          • Digital catalog (OPAC)<br>
+          • Layanan literasi digital<br>
+          • Pelatihan komputer dan seminar teknologi<br><br>
+          Perpustakaan Soeman H.S terus berkembang menjadi ruang belajar terbuka bagi
+          mahasiswa, pelajar, peneliti, dan masyarakat umum. Dengan desain megah
+          dan fasilitas lengkap, perpustakaan ini menjadi salah satu ikon kota Pekanbaru.
+        </div>
+
       </div>
   </section>
 
 
 
   <!-- 📰 Berita & Kegiatan -->
-  <section class="berita py-5 bg-light" data-aos="fade-up">
+  <section class="berita py-5 bg-light" data-aos="fade-up" id="berita">
     <div class="container">
       <div class="text-center mb-5">
-        <h2 class="fw-bold">🗞️ Berita & Kegiatan</h2>
+        <h2 class="fw-bold" id="berita">🗞️ Berita & Kegiatan</h2>
         <p class="text-muted">
           Simak informasi terbaru dari Perpustakaan Pekanbaru
         </p>
@@ -191,37 +228,37 @@ $event = mysqli_fetch_assoc($result);
 
       <div class="row g-4">
         <!-- Kegiatan 1 -->
-       <div class="col-md-4" data-aos="fade-up">
-  <div class="card h-100 shadow-sm border-0">  
-    <!-- Gambar tidak memiliki link -->
-    <img src="assets/pekanliterasi.jpeg" class="card-img-top" alt="Pekan Literasi Digital" />
+        <div class="col-md-4" data-aos="fade-up">
+          <div class="card h-100 shadow-sm border-0">
+            <!-- Gambar tidak memiliki link -->
+            <img src="assets/pekanliterasi.jpeg" class="card-img-top" alt="Pekan Literasi Digital" />
 
 
-    <div class="card-body">
-      <h5 class="card-title">Literasi Digital UNRI 2025</h5>
-      <p class="card-text text-muted">
-        Ayo ikut serta dalam kegiatan literasi digital yang diadakan oleh
-        Perpustakaan Pekanbaru untuk meningkatkan minat baca mahasiswa! dan Dorong Mahasiswa Jadi Kreator Cerdas di Era Digital
-      </p>
-    </div>
+            <div class="card-body">
+              <h5 class="card-title">Literasi Digital UNRI 2025</h5>
+              <p class="card-text text-muted">
+                Ayo ikut serta dalam kegiatan literasi digital yang diadakan oleh
+                Perpustakaan Pekanbaru untuk meningkatkan minat baca mahasiswa! dan Dorong Mahasiswa Jadi Kreator Cerdas
+                di Era Digital
+              </p>
+            </div>
 
-    <!-- Tombol ini yang menuju link berita -->
-    <div class="card-footer bg-white border-0 text-end">
-      <a href="https://https://unri.ac.id/unri-dan-indosat-ooredoo-hutchison-gelar-seminar-literasi-digital-dorong-mahasiswa-jadi-kreator-cerdas-di-era-digital//berita-pekan-literasi" 
-         class="btn btn-outline-primary btn-sm">
-        Selengkapnya
-      </a>
-    </div>
+            <!-- Tombol ini yang menuju link berita -->
+            <div class="card-footer bg-white border-0 text-end" id="buku">
+              <a href="https://https://unri.ac.id/unri-dan-indosat-ooredoo-hutchison-gelar-seminar-literasi-digital-dorong-mahasiswa-jadi-kreator-cerdas-di-era-digital//berita-pekan-literasi"
+                class="btn btn-outline-primary btn-sm">
+                Selengkapnya
+              </a>
+            </div>
 
-  </div>
-</div>
+          </div>
+        </div>
 
 
         <!-- Kegiatan 2 -->
         <div class="col-md-4" data-aos="fade-up">
           <div class="card h-100 shadow-sm border-0">
-            <img src="assets/karyailmuah.jpg" class="card-img-top"
-              alt="Pelatihan Penulisan Karya Ilmiah" />
+            <img src="assets/karyailmuah.jpg" class="card-img-top" alt="Pelatihan Penulisan Karya Ilmiah" />
             <div class="card-body">
               <h5 class="card-title">Pelatihan Penulisan Karya Ilmiah</h5>
               <p class="card-text text-muted">
@@ -231,7 +268,8 @@ $event = mysqli_fetch_assoc($result);
             </div>
 
             <div class="card-footer bg-white border-0 text-end">
-              <a href="https://manajemen.unimus.ac.id/pelatihan-penulisan-karya-tulis-ilmiah/" class="btn btn-outline-primary btn-sm">Selengkapnya</a>
+              <a href="https://manajemen.unimus.ac.id/pelatihan-penulisan-karya-tulis-ilmiah/"
+                class="btn btn-outline-primary btn-sm">Selengkapnya</a>
             </div>
           </div>
         </div>
@@ -239,8 +277,7 @@ $event = mysqli_fetch_assoc($result);
         <!-- Kegiatan 3 -->
         <div class="col-md-4" data-aos="fade-up">
           <div class="card h-100 shadow-sm border-0">
-            <img src="assets/rivew.jpeg" class="card-img-top"
-              alt="Lomba Review Buku" />
+            <img src="assets/rivew.jpeg" class="card-img-top" alt="Lomba Review Buku" />
             <div class="card-body">
               <h5 class="card-title">Lomba Review Buku 2025</h5>
               <p class="card-text text-muted">
@@ -249,7 +286,8 @@ $event = mysqli_fetch_assoc($result);
               </p>
             </div>
             <div class="card-footer bg-white border-0 text-end">
-              <a href="https://lib.unri.ac.id/lomba-resensi-buku-unri-library-art-and-books-fest-2025/" class="btn btn-outline-primary btn-sm">Selengkapnya</a>
+              <a href="https://lib.unri.ac.id/lomba-resensi-buku-unri-library-art-and-books-fest-2025/"
+                class="btn btn-outline-primary btn-sm">Selengkapnya</a>
             </div>
           </div>
         </div>
@@ -257,17 +295,18 @@ $event = mysqli_fetch_assoc($result);
         <!-- Kegiatan 4 -->
         <div class="col-md-4" data-aos="fade-up">
           <div class="card h-100 shadow-sm border-0">
-            <img src="assets/download.jpeg" class="card-img-top"
-              alt="Pekan Literasi Digital" />
+            <img src="assets/download.jpeg" class="card-img-top" alt="Pekan Literasi Digital" />
             <div class="card-body">
               <h5 class="card-title">Unri menjajaki kolaborasi penelitian dengan University of Waterloo</h5>
               <p class="card-text text-muted">
                 Universitas Riau (Unri) di kota Pekanbaru, provinsi Riau, sedang menjajaki
-                kerja sama penelitian dengan Universitas Waterloo, Kanada, menurut seorang pejabat universitas tersebut, Rabu.
+                kerja sama penelitian dengan Universitas Waterloo, Kanada, menurut seorang pejabat universitas tersebut,
+                Rabu.
               </p>
             </div>
             <div class="card-footer bg-white border-0 text-end">
-              <a href="https://en.antaranews.com/news/292434/unri-explores-research-collaboration-with-university-of-waterloo" class="btn btn-outline-primary btn-sm">Selengkapnya</a>
+              <a href="https://en.antaranews.com/news/292434/unri-explores-research-collaboration-with-university-of-waterloo"
+                class="btn btn-outline-primary btn-sm">Selengkapnya</a>
             </div>
           </div>
         </div>
@@ -275,131 +314,142 @@ $event = mysqli_fetch_assoc($result);
         <!-- Kegiatan 5 -->
         <div class="col-md-4" data-aos="fade-up">
           <div class="card h-100 shadow-sm border-0">
-            <img src="assets/bantuanadb.jpeg" class="card-img-top"
-              alt="Pekan Literasi Digital" />
+            <img src="assets/bantuanadb.jpeg" class="card-img-top" alt="Pekan Literasi Digital" />
             <div class="card-body">
               <h5 class="card-title">Unri mulai Fungsikan Gedung-gedung Bantuan ADB</h5>
               <p class="card-text text-muted">
                 Universitas Riau (Unri) mulai memfungsikan gedung-gedung baru yang dikerjakan
-                melalui Proyek AKSI (Advanced Knowledge for Sustainable Growth in Indonesia) 
+                melalui Proyek AKSI (Advanced Knowledge for Sustainable Growth in Indonesia)
                 bantuan Asian Development Bank (ADB) l, yang kini telah selesai dibangun.
               </p>
             </div>
             <div class="card-footer bg-white border-0 text-end">
-              <a href="https://unri.ac.id/unri-mulai-fungsikan-gedung-gedung-bantuan-adb/" class="btn btn-outline-primary btn-sm">Selengkapnya</a>
+              <a href="https://unri.ac.id/unri-mulai-fungsikan-gedung-gedung-bantuan-adb/"
+                class="btn btn-outline-primary btn-sm">Selengkapnya</a>
             </div>
           </div>
         </div>
-         <!-- Kegiatan 6 -->
-  <div class="col-md-4" data-aos="fade-up">
-    <div class="card h-100 shadow-sm border-0">
-      <img src="assets/sistemsatu.jpg" class="card-img-top" alt="">
-      <div class="card-body">
-        <h5 class="card-title">Sistem informasi "Satu UNRI" digaungkan</h5>
-        <p class="card-text text-muted">Dalam rangka integrasi aplikasi di 
-          lingkungan Universitas Riau, pihak kampus sosialisasi Sistem Informasi 
-          Akademik terpadu Universitas Riau (Satu UNRI) di Gedung Senangin 
-          Fakultas Perikanan dan Kelautan (FPK) Universitas Riau, Kamis (25/1)..</p>
-      </div>
-      <div class="card-footer bg-white border-0 text-end">
-        <a href="https://riau.antaranews.com/berita/360585/sistem-informasi-satu-unri-digaungkan" class="btn btn-outline-primary btn-sm">Selengkapnya</a>
-      </div>
-    </div>
-  </div>
-    
+        <!-- Kegiatan 6 -->
+        <div class="col-md-4" data-aos="fade-up">
+          <div class="card h-100 shadow-sm border-0">
+            <img src="assets/sistemsatu.jpg" class="card-img-top" alt="">
+            <div class="card-body">
+              <h5 class="card-title">Sistem informasi "Satu UNRI" digaungkan</h5>
+              <p class="card-text text-muted">Dalam rangka integrasi aplikasi di
+                lingkungan Universitas Riau, pihak kampus sosialisasi Sistem Informasi
+                Akademik terpadu Universitas Riau (Satu UNRI) di Gedung Senangin
+                Fakultas Perikanan dan Kelautan (FPK) Universitas Riau, Kamis (25/1)..</p>
+            </div>
+            <div class="card-footer bg-white border-0 text-end">
+              <a href="https://riau.antaranews.com/berita/360585/sistem-informasi-satu-unri-digaungkan"
+                class="btn btn-outline-primary btn-sm">Selengkapnya</a>
+            </div>
+          </div>
+        </div>
+
 
   </section>
   <!-- layanan -->
   <div class="container py-5">
-    <h3 class="mb-4 fw-bold text-center">Layanan Kami</h3>
+    <h3 class="mb-4 fw-bold text-center" id="layanan">Layanan Kami</h3>
 
     <div class="d-flex justify-content-between gap-4 flex-wrap">
 
-        <!-- CARD 1 -->
-        <div class="card border-0 shadow-sm service-card p-2" style="width: 22rem;">
-            <div class="card-body text-center">
-                <div class="icon-circle mb-3">
-                    <i class="bi bi-person-plus fs-3"></i>
-                </div>
-                <h5 class="card-title fw-semibold">Pendaftaran Anggota</h5>
-            </div>
+      <!-- CARD 1 -->
+      <div class="card border-0 shadow-sm service-card p-2" style="width: 22rem;">
+        <div class="card-body text-center">
+          <div class="icon-circle mb-3">
+            <i class="bi bi-person-plus fs-3"></i>
+          </div>
+          <h5 class="card-title fw-semibold">Pendaftaran Anggota</h5>
         </div>
+      </div>
 
-        <!-- CARD 2 -->
-        <div class="card border-0 shadow-sm service-card p-2" style="width: 22rem;">
-            <div class="card-body text-center">
-                <div class="icon-circle mb-3">
-                    <i class="bi bi-book fs-3"></i>
-                </div>
-                <h5 class="card-title fw-semibold">Peminjaman Buku</h5>
-            </div>
+      <!-- CARD 2 -->
+      <div class="card border-0 shadow-sm service-card p-2" style="width: 22rem;">
+        <div class="card-body text-center">
+          <div class="icon-circle mb-3">
+            <i class="bi bi-book fs-3"></i>
+          </div>
+          <h5 class="card-title fw-semibold">Peminjaman Buku</h5>
         </div>
+      </div>
 
-        <!-- CARD 3 -->
-        <div class="card border-0 shadow-sm service-card p-2" style="width: 22rem;">
-            <div class="card-body text-center">
-                <div class="icon-circle mb-3">
-                    <i class="bi bi-calendar-event fs-3"></i>
-                </div>
-                <h5 class="card-title fw-semibold">Pendaftaran Event</h5>
-            </div>
+      <!-- CARD 3 -->
+      <div class="card border-0 shadow-sm service-card p-2" style="width: 22rem;">
+        <div class="card-body text-center">
+          <div class="icon-circle mb-3">
+            <i class="bi bi-calendar-event fs-3"></i>
+          </div>
+          <h5 class="card-title fw-semibold">Pendaftaran Event</h5>
         </div>
+      </div>
 
     </div>
-</div>
-
-
-<div class="book-slider">
-
-  <!-- Buku 1 -->
-  <div class="book">
-    <img src="https://images-na.ssl-images-amazon.com/images/I/81af+MCATTL.jpg" alt="Book 1">
-    <h5>Harry Potter</h5>
   </div>
 
-  <!-- Buku 2 -->
-  <div class="book">
-    <img src="https://images-na.ssl-images-amazon.com/images/I/71KilybDOoL.jpg" alt="Book 2">
-    <h5>The Hobbit</h5>
-  </div>
+  <!-- ==================== KOLEKSI BUKU ==================== -->
+  <section id="koleksi-buku" class="py-5">
+    <div class="container">
 
-  <!-- Buku 3 -->
-  <div class="book">
-    <img src="https://images-na.ssl-images-amazon.com/images/I/81a4kCNuH+L.jpg" alt="Book 3">
-    <h5>Percy Jackson</h5>
-  </div>
+      <h2 class="fw-bold text-center mb-4"> Koleksi Buku </h2>
 
-  <!-- Buku 4 -->
-  <div class="book">
-    <img src="https://ebooks.gramedia.com/ebook-covers/40151/big_covers/ID_GPU2017MTH09TLOTRSPCFOTRUCB_B.jpg" alt="Book 4">
-    <h5>Lord of The Rings</h5>
-  </div>
+      <div class="book-slider">
 
-  <!-- Buku 5 → TAMBAHAN -->
-  <div class="book">
-    <img src="https://images-na.ssl-images-amazon.com/images/I/81WcnNQ-TBL.jpg" alt="Book 5">
-    <h5>The Great Gatsby</h5>
-  </div>
+        <!-- Buku 1 -->
+        <div class="book">
+          <img src="https://images-na.ssl-images-amazon.com/images/I/81af+MCATTL.jpg" alt="Book 1">
+          <h5>Harry Potter</h5>
+        </div>
 
-  <!-- Buku 6 → TAMBAHAN -->
-  <div class="book">
-    <img src="https://images-na.ssl-images-amazon.com/images/I/71g2ednj0JL.jpg" alt="Book 6">
-    <h5>To Kill a Mockingbird</h5>
-  </div>
+        <!-- Buku 2 -->
+        <div class="book">
+          <img src="https://images-na.ssl-images-amazon.com/images/I/71KilybDOoL.jpg" alt="Book 2">
+          <h5>The Hobbit</h5>
+        </div>
 
-  <!-- Buku 7 → TAMBAHAN -->
-  <div class="book">
-    <img src="https://images-na.ssl-images-amazon.com/images/I/81iqZ2HHD-L.jpg" alt="Book 7">
-    <h5>1984 - George Orwell</h5>
-  </div>
+        <!-- Buku 3 -->
+        <div class="book">
+          <img src="https://images-na.ssl-images-amazon.com/images/I/81a4kCNuH+L.jpg" alt="Book 3">
+          <h5>Percy Jackson</h5>
+        </div>
 
-  <!-- Buku 8 → TAMBAHAN -->
-  <div class="book">
-    <img src="https://images-na.ssl-images-amazon.com/images/I/91uwocAMtSL.jpg" alt="Book 8">
-    <h5>The Alchemist</h5>
-  </div>
+        <!-- Buku 4 -->
+        <div class="book">
+          <img src="https://ebooks.gramedia.com/ebook-covers/40151/big_covers/ID_GPU2017MTH09TLOTRSPCFOTRUCB_B.jpg"
+            alt="Book 4">
+          <h5>Lord of The Rings</h5>
+        </div>
 
-</div>
+        <!-- Buku 5 -->
+        <div class="book">
+          <img src="https://images-na.ssl-images-amazon.com/images/I/81WcnNQ-TBL.jpg" alt="Book 5">
+          <h5>The Great Gatsby</h5>
+        </div>
+
+        <!-- Buku 6 -->
+        <div class="book">
+          <img src="https://images-na.ssl-images-amazon.com/images/I/71g2ednj0JL.jpg" alt="Book 6">
+          <h5>To Kill a Mockingbird</h5>
+        </div>
+
+        <!-- Buku 7 -->
+        <div class="book">
+          <img src="https://images-na.ssl-images-amazon.com/images/I/81iqZ2HHD-L.jpg" alt="Book 7">
+          <h5>1984 - George Orwell</h5>
+        </div>
+
+        <!-- Buku 8 -->
+        <div class="book">
+          <img src="https://images-na.ssl-images-amazon.com/images/I/91uwocAMtSL.jpg" alt="Book 8">
+          <h5>The Alchemist</h5>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
 
 
 
@@ -442,24 +492,23 @@ $event = mysqli_fetch_assoc($result);
     <div class="container">
       <div class="row g-4">
 
-        <!-- 📍 Google Map -->
+        <!-- 📍 Lokasi -->
         <div class="col-md-4">
           <h5 class="mb-3">📍 Lokasi Kami</h5>
           <div class="ratio ratio-16x9 rounded shadow">
             <iframe
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4031.215687303451!2d101.44387307496473!3d0.5156158994793396!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31d5ac1d5ea23b79%3A0x406ac240e5fb26c4!2sPerpustakaan%20Soeman%20HS%20Provinsi%20Riau!5e1!3m2!1sid!2sid!4v1761869892480!5m2!1sid!2sid"
-              width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade"></iframe>
+              width="600" height="450" style="border:0;" allowfullscreen loading="lazy">
+            </iframe>
           </div>
         </div>
 
-        <!-- 👥 Statistik -->
+        <!-- 📊 Statistik -->
         <div class="col-md-4">
           <h5 class="mb-3">📊 Statistik Pengunjung</h5>
 
           <div class="bg-secondary bg-opacity-25 p-3 rounded text-center shadow-sm mb-3">
             <?php
-            // Total kunjungan (disimpan di file)
             $file = "counter.txt";
             if (!file_exists($file)) {
               file_put_contents($file, 0);
@@ -471,10 +520,9 @@ $event = mysqli_fetch_assoc($result);
             <h3 class="fw-bold text-light"><?= $count; ?></h3>
             <p>Total Pengunjung Website</p>
           </div>
-          <!-- Total anggota terdaftar dari database -->
+
           <div class="bg-secondary bg-opacity-25 p-3 rounded text-center shadow-sm">
             <?php
-
             include 'back-end/koneksi.php';
             $sql = "SELECT COUNT(*) AS total_anggota FROM anggota_perpus WHERE status = 'aktif'";
             $result = mysqli_query($koneksi, $sql);
@@ -482,22 +530,49 @@ $event = mysqli_fetch_assoc($result);
             $totalAnggota = $data['total_anggota'];
             ?>
             <h3 class="fw-bold text-light"><?= $totalAnggota; ?></h3>
-            <p>Anggota Terdaftar </p>
+            <p>Anggota Terdaftar</p>
           </div>
         </div>
 
-        <!-- 📞 Kontak -->
-        <div class="col-md-4">
-          <h5 class="mb-3">📞 Kontak Kami</h5>
+        <!-- 🔗 Quick Links -->
+        <div class="col-md-2">
+          <h5 class="mb-3">🔗 Link Cepat</h5>
           <ul class="list-unstyled">
-            <li><i class="bi bi-geo-alt-fill me-2"></i> Perpustakaan Pusat UNRI, Pekanbaru</li>
-            <li><i class="bi bi-telephone-fill me-2"></i> (0761) 123456</li>
-            <li><i class="bi bi-envelope-fill me-2"></i> perpus@unri.ac.id</li>
-            <li><i class="bi bi-instagram me-2"></i> <a href="https://www.instagram.com/dipersipprovriau/"
-                class="text-light text-decoration-none">@perpusunri</a></li>
+            <li><a href="#heroCarousel" class="text-light text-decoration-none">Beranda</a></li>
+            <li><a href="#layanan" class="text-light text-decoration-none">Layanan</a></li>
+            <li><a href="#koleksi-buku" class="text-light text-decoration-none">Koleksi</a></li>
+            <li><a href="#sejarah" class="text-light text-decoration-none">Sejarah</a></li>
           </ul>
         </div>
+
+        <!-- 📞 Kontak + Sosmed -->
+        <div class="col-md-2">
+          <h5 class="mb-3">📞 Kontak</h5>
+          <ul class="list-unstyled small">
+            <li><i class="bi bi-geo-alt-fill me-2"></i> UNRI, Pekanbaru</li>
+            <li><i class="bi bi-telephone-fill me-2"></i> (0761) 123456</li>
+            <li><i class="bi bi-envelope-fill me-2"></i> perpus@unri.ac.id</li>
+          </ul>
+
+          <h5 class="mt-4 mb-2">🌐 Sosial Media</h5>
+          <div class="d-flex gap-3">
+            <a href="#" class="text-light fs-4"><i class="bi bi-instagram"></i></a>
+            <a href="#" class="text-light fs-4"><i class="bi bi-facebook"></i></a>
+            <a href="#" class="text-light fs-4"><i class="bi bi-youtube"></i></a>
+            <a href="#" class="text-light fs-4"><i class="bi bi-tiktok"></i></a>
+          </div>
+        </div>
+
       </div>
+
+      <!-- Copyright -->
+      <div class="text-center mt-4 pt-3 border-top border-secondary">
+        <p class="mb-0">
+          © <?= date("Y") ?> Perpustakaan Pekanbaru — All Rights Reserved.
+        </p>
+      </div>
+
+    </div>
   </footer>
 
 
